@@ -108,6 +108,9 @@
     "nikic/php-parser": {
         "version": "v4.2.2"
     },
+    "ocramius/package-versions": {
+        "version": "1.4.0"
+    },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
@@ -174,6 +177,9 @@
             "bin/console",
             "config/bootstrap.php"
         ]
+    },
+    "symfony/contracts": {
+        "version": "v1.1.0"
     },
     "symfony/css-selector": {
         "version": "v4.3.0"
