@@ -14,12 +14,15 @@
                             <table class="table">
                                 <thead class=" text-primary">
                                     <th>Id</th>
-                                    <th></th>
+                                    <th>Fecha</th>
+                                    <th>Numero</th>
                                 </thead>
                                 <tbody>
                                 {% for arMovimiento in arMovimientos %}
                                 <tr>
                                     <td>{{ arMovimiento.codigoMovimientoPk }}</td>
+                                    <td>{{ arMovimiento.fecha | date('Y-m-d') }}</td>
+                                    <td>{{ arMovimiento.numero }}</td>
                                     <td align="center"><input type="checkbox" name="ChkSeleccionar[]"
                                                               value="{{ arMovimiento.codigoMovimientoPk }}"/></td>
                                 </tr>

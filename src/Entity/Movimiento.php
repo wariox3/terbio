@@ -23,6 +23,36 @@ class Movimiento
     private $codigoEmpresaFk;
 
     /**
+     * @ORM\Column(name="resolucion_numero", type="string",length=20, nullable=true)
+     */
+    private $resolucionNumero;
+
+    /**
+     * @ORM\Column(name="resolucion_fecha_desde", type="string",length=20, nullable=true)
+     */
+    private $resolucionFechaDesde;
+
+    /**
+     * @ORM\Column(name="resolucion_desde_hasta", type="string",length=20, nullable=true)
+     */
+    private $resolucionDesdeHasta;
+
+    /**
+     * @ORM\Column(name="resolucion_prefijo", type="string",length=20, nullable=true)
+     */
+    private $resolucionPrefijo;
+
+    /**
+     * @ORM\Column(name="resolucion_desde", type="string",length=20, nullable=true)
+     */
+    private $resolucionDesde;
+
+    /**
+     * @ORM\Column(name="resolucion_hasta", type="string",length=20, nullable=true)
+     */
+    private $resolucionHasta;
+
+    /**
      * @ORM\Column(name="fecha", type="date", nullable=true)
      */
     private $fecha;
@@ -62,6 +92,102 @@ class Movimiento
     public function setCodigoEmpresaFk($codigoEmpresaFk): void
     {
         $this->codigoEmpresaFk = $codigoEmpresaFk;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionNumero()
+    {
+        return $this->resolucionNumero;
+    }
+
+    /**
+     * @param mixed $resolucionNumero
+     */
+    public function setResolucionNumero($resolucionNumero): void
+    {
+        $this->resolucionNumero = $resolucionNumero;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionFechaDesde()
+    {
+        return $this->resolucionFechaDesde;
+    }
+
+    /**
+     * @param mixed $resolucionFechaDesde
+     */
+    public function setResolucionFechaDesde($resolucionFechaDesde): void
+    {
+        $this->resolucionFechaDesde = $resolucionFechaDesde;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionDesdeHasta()
+    {
+        return $this->resolucionDesdeHasta;
+    }
+
+    /**
+     * @param mixed $resolucionDesdeHasta
+     */
+    public function setResolucionDesdeHasta($resolucionDesdeHasta): void
+    {
+        $this->resolucionDesdeHasta = $resolucionDesdeHasta;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionPrefijo()
+    {
+        return $this->resolucionPrefijo;
+    }
+
+    /**
+     * @param mixed $resolucionPrefijo
+     */
+    public function setResolucionPrefijo($resolucionPrefijo): void
+    {
+        $this->resolucionPrefijo = $resolucionPrefijo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionDesde()
+    {
+        return $this->resolucionDesde;
+    }
+
+    /**
+     * @param mixed $resolucionDesde
+     */
+    public function setResolucionDesde($resolucionDesde): void
+    {
+        $this->resolucionDesde = $resolucionDesde;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResolucionHasta()
+    {
+        return $this->resolucionHasta;
+    }
+
+    /**
+     * @param mixed $resolucionHasta
+     */
+    public function setResolucionHasta($resolucionHasta): void
+    {
+        $this->resolucionHasta = $resolucionHasta;
     }
 
     /**
