@@ -22,6 +22,7 @@ class MovimientoController extends Controller
         $paginator = $this->get('knp_paginator');
         $form = $this->createFormBuilder()
             ->add('btnTransferir', SubmitType::class, ['label' => 'Transferir', 'attr' => ['class' => 'btn btn-sm btn-default']])
+            ->add('btnTransferirDispapeles', SubmitType::class, ['label' => 'Transferir dispapeles', 'attr' => ['class' => 'btn btn-sm btn-default']])
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,6 +31,14 @@ class MovimientoController extends Controller
                 if($arrMovimientos) {
                     $transferir = new Transmitir($em);
                     $transferir->transferirMovimientos($arrMovimientos);
+                }
+                return $this->redirect($this->generateUrl('movimiento_lista'));
+            }
+            if ($form->get('btnTransferirDispapeles')->isClicked()) {
+                $arrMovimientos = $request->request->get('ChkSeleccionar');
+                if($arrMovimientos) {
+                    $transferir = new Transmitir($em);
+                    $transferir->transferirMovimientosDispapeles($arrMovimientos);
                 }
                 return $this->redirect($this->generateUrl('movimiento_lista'));
             }
