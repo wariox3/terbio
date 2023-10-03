@@ -1,0 +1,185 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block title %}Adquiriente{% endblock %}
+{% block content %}
+    <script language="javascript">
+        function selDestinatario(numeroIdentificacion, nombreCorto, codigoIdentificacionFk, codigoTerceroPk) {
+            window.opener.document.getElementById('form_codigoAdquiriente').value = codigoTerceroPk;
+            window.opener.document.getElementById('form_tipoIdentificacionAdquiriente').value = codigoIdentificacionFk;
+            window.opener.document.getElementById('form_identificacionAdquiriente').value = numeroIdentificacion;
+            window.opener.document.getElementById('form_nombreAdquiriente').value = nombreCorto;
+            self.close();
+        }
+    </script>
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Lista destinatarios</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre, { 'attr': {'class': 'form-control','autofocus':true,'onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Código:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoTercero) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Identificación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacionLista) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IDENTIFICACIÓN</th>
+                    <th>NOMBRE</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arTercero in arTerceros %}
+                    <tr>
+                        <td>{{ arTercero.codigoTerceroPk }}</td>
+                        <td>{{ arTercero.numeroIdentificacion }}</td>
+                        <td>{{ arTercero.nombreCorto }}</td>
+                        <td class="text-center" title="Seleccionar registro">
+                            <a href="javascript:selDestinatario('{{ arTercero.numeroIdentificacion }}','{{ arTercero.nombreCorto }}', '{{ arTercero.codigoIdentificacionFk }}', '{{ arTercero.codigoTerceroPk }}')">
+                                <i style="font-size: large;color: black;" class="fa fa-search"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arTerceros.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arTerceros) }}
+        </div>
+    </div>
+    <hr>
+    {{ form_start(formNuevo) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">ADQUIRIENTE NUEVO</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Tipo identificación:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.codigoIdentificacionFk) }}
+                        {{ form_errors(formNuevo.codigoIdentificacionFk) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Numero identificación:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.numeroIdentificacion) }}
+                        {{ form_errors(formNuevo.numeroIdentificacion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.nombreCorto) }}
+                        {{ form_errors(formNuevo.nombreCorto) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">nombre 1:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.nombre1) }}
+                        {{ form_errors(formNuevo.nombre1) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">nombre 2:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.nombre2) }}
+                        {{ form_errors(formNuevo.nombre2) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Apellido 1:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.apellido1) }}
+                        {{ form_errors(formNuevo.apellido1) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Apellido 2:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.apellido2) }}
+                        {{ form_errors(formNuevo.apellido2) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Dirección:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.direccion) }}
+                        {{ form_errors(formNuevo.direccion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.correo) }}
+                        {{ form_errors(formNuevo.correo) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Teléfono:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.telefono) }}
+                        {{ form_errors(formNuevo.telefono) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Celular:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.celular) }}
+                        {{ form_errors(formNuevo.celular) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Ciudad:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.codigoCiudadFk) }}
+                        {{ form_errors(formNuevo.codigoCiudadFk) }}
+                    </div>
+                </div>
+                <div class="col-xl-12 col-sm-12 text-right mt-2">
+                    {{ form_widget(formNuevo.btnGuardar) }}
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(formNuevo) }}
+    {{ form_end(formNuevo) }}
+{% endblock %}

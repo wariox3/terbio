@@ -1,0 +1,135 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}EMPRESAS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2>Usuarios</h2>
+    </div>
+    <div class="row">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-1 control-label">Usuario:</label>
+                        <div class="col-sm-3">
+                            {{ form_widget(form.codigoUsuario) }}
+                        </div>
+                        <label class="col-sm-1 control-label">Identificación:</label>
+                        <div class="col-sm-3">
+                            {{ form_widget(form.numeroIdentificacion) }}
+                        </div>
+                        <label class="col-sm-1 control-label">Nombres:</label>
+                        <div class="col-sm-3">
+                            {{ form_widget(form.nombre) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <label class="col-sm-1 control-label">Rol:</label>
+                        <div class="col-sm-3">
+                            {{ form_widget(form.codigoRolFk) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+            <div class="btn-group btn-group-sm" style="float: right">
+                {{ form_widget(form.btnActualizarDatosUsuario, { 'attr': {'class': 'btn btn-default btn-sm',} }) }}
+                <a class="btn btn-default btn-sm "
+                   href="{{ path('empresa_usuario_nuevo', {'id': 0}) }}">Nuevo</a>
+                {{ form_widget(form.btnExcel, { 'attr': {'class': 'btn btn-default waves-effect waves-themed btn-sm'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>USUARIO</th>
+                    <th title="Tipo identificación">TI</th>
+                    <th title="Número identificación">NI</th>
+                    <th>NOMBRES</th>
+                    <th>APELLIDOS</th>
+                    <th>CORREO</th>
+                    <th title="Fecha registro">F_REGISTRO</th>
+                    <th>ERP</th>
+                    <th>OPERACIÓN</th>
+                    <th>EMPLEADO</th>
+                    <th>CLIENTE</th>
+                    <th>PROVEEDOR</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arUsuario in arUsuarios %}
+                    <tr>
+                        <td>{{ arUsuario.codigoUsuarioPk }}</td>
+                        <td>{{ arUsuario.codigoIdentificacionFk }}</td>
+                        <td>{{ arUsuario.numeroIdentificacion }}</td>
+                        <td>{{ arUsuario.nombres }}</td>
+                        <td>{{ arUsuario.apellidos }}</td>
+                        <td>{{ arUsuario.correo }}</td>
+                        <td>{{ arUsuario.fechaRegistro | date ('Y-m-d') }}</td>
+                        <td>{{ arUsuario.codigoTerceroErpFk }}</td>
+                        <td>{{ arUsuario.codigoOperacionFk }}</td>
+                        <td class="text-center">{{ arUsuario.empleado ? "SI":"NO" }}</td>
+                        <td class="text-center">{{ arUsuario.cliente ? "SI":"NO" }}</td>
+                        <td class="text-center">{{ arUsuario.proveedor ? "SI":"NO" }}</td>
+                        {% if arUsuario.empleado == false %}
+                            <td class="text-center">
+                                <a href="{{ path('empresa_usuario_nuevo', {'id':arUsuario.codigoUsuarioPk }) }}"
+                                   class="btn btn-sm btn-default" title="Editar">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                        <td class="text-center">
+                            <a href="javascript:abrirVentana3('{{ path('empresa_usuario_cambioclave', {'id':  arUsuario.codigoUsuarioPk}) }}', 'Cambio de clave', 600, 1200)"
+                               class="btn btn-sm btn-default" title="Cambio clave">
+                                <i class="fa fa-key"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('empresa_usuario_detalle', {'id':arUsuario.codigoUsuarioPk}) }}"
+                               class="btn btn-sm btn-default" title="Detalle">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <button type="submit" name="OpEliminar" value="{{ arUsuario.codigoUsuarioPk }}"
+                                    class="btn btn-default btn-sm" title="Eliminar">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arUsuarios.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arUsuarios) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

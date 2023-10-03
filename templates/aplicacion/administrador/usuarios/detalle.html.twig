@@ -1,0 +1,51 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CLIENTES{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">CLIENTE DETALLE</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                <a href="{{ path('administrador_empresa_usuario_lista') }}" class=" btn btn-sm btn-default"
+                   title="regresar a la lista"><i class="fa fa-arrow-left"></i> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                <td>IDENTIFICACIÓN</td>
+                <td>{{ arRegistro.identificacionRel.nombre }}</td>
+                <td>NÚMERO IDENTIFICACIÓN</td>
+                <td>{{ arRegistro.numeroIdentificacion }}</td>
+                <td>EMPRESA</td>
+                <td>{{ arRegistro.empresa ? "SI" : "NO" }}</td>
+            </tr>
+            <tr>
+                <td>NOMBRE</td>
+                <td>{{ arRegistro.nombres }}</td>
+                <td>APELLIDOS</td>
+                <td>{{ arRegistro.apellidos }}</td>
+                <td>CLIENTE</td>
+                <td>{{ arRegistro.cliente ? "SI" : "NO" }}</td>
+            </tr>
+            <tr>
+                <td>ROL</td>
+                <td>{{ arRegistro.codigoRolFk [5:] }}</td>
+                <td></td>
+                <td></td>
+                <td>PROVEEDOR</td>
+                <td>{{ arRegistro.proveedor ? "SI" : "NO" }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>EMPLEADO</td>
+                <td>{{ arRegistro.empleado ? "SI" : "NO" }}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

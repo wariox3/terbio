@@ -1,0 +1,63 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Reclamo{% endblock %}
+{% block content %}
+    <div class="btn-toolbar" style="float:left">
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('empleado_reclamo_lista') }}">
+                <i class="fa fa-reply" aria-hidden="true"></i>
+                Volver
+            </a>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-bordered tabla-informacion w-100">
+                <tr>
+                    <td class="titulo">CÓDIGO:</td>
+                    <td class="td-in-well">{{ arReclamo.codigoReclamoPk }}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                </tr>
+                <tr>
+                    <td class="titulo">IDENTIFICACIÓN:</td>
+                    <td class="td-in-well">{{ arReclamo.numeroIdentificacion }}</td>
+                    <td class="titulo">EMPLEADO:</td>
+                    <td class="td-in-well">{{ arReclamo.empleado }}</td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA:</td>
+                    <td class="td-in-well">{{ arReclamo.fecha | date('Y-m-d') }}</td>
+                    <td class="titulo"></td>
+                    <td class="td-in-well"></td>
+                </tr>
+                <tr>
+                    <td class="titulo">FECHA CIERRE:</td>
+                    <td class="td-in-well">{{ arReclamo.fechaCierre ? arReclamo.fechaCierre | date('Y-m-d') : 'SIN CERRAR' }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FECHA</th>
+                    <th>RESPUESTA</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arRespuesta in arReclamo.respuestas %}
+                    <tr>
+                        <td>{{ arRespuesta.codigoReclamoRespuestaPk }}</td>
+                        <td>{{ arRespuesta.fecha | date('Y-m-d H:i:s') }}</td>
+                        <td>{{ arRespuesta.respuesta }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block title %}Conductores{% endblock %}
+{% block content %}
+    <script language="javascript">
+        function selConductor(codigo, nombre) {
+            opener.document.getElementById('form_codigoConductorFk').value = codigo;
+            opener.document.getElementById('form_conductorNombreCorto').value = nombre;
+            opener.document.getElementById('form_codigoConductorFk').focus();
+            self.close();
+        }
+    </script>
+    {{ form_start(form)}}
+    <div class="row">
+        <h2 class="panel-title">Lista conductores</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Identificacion:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>IDENTIFICACION</th>
+                    <th>NOMBRE</th>
+                    <th>V_LIC</th>
+                    <th>V_ARL</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arConductor in arConductores %}
+                    <tr>
+                        <td>{{ arConductor.codigoConductorPk }}</td>
+                        <td>{{ arConductor.numeroIdentificacion }}</td>
+                        <td>{{ arConductor.nombreCorto }}</td>
+                        <td {% if arConductor.fechaVenceLicencia | date('Y-m-d') < "now"|date('Y-m-d')  %} class="alert-danger" {% endif %}>{{ arConductor.fechaVenceLicencia | date('Y-m-d') }}</td>
+                        <td {% if arConductor.fechaVenceArl | date('Y-m-d') < "now"|date('Y-m-d')  %} class="alert-danger" {% endif %}>{{ arConductor.fechaVenceArl | date('Y-m-d') }}</td>
+                        <td class="text-center" title="Seleccionar registro">
+                            <a href="javascript:selConductor('{{ arConductor.codigoConductorPk }}', '{{ arConductor.nombreCorto }}')">
+                                <i style="font-size: large;color: black;" class="fa fa-search"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

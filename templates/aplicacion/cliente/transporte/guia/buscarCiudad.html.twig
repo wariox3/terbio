@@ -1,0 +1,74 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block title %}Destino{% endblock %}
+{% block content %}
+    <script language="javascript">
+        function selBuscar(codigoCiudad, nombre) {
+            opener.document.getElementById('{{ campoCodigo }}').value = codigoCiudad;
+            opener.document.getElementById('{{ campoNombre }}').value = nombre;
+            self.close();
+        }
+    </script>
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Lista ciudad</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Código:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigo) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arCiudad in arrCiudades %}
+                    <tr>
+                        <td>{{ arCiudad.codigoCiudadPk }}</td>
+                        <td>{{ arCiudad.nombre }}</td>
+                        <td class="text-center" title="Seleccionar registro">
+                            <a href="javascript:selBuscar('{{ arCiudad.codigoCiudadPk }}','{{ arCiudad.nombre }}')">
+                                <i style="font-size: large;color: black;" class="fa fa-search"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arrCiudades.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arrCiudades) }}
+        </div>
+    </div>
+{% endblock %}
+

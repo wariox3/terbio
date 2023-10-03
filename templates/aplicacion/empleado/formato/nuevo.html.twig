@@ -1,0 +1,106 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="panel panel-default">
+        <div class="panel-heading">Información general</div>
+        <div class="panel-body">
+            <div class="form-group form-group-sm">
+                <label for="form_recogidaTipoRel" class="col-sm-2 control-label">Nombre:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+                <label for="form_fechaVence" class="col-sm-2 control-label">Fecha:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.fecha, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_recogidaTipoRel" class="col-sm-2 control-label">Versión:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.version, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+
+                <label for="form_fechaVence" class="col-sm-2 control-label">Fecha actualización:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.fechaActualizacion, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="form_fechaVence" class="col-sm-2 control-label">Código:</label>
+                <div class="col-sm-4">
+                    {{ form_widget(form.codigo, { 'attr': {'class': 'form-control'} }) }}
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                <label for="" class="control-label col-sm-2">Contenido:</label>
+                <div class="col-sm-6">
+                    {{ form_widget(form.contenido) }}
+                </div>
+                <div class="col-sm-2">
+                    <strong class="control-label">Etiquetas:</strong>
+                    <br>
+                    {% for etiqueta in etiquetas %}
+                        <spam><em>{{ etiqueta.etiqueta }}</em> <small>{{ etiqueta.descripcion }}</small></spam><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a class="btn btn-default btn-sm" href="{{ path('formato_lista') }}">Cancelar</a>
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    <div class="row">
+        <h2 class="panel-title">Imágenes formato</h2>
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>X</th>
+                    <th>Y</th>
+                    <th>ANCHO</th>
+                    <th>ALTO</th>
+                    <th>IMAGEN</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key, valor in arFormatoImagenes %}
+                    <tr>
+                        <td>{{ valor.codigoFormatoImagenPk }}</td>
+                        <td>{{ valor.posicionX }}</td>
+                        <td>{{ valor.posicionY }}</td>
+                        <td>{{ valor.ancho }}</td>
+                        <td>{{ valor.alto }}</td>
+                        <td class="text-center">
+                            <img alt="Embedded Image" src="data:image/png;base64,{{ images[key] }}" width="100"
+                                 height="100"/>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-default waves-effect waves-themed btn-sm"
+                               href="javascript:abrirVentana3('{{ path('formato_image_nuevo', { 'codigoFormato': arFormato.codigoFormatoPk,'codigoFormatoImagen': valor.codigoFormatoImagenPk  }) }}', 'formato imagen', 600, 1200)">
+                                <i class="fa fa-edit "></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <input type="checkbox" name="ChkSeleccionar[]" value="{{ valor.codigoFormatoImagenPk }}"/>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div style="float: right">
+            <a class="btn btn-default waves-effect waves-themed btn-sm"
+               href="javascript:abrirVentana3('{{ path('formato_image_nuevo', { 'codigoFormato': arFormato.codigoFormatoPk,'codigoFormatoImagen': 0 }) }}', 'formato imagen', 600, 1200)">
+                Nuevo
+            </a>
+            {{ form_widget(form.btnEliminarImagen) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Novedades{% endblock %}
+{% block content %}
+    {{ form_start(form)}}
+    <div class="row">
+        <h2 class="panel-title">Lista novedades</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Guia:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoGuia) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Documento cliente:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.documentoCliente) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Atendido:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.estadoAtendido) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Solucionado:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.estadoSolucionado) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+            {{ form_widget(form.btnExcel) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>GUIA</th>
+                    <th>DOCUMENTO</th>
+                    <th>TIPO</th>
+                    <th>FECHA</th>
+                    <th>DESCRIPCIÓN</th>
+                    <th title="Atendido">ATE</th>
+                    <th title="Solucionado">SOL</th>
+                    <th>SOLUCIÓN</th>
+                    <th>FECHA</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arNovedad in arNovedades %}
+                    <tr>
+                        <td>{{ arNovedad.codigoNovedadPk }}</td>
+                        <td>{{ arNovedad.codigoGuiaFk }}</td>
+                        <td>{{ arNovedad.documentoCliente }}</td>
+                        <td>{{ arNovedad.novedadTipo }}</td>
+                        <td>{{ arNovedad.fechaRegistro | date ('Y-m-d') }}</td>
+                        <td>{{ arNovedad.descripcion }}</td>
+                        <td>{{ arNovedad.estadoAtendido ? 'SI' : 'NO' }}</td>
+                        <td>{{ arNovedad.estadoSolucion ? 'SI' : 'NO' }}</td>
+                        <td>{{ arNovedad.solucion }}</td>
+                        <td>{{ arNovedad.estadoSolucion ? arNovedad.fechaSolucion | date ('Y-m-d') : '' }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col">
+        Total {{ arNovedades.getTotalItemCount }} registros
+    </div>
+    <div class="col">
+        {{ knp_pagination_render(arNovedades) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

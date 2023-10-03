@@ -1,0 +1,202 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}ASPIRANTE{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">INFORMACIÓN GENERAL</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Identificación:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacion) }}
+                        {{ form_errors(form.numeroIdentificacion) }}
+                        <span id="msjValidacionNumeroIdentificacion"></span>
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Primer nombre:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre1) }}
+                        {{ form_errors(form.nombre1) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Segundo nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre2) }}
+                        {{ form_errors(form.nombre2) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Primer apellido:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.apellido1) }}
+                        {{ form_errors(form.apellido1) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Segundo apellido:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.apellido2) }}
+                        {{ form_errors(form.apellido2) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Estatura:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.estatura) }}
+                        {{ form_errors(form.estatura) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Peso:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.peso) }}
+                        {{ form_errors(form.peso) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Fecha nacimiento:<span
+                                style="color: red;font-size: 15px;text-align: center;margin-left: 5px">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaNacimiento) }}
+                        {{ form_errors(form.fechaNacimiento) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Cargo aspira:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.cargoAspira) }}
+                        {{ form_errors(form.cargoAspira) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Libreta militar:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.libretaMilitar) }}
+                        {{ form_errors(form.libretaMilitar) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Correo:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.correo) }}
+                        {{ form_errors(form.correo) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Dirección:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.direccion) }}
+                        {{ form_errors(form.direccion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Teléfono:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.telefono) }}
+                        {{ form_errors(form.telefono) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Celular:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.celular) }}
+                        {{ form_errors(form.celular) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Barrio:<span class="indicardorInputObligatorio">*</span></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.barrio) }}
+                        {{ form_errors(form.barrio) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.cursoVigilancia) }}
+                        {{ form_errors(form.cursoVigilancia) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Fecha vencimiento curso
+                        vigilancia: </label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaVenceCursoVigilancia) }}
+                        {{ form_errors(form.fechaVenceCursoVigilancia) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">INFORMACIÓN EXTRA</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Número de hijos:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroHijos) }}
+                        {{ form_errors(form.numeroHijos) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label">Última empresa labora:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.ultimaEmpresalabora) }}
+                        {{ form_errors(form.ultimaEmpresalabora) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.moto) }}
+                        {{ form_errors(form.moto) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.carro) }}
+                        {{ form_errors(form.carro) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.licenciaMoto) }}
+                        {{ form_errors(form.licenciaMoto) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.licenciaCarro) }}
+                        {{ form_errors(form.licenciaCarro) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.cabezaHogar) }}
+                        {{ form_errors(form.cabezaHogar) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.posibilidadViajar) }}
+                        {{ form_errors(form.posibilidadViajar) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.discapacidad) }}
+                        {{ form_errors(form.discapacidad) }}
+                    </div>
+                    <label for="form_sectorRel" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.padreFamilia) }}
+                        {{ form_errors(form.padreFamilia) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-sm btn-default"
+                   href="{{ path('aspirante_lista') }}">Cancelar</a>
+                {{ form_widget(form.guardar) }}
+            </div>
+        </section>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

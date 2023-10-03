@@ -1,0 +1,126 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}USUARIO {% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Información General</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Tipo documento:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.identificacionRel) }}
+                        {{ form_errors(form.identificacionRel) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Número identificación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacion) }}
+                        {{ form_errors(form.numeroIdentificacion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombres:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombres) }}
+                        {{ form_errors(form.nombres) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Apellidos:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.apellidos) }}
+                        {{ form_errors(form.apellidos) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.correo) }}
+                        {{ form_errors(form.correo) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Código tercero ERP:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoTerceroErpFk) }}
+                        {{ form_errors(form.codigoTerceroErpFk) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.cliente) }}
+                        {{ form_widget(form.proveedor) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Seguridad</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre del usuario:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoUsuarioPk) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Contraseña:</label>
+                    <div class="col-sm-4">
+                        {% if ingresarContrasena %}
+                            {{ form_widget(form.claveNueva) }}
+                            {{ form_errors(form.claveNueva) }}
+                        {% else %}
+                            {{ form_widget(form.claveNueva, {'attr': {'style': 'display: none'}} ) }}
+                            {{ form_errors(form.claveNueva) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Transporte</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Operación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoOperacionFk) }}
+                        {{ form_errors(form.codigoOperacionFk) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Operación cliente:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoOperacionClienteFk) }}
+                        {{ form_errors(form.codigoOperacionClienteFk) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.gestionTranporte) }}
+                        {{ form_widget(form.guiaNuevo) }}
+                        {{ form_widget(form.cambiarValoresGuia) }}
+                        {{ form_widget(form.permiteCambiarAdquiriente) }}
+                        {{ form_widget(form.estadoRecogido) }}
+                        {{ form_widget(form.estadoIngreso) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row form-group form-group-sm">
+            <div class="col-xl-12 col-sm-12 text-right mt-2">
+                <a href="{{ path('empresa_usuario_lista') }}" class=" btn btn-sm btn-default"
+                   title="regresar a la lista">Cancelar</a>
+                {{ form_widget(form.btnGuardar) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

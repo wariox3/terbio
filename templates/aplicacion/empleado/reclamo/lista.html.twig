@@ -1,0 +1,64 @@
+{% extends 'aplicacion/base.html.twig' %}
+
+{% block title %}Reclamos{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Reclamo registrados</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+            <a href="{{ path('empleado_reclamo_nuevo', {'id':0 }) }}" class="btn btn-default btn-sm pull-right">
+                Nuevo
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>CONCEPTO</th>
+                    <th>FECHA</th>
+                    <th>RECLAMO</th>
+                    <th>ATENDIDO</th>
+                    <th title="Fecha de cierre">F.CIERRE</th>
+                    <th title="Cantidad de respuestas">RESPUESTAS</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arReclamo in arrReclamos %}
+                    <tr>
+                        <td>{{ arReclamo.codigoReclamoPk }}</td>
+                        <td>{{ arReclamo.concepto }}</td>
+                        <td>{{ arReclamo.fecha | date('Y-m-d') }}</td>
+                        <td>{{ arReclamo.descripcion }}</td>
+                        <td>{{ arReclamo.estadoAtendido ? 'SI':'NO' }}</td>
+                        <td>{% if arReclamo.fechaCierre == null %}{{ '--:--:--' }}{% else %}{{ arReclamo.fechaCierre | date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td style="text-align: right;">{{ arReclamo.cantidadRespuestas }}</td>
+                        <td class="text-center">
+                            {% if arReclamo.estadoAutorizado == false %}
+                                <a href="{{ path('empleado_reclamo_nuevo', {'id':arReclamo.codigoReclamoPk }) }}"
+                                   class="btn btn-sm btn-default" title="editar">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('empleado_reclamo_detalle', {'id':arReclamo.codigoReclamoPk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

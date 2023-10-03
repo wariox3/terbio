@@ -1,0 +1,52 @@
+{% extends 'aplicacion/base.html.twig' %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Reportes registrados</h2>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>FECHA</th>
+                    <th>TIPO</th>
+                    <th>DESDE</th>
+                    <th>HASTA</th>
+                    <th>COMENTARIO</th>
+                    <th>ATENDIDO</th>
+                    <th title="Fecha de cierre">F.CIERRE</th>
+                    <th title="Cantidad de respuestas">RESPUESTAS</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arProgramacionReporte in arrProgramacionReportes %}
+                    <tr>
+                        <td>{{ arProgramacionReporte.codigoProgramacionReportePk }}</td>
+                        <td>{{ arProgramacionReporte.fecha | date('Y-m-d') }}</td>
+                        <td>{{ arProgramacionReporte.reporteTipoNombre }}</td>
+                        <td>{{ arProgramacionReporte.diaDesde }}</td>
+                        <td>{{ arProgramacionReporte.diaHasta }}</td>
+                        <td>{{ arProgramacionReporte.comentario }}</td>
+                        <td>{{ arProgramacionReporte.estadoAtendido ? 'SI':'NO' }}</td>
+                        <td>{% if arProgramacionReporte.fechaCierre == null %}{{ '--:--:--' }}{% else %}{{ arProgramacionReporte.fechaCierre | date('Y-m-d H:i:s') }}{% endif %}</td>
+                        <td style="text-align: right;">{{ arProgramacionReporte.cantidadRespuestas }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('turno_programacionreporte_detalle', {'id':arProgramacionReporte.codigoProgramacionReportePk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

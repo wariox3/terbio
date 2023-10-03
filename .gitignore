@@ -1,0 +1,23 @@
+###> symfony/framework-bundle ###
+.env
+.env.test
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+/nbproject/private/
+/nbproject/*
+/.idea/
+/.idea/*
+composer.lock
+symfony.lock
+/config/packages/sensio_framework_extra.yaml
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

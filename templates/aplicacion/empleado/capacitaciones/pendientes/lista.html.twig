@@ -1,0 +1,47 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Pendientes{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Capacitaciones pendientes</h2>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                    <tr>
+                        <th>TEMA</th>
+                        <th>CONTENIDO</th>
+                        <th>OBJETIVO</th>
+                        <th>FECHA</th>
+                        <th>HORA</th>
+                        <th>LUGAR</th>
+                        <th>EVALUACIÓN</th>
+                        <th>ASISTENCIA</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for arrCapatitacion in arrCapatitaciones %}
+                        <tr>
+                            <td>{{ arrCapatitacion.tema }}</td>
+                            <td>{{ arrCapatitacion.contenido }}</td>
+                            <td>{{ arrCapatitacion.objetivo }}</td>
+                            <td>{{ arrCapatitacion.fechaCapacitacion | date("Y/m/d") }}</td>
+                            <td>{{ arrCapatitacion.fechaCapacitacion | date("H:i:s") }}</td>
+                            <td >{{ arrCapatitacion.lugar }}</td>
+                            <td class="text-center">{{ arrCapatitacion.evaluacion }}</td>
+                            <td class="text-center">{{ arrCapatitacion.asistencia ? "SI" : "NO" }}</td>
+                            <td class="text-center">
+                                <button name="btnConfirmarAsistencia"
+                                        value="{{ arrCapatitacion.codigoCapacitacionDetallePk }}"
+                                        type="submit" class="mb-xs mt-xs mr-xs btn btn-sm btn-default">Confirmar asistencia</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

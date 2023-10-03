@@ -1,0 +1,57 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Certificados laborales{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Contratos registrados</h2>
+    </div>
+    {% if app.user.empresaRel.certificadoRetiro %}
+        <div class="row">
+            <div class="table-responsive mt-2">
+                <table class="table table-bordered table-hover tabla-datos-v2">
+                    <thead>
+                    <tr>
+                        <th title="Código del registro">ID</th>
+                        <th>NÚMERO</th>
+                        <th>TIPO</th>
+                        <th>IDENTIFICACIÓN</th>
+                        <th>NOMBRE</th>
+                        <th>DESDE</th>
+                        <th>HASTA</th>
+                        <th>CARGO</th>
+                        <th>GRUPO</th>
+                        <th>SALARIO</th>
+{#                        <td></td>#}
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arContrato in arContratos %}
+                        <tr>
+                            <td>{{ arContrato.codigoContratoPk }}</td>
+                            <td>{{ arContrato.numero }}</td>
+                            <td>{{ arContrato.contratoTipo }}</td>
+                            <td>{{ arContrato.numeroIdentificacion }}</td>
+                            <td>{{ arContrato.nombreEmpleado }}</td>
+                            <td>{{ arContrato.fechaDesde | date("Y-m-d") }}</td>
+                            <td>{{ arContrato.fechaHasta | date("Y-m-d") }}</td>
+                            <td>{{ arContrato.nombreCargo }}</td>
+                            <td>{{ arContrato.nombreGrupo }}</td>
+                            <td class="text-right"> {{ arContrato.vrSalario| number_format(0, '.', ',') }}</td>
+{#                            <td class="text-center">#}
+{#                                <button class="btn btn-default btn-xs" type="submit" name="opImprimir"#}
+{#                                        value="{{ arContrato.codigoContratoPk }}"><i class="fa fa-print"></i></button>#}
+{#                            </td>#}
+                            <td class="text-center">
+                                <button class="btn btn-default btn-xs" type="submit" name="opImprimir2"
+                                        value="{{ arContrato.codigoContratoPk }}"><i class="fa fa-print"></i></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_end(form) }}
+{% endblock %}

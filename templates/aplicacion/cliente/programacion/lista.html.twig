@@ -1,0 +1,108 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}PROGRAMACIONES{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+
+    <div class="row">
+        <h2 class="panel-title">PROGRAMACIÓN</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-1 control-label">Mes:</label>
+                    <div class="col-sm-3">
+                        <input type="month" id="mes" name="mes" class="form-control"
+                               max="{{ mesActualFijo }}"   value="{{ mesActual}}">
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>AÑO</th>
+                    <th>MES</th>
+                    <th>PROGRAMACIÓN</th>
+                    <th>COD. EMPLEADO</th>
+                    <th>N.I</th>
+                    <th>NOMBRE</th>
+                    {% for i in range(1,31) %}
+                        <th>{{ i }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% set intCodigoTercero = '' %}
+                {% set intCodigoPuesto = '' %}
+                {% for arrProgramacion in arrProgramaciones %}
+                        {% if intCodigoPuesto != arrProgramacion.codigoPuestoFk %}
+                            <tr>
+                                <td colspan="3" class="bg-fusion-50">
+                                    <b>COD.PUESTO:
+                                    {{ arrProgramacion.codigoPuestoFk }}</b>
+                                </td>
+                                <td id="suptipo" colspan="40" class="bg-fusion-50">
+                                   <b> {{ arrProgramacion.puestoNombre | default('') }} | {{ arrProgramacion.modalidadNombre }}</b>
+                                </td>
+                            </tr>
+                            {% set intCodigoPuesto = arrProgramacion.codigoPuestoFk %}
+                        {% endif %}
+                        <tr>
+                            <td>{{ arrProgramacion.anio }}</td>
+                            <td>{{ arrProgramacion.mes }}</td>
+                            <td>{{ arrProgramacion.codigoProgramacionPk }}</td>
+                            <td>{{ arrProgramacion.codigoEmpleadoFk }}</td>
+                            <td>{{ arrProgramacion.numeroIdentificacion  }}</td>
+                            <td>{{ arrProgramacion.empleadoNombreCorto }}</td>
+                            <td>{{ arrProgramacion.dia1 }}</td>
+                            <td>{{ arrProgramacion.dia2 }}</td>
+                            <td>{{ arrProgramacion.dia3 }}</td>
+                            <td>{{ arrProgramacion.dia4 }}</td>
+                            <td>{{ arrProgramacion.dia5 }}</td>
+                            <td>{{ arrProgramacion.dia6 }}</td>
+                            <td>{{ arrProgramacion.dia7 }}</td>
+                            <td>{{ arrProgramacion.dia8 }}</td>
+                            <td>{{ arrProgramacion.dia9 }}</td>
+                            <td>{{ arrProgramacion.dia10 }}</td>
+                            <td>{{ arrProgramacion.dia11 }}</td>
+                            <td>{{ arrProgramacion.dia12 }}</td>
+                            <td>{{ arrProgramacion.dia13 }}</td>
+                            <td>{{ arrProgramacion.dia14 }}</td>
+                            <td>{{ arrProgramacion.dia15 }}</td>
+                            <td>{{ arrProgramacion.dia16 }}</td>
+                            <td>{{ arrProgramacion.dia17 }}</td>
+                            <td>{{ arrProgramacion.dia18 }}</td>
+                            <td>{{ arrProgramacion.dia19 }}</td>
+                            <td>{{ arrProgramacion.dia20 }}</td>
+                            <td>{{ arrProgramacion.dia21 }}</td>
+                            <td>{{ arrProgramacion.dia22 }}</td>
+                            <td>{{ arrProgramacion.dia23 }}</td>
+                            <td>{{ arrProgramacion.dia24 }}</td>
+                            <td>{{ arrProgramacion.dia25 }}</td>
+                            <td>{{ arrProgramacion.dia26 }}</td>
+                            <td>{{ arrProgramacion.dia27 }}</td>
+                            <td>{{ arrProgramacion.dia28 }}</td>
+                            <td>{{ arrProgramacion.dia29 }}</td>
+                            <td>{{ arrProgramacion.dia30 }}</td>
+                            <td>{{ arrProgramacion.dia31 }}</td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

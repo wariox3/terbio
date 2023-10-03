@@ -1,0 +1,42 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Formatos{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Formatos registrados</h2>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th title="Código del registro">ID</th>
+                    <th>FECHA</th>
+                    <th>NOMBRE</th>
+                    <th>TIPO</th>
+                    <th>TÍTULO</th>
+                    <th>CONTENIDO</th>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arFormato in arFormatos %}
+                    <tr>
+                        <td> {{ arFormato.codigoFormatoPk }}</td>
+                        <td> {{ arFormato.fecha | date('Y-m-d') }}</td>
+                        <td> {{ arFormato.nombre }}</td>
+                        <td> {{ arFormato.tipo }}</td>
+                        <td> {{ arFormato.titulo }}</td>
+                        <td> {{ arFormato.contenido }}</td>
+                        <td style="text-align: center;">
+                            <a href="{{ path('formato_nuevo',{'id': arFormato.codigoFormatoPk }) }}"><i
+                                        class="fa fa-edit" style="color: black;font-size: large;"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

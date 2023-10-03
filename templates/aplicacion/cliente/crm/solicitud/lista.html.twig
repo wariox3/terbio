@@ -1,0 +1,48 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}SOLICITUD{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">SOLICITUD</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
+                 <a href="{{ path('cliente_crm_solicitud_nuevo', {'codigoSolicitud':0 }) }}" class="btn btn-sm btn-default ">
+                 Nuevo
+                 </a>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <table class="table table-bordered table-hover tabla-datos-v2">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>TIPO</th>
+                <th>FECHA</th>
+                <th title="Fecha vencimiento">F_VEN</th>
+                <th title="Fecha respuesta">F_RES</th>
+                <th title="Fecha cierre">F_CIE</th>
+                <th>DESCRIPCIÓN</th>
+                <th title="Estado cerrado">CER</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for arSolicitud in arrSolicitudes %}
+                <tr>
+                    <td>{{ arSolicitud.codigoSolicitudPk }}</td>
+                    <td>{{ arSolicitud.tipo }}</td>
+                    <td>{{ arSolicitud.fecha | date('Y-m-d') }}</td>
+                    <td>{% if arSolicitud.fechaVencimiento == null %}{{ '--:--:--' }}{% else %}{{ arSolicitud.fechaVencimiento | date ('Y-m-d') }}{% endif %}</td>
+                    <td>{% if arSolicitud.fechaRespuesta == null %}{{ '--:--:--' }}{% else %}{{ arSolicitud.fechaRespuesta | date ('Y-m-d') }}{% endif %}</td>
+                    <td>{% if arSolicitud.fechaCierre == null %}{{ '--:--:--' }}{% else %}{{ arSolicitud.fechaCierre | date ('Y-m-d') }}{% endif %}</td>
+                    <td>{{ arSolicitud.descripcion }}</td>
+                    <td class="text-center">{{ arSolicitud.estadoCerrado ? 'SI':'NO' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

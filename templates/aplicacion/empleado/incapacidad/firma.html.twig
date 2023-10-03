@@ -1,0 +1,222 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block css %}
+    <style>
+        .contenedorCanvas {
+            background-color: #eee;
+            font-family: Arial, sans-serif;
+        }
+
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 3px;
+            box-shadow: 0px 0px 15px 3px #ccc;
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <form action="">
+        <div class="row">
+            <div class="col-xl-12">
+                <div id="panel-1" class="panel">
+                    <div class="panel-hdr">
+                        <h2>Firma</h2>
+                    </div>
+                    <div class="panel-container show">
+                        <div class="panel-content">
+                            <div class="contenedorCanvas">
+                                <canvas id="pizarra">Su navegador no soporta canvas</canvas>
+                            </div>
+                            <div class="form-group m-2">
+                                <div class="row">
+                                    <div class="col-sm-3  offset-sm-9">
+                                        <button type="submit" id="btnLimpiarFirma"
+                                                class="btn btn-sm btn-default btn waves-effect waves-themed">Limpiar
+                                        </button>
+                                        <button type="button" id="btnGuardarFirma" name="programacion[guardar]"
+                                                class="btn btn-sm btn-primary btn waves-effect waves-themed">Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row mt-2">
+        <div class="col-xl-12">
+            <div class="table-responsive-sm">
+                <table class="table table-bordered table-hover table-sm table-hover table-striped tabla-datos-v2">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>MODELO</th>
+                        <th>MOVIMIENTO</th>
+                        <th>FECHA</th>
+                        <th>NOMBRE</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="default-example-modal-center" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img id='imgFirma' src="" class="img-thumbnail" alt=" Imagen sin contenido cargado">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" value="{{ entidad }}" id="entidad">
+    <input type="hidden" value="{{ codigo }}" id="codigo">
+{% endblock %}
+{% block javascripts %}
+    <script>
+
+        //======================================================================
+        // VARIABLES
+        //======================================================================
+        let miCanvas = document.querySelector('#pizarra');
+        let btnGuardarFirma = document.querySelector('#btnGuardarFirma');
+        let btnlimpiarFirma = document.querySelector('#btnlimpiarFirma');
+        let lineas = [];
+        let correccionX = 0;
+        let correccionY = 0;
+        let pintarLinea = false;
+
+        let posicion = miCanvas.getBoundingClientRect()
+        correccionX = posicion.x;
+        correccionY = posicion.y;
+
+        miCanvas.width = 800;
+        miCanvas.height = 350;
+
+        //======================================================================
+        // FUNCIONES
+        //======================================================================
+
+        /**
+         * Funcion que empieza a dibujar la linea
+         */
+        function empezarDibujo() {
+            pintarLinea = true;
+            lineas.push([]);
+        }
+
+        /**
+         * Funcion dibuja la linea
+         */
+        function dibujarLinea(event) {
+            event.preventDefault();
+            if (pintarLinea) {
+                /**
+                 *@var ctx hace referencia al canvas en un contesto de 2 dimenciones
+                 * */
+                let ctx = miCanvas.getContext('2d')
+                // Estilos de linea
+                ctx.lineJoin = ctx.lineCap = 'round';
+                ctx.lineWidth = 10;
+                // Color de la linea
+                ctx.strokeStyle = '#00000';
+                // Marca el nuevo punto
+                let nuevaPosicionX = 0;
+                let nuevaPosicionY = 0;
+                if (event.changedTouches == undefined) {
+                    // Versión ratón
+                    nuevaPosicionX = event.layerX;
+                    nuevaPosicionY = event.layerY;
+                } else {
+                    // Versión touch, pantalla tactil
+                    nuevaPosicionX = event.changedTouches[0].pageX - correccionX;
+                    nuevaPosicionY = event.changedTouches[0].pageY - correccionY;
+                }
+                // Guarda la linea
+                lineas[lineas.length - 1].push({
+                    x: nuevaPosicionX,
+                    y: nuevaPosicionY
+                });
+                // Redibuja todas las lineas guardadas
+                ctx.beginPath();
+                lineas.forEach(function (segmento) {
+                    ctx.moveTo(segmento[0].x, segmento[0].y);
+                    segmento.forEach(function (punto, index) {
+                        ctx.lineTo(punto.x, punto.y);
+                    });
+                });
+                ctx.stroke();
+            }
+        }
+
+        /**
+         * Funcion que deja de dibujar la linea
+         */
+        function pararDibujar() {
+            pintarLinea = false;
+        }
+
+        function limpiarCanvas() {
+            let pintarLinea = false;
+
+        }
+
+        function guardarImegen() {
+            let imagen = miCanvas.toDataURL("image/png");
+            let entidad = document.querySelector("#entidad");
+            let codigo = document.querySelector("#codigo");
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                data: {
+                    arrParametros: JSON.stringify({
+                        imagen: imagen,
+                        entidad: entidad.value,
+                        codigo: codigo.value
+                    })
+                }
+            }).done(function (retorno) {
+                alert("Se guardo la firma");
+                window.location.reload();
+            });
+        }
+
+        function imagenRender(imgBase64) {
+            document.querySelector('#imgFirma').src = imgBase64
+        }
+
+        //======================================================================
+        // EVENTOS
+        //======================================================================
+
+        // Eventos raton
+        miCanvas.addEventListener('mousedown', empezarDibujo, false);
+        miCanvas.addEventListener('mousemove', dibujarLinea, false);
+        miCanvas.addEventListener('mouseup', pararDibujar, false);
+
+        // Eventos pantallas táctiles
+        miCanvas.addEventListener('touchstart', empezarDibujo, false);
+        miCanvas.addEventListener('touchmove', dibujarLinea, false);
+
+        //guardar canvas
+        btnGuardarFirma.addEventListener('click', guardarImegen, false)
+    </script>
+{% endblock %}

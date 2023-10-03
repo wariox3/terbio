@@ -1,0 +1,93 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Despacho nueva{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <input type="hidden" id="codigoTercero" value="{{ codigoTercero }}">
+    <div class="row mt-2">
+    <section class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h2 class="panel-title">DESPACHO NUEVO</h2>
+        </div>
+    </div>
+    <div class="panel-body">
+            <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Tipo:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.despachoTipoRel, { 'attr' : {'class': 'form-control to-select-2'}}) }}
+                {{ form_errors(form.despachoTipoRel) }}
+            </div>
+        </div>
+{#        <div class="row form-group form-group-sm">#}
+{#            <label class="col-sm-2 control-label">Conductor:</label>#}
+{#            <div class="col-sm-10">#}
+{#                {{ form_widget(form.codigoConductorFk) }}#}
+{#                {{ form_errors(form.codigoConductorFk) }}#}
+{#            </div>#}
+{#        </div>#}
+		<div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Conductor:</label>
+            <div class="col-sm-10">
+		            <div class="row form-group">
+                        <div class="col-sm-2">
+                            {{ form_widget(form.codigoConductorFk) }}
+                        </div>
+                        <div class="col-sm-9">
+                            {{ form_widget(form.conductorNombreCorto) }}
+                        </div>
+                        <div class="col-sm-1">
+                            <span class="input-group-btn">
+                              <a class="btn btn-sm btn-default"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_despacho_buscarconductor')}}', 'buscarConductor', 600, 1200)">
+                                <i class="fa fa-search"></i></a>
+                            </span>
+                        </div>
+		            </div>
+
+
+            </div>
+		</div>
+
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Vehiculo:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.codigoVehiculoFk) }}
+                {{ form_errors(form.codigoVehiculoFk) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Origen:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.ciudadOrigenRel, { 'attr' : {'class': 'form-control to-select-2'}}) }}
+                {{ form_errors(form.ciudadOrigenRel) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Destino:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.ciudadDestinoRel, { 'attr' : {'class': 'form-control to-select-2'}}) }}
+                {{ form_errors(form.ciudadDestinoRel) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Ruta:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.rutaRel, { 'attr' : {'class': 'form-control to-select-2'}}) }}
+                {{ form_errors(form.rutaRel) }}
+            </div>
+        </div>
+        <div class="col-xl-12 col-sm-12 text-right mt-2">
+            <a href="{{ path('cliente_transporte_despacho_lista') }}" class=" btn btn-sm btn-default"
+               title="Regresar a la lista"> Cancelar</a>
+            {{ form_widget(form.btnGuardar) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script>
+
+    </script>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'baseUtilidad.html.twig' %}
+{% block title %}Factura{% endblock %}
+{% block css %}
+    <style>
+        .container {
+            margin: 0;
+            padding: 0;
+        }
+
+        #contenderPrincipal {
+            height: 100vh;
+        }
+
+        #encabezado {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: left;
+            background-color: #2F6690;
+            padding: 10px;
+            width: 100vw;
+        }
+
+        #titulo {
+            font-size: medium;
+            color: #fff;
+            width: 100vw;
+            background-color: #387AAD;
+            height: 80px;
+            display: flex;
+            align-items: center;
+        }
+
+        #titulo h3 {
+            margin: 0px;
+            padding: 10px;
+        }
+
+        #tabla {
+            padding: 30px;
+            margin: 0;
+        }
+
+        #botonera {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+
+        }
+
+        .bgAzul {
+            background-color: #2F6690;
+            color: #fff;
+        }
+
+        .w100 {
+            width: 100vw;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div id="contenderPrincipal">
+        <div id="encabezado">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+                <img alt="Embedded Image" src="data:image/png;base64,{{ logo }}" width="200" height="100"/>
+            </div>
+        </div>
+        <div id="titulo">
+            <h3>{{ arEmpresa.nombre }}</h3>
+        </div>
+        <div id="tabla" class="row w100">
+            {{ notificar()|raw }}
+            {% if arFactura %}
+                <div class="table-responsive">
+                    <table class="table table-condensed table-bordered tabla-datos-v2 mt-5">
+                        <tbody>
+                        <tr>
+                            <td class="bgAzul">CÓDIGO:</td>
+                            <td class="">{{ arFactura.codigoFactura }}</td>
+                            <td class="bgAzul">NÚMERO:</td>
+                            <td class="">{{ arFactura.numeroFactura }}</td>
+                            <td class="bgAzul">FECHA:</td>
+                            <td class="">{{ arFactura.fecha | date ('Y-m-d') }}</td>
+                            <td class="bgAzul">SUBTOTAL:</td>
+                            <td align="right">{{ arFactura.vrSubtotal | number_format }}</td>
+                        </tr>
+                        <tr>
+                            <td class="bgAzul"></td>
+                            <td></td>
+                            <td class="bgAzul"></td>
+                            <td class=""></td>
+                            <td class="bgAzul">VENCE:</td>
+                            <td class="">{{ arFactura.fechaVence | date ('Y-m-d') }}</td>
+                            <td class="bgAzul">IVA:</td>
+                            <td align="right">{{ arFactura.vrIva | number_format }}</td>
+                        </tr>
+                        <tr>
+                            <td class="bgAzul"></td>
+                            <td class=""></td>
+                            <td class="bgAzul"></td>
+                            <td class=""></td>
+                            <td class="bgAzul"></td>
+                            <td class=""></td>
+                            <td class="bgAzul">TOTAL:</td>
+                            <td align="right">{{ arFactura.vrTotal | number_format }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                {% if arFactura.respuestaElectronico == 'P' and expirado == false %}
+                    <div id="botonera">
+                        {{ form_start(form) }}
+
+                        {{ form_end(form) }}
+                    </div>
+                {% endif %}
+            {% else %}
+                <div>
+                    {{ "No existe la factura" }}
+                </div>
+            {% endif %}
+        </div>
+        {% if arGuias != null %}
+            <div id="tabla" class="row w100">
+                <h1>Guias</h1>
+                <div class="table-responsive">
+                    <table class="table table-condensed table-bordered tabla-datos-v2 mt-5" style="width: 20%">
+                        <thead>
+                        <tr>
+                            <th>GUIA</th>
+                            <th>DESCARGAR</th>
+                            <th>ARCHIVOS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arGuia in arGuias %}
+                            <tr>
+                                <td>{{ arGuia.codigoGuiaFk }}</td>
+                                <td style="text-align: center"><a
+                                            href="{{ path('descargarguia', {'codigoEmpresa':codigoEmpresa, 'codigoGuia': arGuia.codigoGuiaFk }) }}"
+                                            target="_blank"><i
+                                                class="fa fa-download" style="font-size: large;color: black;"></i></a>
+                                </td>
+                                <td class="text-center">
+                                    <a title="Ver archivos masivos"
+                                       href="javascript:abrirVentana3('{{ path('utilidad_factura_archivos_masivos', {'codigoEmpresa':codigoEmpresa, 'codigoGuia': arGuia.codigoGuiaFk }) }}', 'ArchivosMasivos', 800, 1250)">
+                                        <i class="fa fa-files-o" style="font-size: large;color: black;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+

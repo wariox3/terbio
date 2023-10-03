@@ -1,0 +1,101 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}EMPLEADO{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">EMPLEADO INFORMACIÓN PERSONAL</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Teléfono:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.telefono) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Dirección:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.direccion) }}
+                    </div>
+
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Celular:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.celular) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Barrio:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.barrio) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.correo) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Ciudad:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.ciudadRel) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-xl-12 col-sm-12 text-right mt-2">
+                        {{ form_widget(form.btnActualizar) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Referencias personales</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-right">
+                            <a class="btn btn-default btn-sm"
+                               href="javascript:abrirVentana3('{{ path('empleado_referenciaspersonales_personal', {'id' : 0, 'codigoReferencia': arrEmpleado.codigoEmpleadoPk }) }}', 'referenciapersonal', 600, 900)">
+                                Nuevo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive-sm mt-2">
+                    <table class="table table-bordered table-hover tabla-datos-v2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NOMBRE</th>
+                            <th>TEL</th>
+                            <th>OCUPACIÓN</th>
+                            <th>DIRECCIÓN</th>
+                            <th>CIUDAD</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arrReferenciaPersonal in arrReferenciasPersonales %}
+                            <tr>
+                                <td>{{ arrReferenciaPersonal.codigoEmpleadoReferenciaPersonalPk }}</td>
+                                <td>{{ arrReferenciaPersonal.nombre }}</td>
+                                <td>{{ arrReferenciaPersonal.telefono }}</td>
+                                <td>{{ arrReferenciaPersonal.ocupacion }}</td>
+                                <td>{{ arrReferenciaPersonal.direccion }}</td>
+                                <td>{{ arrReferenciaPersonal.ciudad }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Detalle{% endblock %}
+{% block content %}
+    <div class="row">
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        <div class="btn-toolbar" style="float:left">
+            <div class="btn-group">
+                <a class="btn btn-default" href="{{ path('cliente_transporte_despacho_lista') }}">
+                    <i class="fa fa-reply" aria-hidden="true"></i>
+                    Volver
+                </a>
+            </div>
+            <div class="btn-group">
+                {{ form_widget(form.btnAutorizar) }}
+                {{ form_widget(form.btnAprobar) }}
+                {{ form_widget(form.btnImprimir) }}
+            </div>
+        </div>
+        <br><br>
+        <div class="btn-toolbar" style="float:right">
+            <div class="btn-group justify-content-end">
+                {{ form_widget(form.btnActualizar) }}
+            </div>
+        </div>
+        <br><br>
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>GUIA</th>
+                    <th>FECHA</th>
+                    <th>DOCUMENTO</th>
+                    <th>DESTINATARIO</th>
+                    <th>DESTINO</th>
+                    <th>UNIDADES</th>
+                    <th>PESO</th>
+                    <th>VOL</th>
+                    <th title="Entregado">ENT</th>
+                    <th title="Soporte">SOP</th>
+                    <th title="Digitalizado">DIG</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arDetalle in arDetalles %}
+                    <tr>
+                        <td>{{ arDetalle.codigoDespachoDetallePk }}</td>
+                        <td>{{ arDetalle.codigoGuiaFk }}</td>
+                        <td>{{ arDetalle.fechaIngreso | date('Y-m-d') }}</td>
+                        <td>{{ arDetalle.documentoCliente }}</td>
+                        <td>{{ arDetalle.nombreDestinatario }}</td>
+                        <td>{{ arDetalle.ciudadDestino }}</td>
+                        <td>{{ arDetalle.unidades }}</td>
+                        <td>{{ arDetalle.pesoReal }}</td>
+                        <td>{{ arDetalle.pesoVolumen }}</td>
+                        <td>{{ arDetalle.estadoEntregado ? 'SI':'NO' }}</td>
+                        <td>{{ arDetalle.estadoSoporte ? 'SI':'NO' }}</td>
+                        <td>{{ arDetalle.estadoDigitalizado ? 'SI':'NO' }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-2">
+        {% if arDespacho.estadoAutorizado == 0 %}
+            <div class="d-flex">
+            </div>
+            <div class="row mt-2">
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control form-control-sm" id="txtGuiaCodigo" aria-label=""
+                           aria-describedby="basic-addon2" placeholder="Guia">
+                    <div class="input-group-append">
+                        <button class="btn btn-default waves-effect waves-themed btn-sm" type="button"
+                                id="btnAdicionar">Adicionar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-sm" id="txtGuiaDocumento" aria-label=""
+                           aria-describedby="basic-addon2" placeholder="Documento">
+                    <div class="input-group-append">
+                        <button class="btn btn-default waves-effect waves-themed btn-sm" type="button"
+                                id="btnAdicionarDocumento">Adicionar documento
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var codigoDespacho = '{{ arDespacho.codigoDespachoPk }}';
+
+        $(function () {
+            var button = $("#btnAdicionar");
+            var txtGuiaCodigo = $("#txtGuiaCodigo");
+            var buttonDocumento = $("#btnAdicionarDocumento");
+            var txtGuiaDocumento = $("#txtGuiaDocumento");
+
+            button.click(function () {
+                agregarGuia(txtGuiaCodigo.val(), codigoDespacho);
+            });
+            buttonDocumento.click(function () {
+                agregarDocumento(txtGuiaDocumento.val(), codigoDespacho);
+            });
+            txtGuiaCodigo.keydown(function (event) {
+                if (event.keyCode === 13) {
+                    agregarGuia(txtGuiaCodigo.val(), codigoDespacho);
+                }
+            });
+            txtGuiaDocumento.keydown(function (event) {
+                if (event.keyCode === 13) {
+                    agregarDocumento(txtGuiaDocumento.val(), codigoDespacho);
+                }
+            });
+
+        });
+
+        var agregarGuia = function (codigoGuia, codigoDespacho) {
+            if (codigoGuia != '') {
+                endpoint = "{{ url('api_despacho_guia_adicionar_guia') }}";
+                $.ajax(endpoint, {
+                    type: 'POST',
+                    data: {
+                        arrParametros: JSON.stringify({
+                            codigoGuia: codigoGuia,
+                            codigoDespacho: codigoDespacho,
+                            documento: 0
+                        }),
+                    }
+                }).done(function (respuesta) {
+                    if (respuesta) {
+                        if(respuesta.error === true) {
+                            alert(respuesta.errorMensaje);
+                        }
+                    }
+                    $("#txtGuiaCodigo").val("").focus();
+                });
+            } else {
+                alert("Debe digitar un número de guía");
+            }
+        };
+
+        var agregarDocumento = function (documento, codigoDespacho) {
+            if (documento != '') {
+                endpoint = "{{ url('api_despacho_guia_adicionar') }}";
+                $.ajax(endpoint, {
+                    type: 'POST',
+                    data: {
+                        arrParametros: JSON.stringify({
+                            codigoGuia: 0,
+                            codigoDespacho: codigoDespacho,
+                            documento: documento
+                        }),
+                    }
+                }).done(function (respuesta) {
+                    if (respuesta) {
+                        if(respuesta.error === true) {
+                            alert(respuesta.errorMensaje);
+                        }
+                    }
+                    $("#txtGuiaDocumento").val("").focus();
+                });
+            } else {
+                alert("Debe digitar un número de documento");
+            }
+        };
+
+    </script>
+{% endblock %}

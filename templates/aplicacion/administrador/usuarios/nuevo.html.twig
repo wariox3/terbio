@@ -1,0 +1,68 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}USUARIO {% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">USUARIO NUEVO</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Tipo documento:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.identificacionRel) }}
+                        {{ form_errors(form.identificacionRel) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Número identificación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacion) }}
+                        {{ form_errors(form.numeroIdentificacion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre(s):</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombres) }}
+                        {{ form_errors(form.nombres) }}
+
+                    </div>
+                    <label class="col-sm-2 control-label">Apellidos:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.apellidos) }}
+                        {{ form_errors(form.apellidos) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.correo) }}
+                        {{ form_errors(form.correo) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre de usuario:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoUsuarioPk) }}
+                        {{ form_errors(form.codigoUsuarioPk) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Contraseña:</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control form-control" name="contrasena" required
+                               value="{{ arRegistro.clave }}">
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-xl-12 col-sm-12 text-right mt-2">
+                        <a href="{{ path('administrador_empresa_usuario_lista') }}" class=" btn btn-sm btn-default"
+                           title="regresar a la lista">Cancelar</a>
+                        {{ form_widget(form.btnGuardar) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

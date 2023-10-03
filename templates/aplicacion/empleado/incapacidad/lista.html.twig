@@ -1,0 +1,54 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}INCAPACIDAD{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">INCAPACIDADES</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
+                <a href="{{ path('empleado_incapacidad_nuevo', {'id':0 }) }}"
+                   class="btn btn-sm btn-default ">
+                    Nuevo
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TIPO</th>
+                    <th>DESDE</th>
+                    <th>HASTA</th>
+                    <th title="Número eps">NUM</th>
+                    <th>COMENTARIO</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arIncapacidad in arIncapacidades %}
+                    <tr>
+                        <td>{{ arIncapacidad.codigoIncapacidadPk }}</td>
+                        <td>{{ arIncapacidad.incapacidadTipoNombre }}</td>
+                        <td>{{ arIncapacidad.fechaDesde | date('Y-m-d') }}</td>
+                        <td>{{ arIncapacidad.fechaHasta | date('Y-m-d') }}</td>
+                        <td>{{ arIncapacidad.numeroEps }}</td>
+                        <td>{{ arIncapacidad.comentarios }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('empleado_incapacidad_detalle', {'id':arIncapacidad.codigoIncapacidadPk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

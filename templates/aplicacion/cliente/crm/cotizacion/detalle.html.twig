@@ -1,0 +1,167 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Cotizacion{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                <a href="{{ path('cliente_crm_contratacion_lista') }}" class=" btn btn-sm btn-default"
+                   title="regresar a la lista"><i class="fa fa-arrow-left"></i> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                <td class="titulo">CÓDIGO:</td>
+                <td class="td-in-well">{{ arCotizacion.codigoCotizacionPk }}</td>
+                <td class="titulo">TERCERO:</td>
+                <td class="td-in-well" style="text-transform: uppercase;">{{ arCotizacion.cliente }}</td>
+                <td class="titulo">SUBTOTAL:</td>
+                <td class="td-in-well"
+                    style="text-align: right;">{{ arCotizacion.vrSubtotal |number_format(0, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">NÚMERO:</td>
+                <td class="td-in-well">{{ arCotizacion.numero }}</td>
+                <td class="titulo"></td>
+                <td class="td-in-well" style="text-transform: uppercase;"></td>
+                <td class="titulo">IVA:</td>
+                <td class="td-in-well"
+                    style="text-align: right;">{{ arCotizacion.vrIva |number_format(0, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">FECHA:</td>
+                <td class="td-in-well">{{ arCotizacion.fecha | date('Y-m-d') }}</td>
+                <td class="titulo">TIEMPO ENTREGA:</td>
+                <td class="td-in-well">{{ arCotizacion.tiempoEntrega | default ('') }}</td>
+                <td class="titulo">DESCUENTO:</td>
+                <td class="td-in-well"
+                    style="text-align: right;">{{ arCotizacion.vrDescuento |number_format(0, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">VENCIMIENTO:</td>
+                <td>{{ arCotizacion.vencimiento | date('Y-m-d') }}</td>
+                <td class="titulo">FORMA PAGO:</td>
+                <td>{{ arCotizacion.formaPagoRel.nombre | default('') }}</td>
+                <td class="titulo">COSTO DE ENVÍO:</td>
+                <td class="td-in-well"
+                    style="text-align: right;">{{ arCotizacion.costoEnvio |number_format(0, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">CONTACTO:</td>
+                <td>{{ arCotizacion.contactoRel.NombreCorto | default('') }}</td>
+                <td class="titulo">TELÉFONO:</td>
+                <td>{{ arCotizacion.contactoRel.telefono | default('') }}</td>
+                <td class="titulo">TOTAL:</td>
+                <td class="td-in-well"
+                    style="text-align: right;">{{ arCotizacion.vrTotal |number_format(0, '.', ',') }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">COMENTARIO:</td>
+                <td class="td-in-well" colspan="6">{{ arCotizacion.comentarios }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="tabs tabs-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#Detalle" data-toggle="tab">Detalle</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="Detalle" class="tab-pane active">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="pull-right">
+                                    <a class="btn btn-default btn-sm"
+                                       href="javascript:abrirVentana3('{{ path('cliente_crm_contratacion_detalle_nuevo', {'id' : 0, 'codigoCotizacion': arCotizacion.codigoCotizacionPk }) }}', 'CotizacionAdicionarDetalle', 600, 900)">
+                                        Nuevo
+                                    </a>
+                                    {{ form_widget(form.btnEliminar) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-no-more table-bordered table-striped mb-none tabla-datos-v2 mt-2">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th title="Ítem">ÍTEM</th>
+                                    <th title="Modalidad">MOD</th>
+                                    <th title="Fecha desde">DES</th>
+                                    <th title="Fecha hasta">HAS</th>
+                                    <th title="Horas desde">H DES</th>
+                                    <th title="Horas hasta">H HAS</th>
+                                    <th>CANT</th>
+                                    <th>L</th>
+                                    <th>M</th>
+                                    <th>X</th>
+                                    <th>J</th>
+                                    <th>V</th>
+                                    <th>S</th>
+                                    <th>D</th>
+                                    <th>F</th>
+                                    <th title="Horas totales">H</th>
+                                    <th title="Horas diurnas">HD</th>
+                                    <th title="Horas nocturnas">HN</th>
+                                    <th title="Salario base">P</th>
+                                    <th>SUBTOTAL</th>
+                                    <th>
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input"
+                                                   id="todosInputDetalles"
+                                                   onclick="ChequearTodosTabla(this, 'ChkSeleccionarDetalles[]')"/>
+                                            <label class="custom-control-label" for="todosInputDetalles"></label>
+                                        </div>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for arCotizacionDetalle in arrCotizacionDetalles %}
+                                    <tr>
+                                        <td> {{ arCotizacionDetalle.codigoCotizacionDetallePk }}    </td>
+                                        <td>{{ arCotizacionDetalle.nombreItem }}</td>
+                                        <td>{{ arCotizacionDetalle.modalidad }}</td>
+                                        <td>{{ arCotizacionDetalle.fechaDesde | date('Y-m-d') }}</td>
+                                        <td>{{ arCotizacionDetalle.fechaHasta | date('Y-m-d') }}</td>
+                                        <td>{{ arCotizacionDetalle.horaDesde | date('H:i') }}</td>
+                                        <td>{{ arCotizacionDetalle.horaHasta | date('H:i') }}</td>
+                                        <td>{{ arCotizacionDetalle.cantidad }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.lunes ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.martes ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.miercoles ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.jueves  ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.viernes ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.sabado  ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.domingo ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.festivo ? 'S':'N' }}</td>
+                                        <td class="estado-v2">{{ arCotizacionDetalle.horas }}</td>
+                                        <td>{{ arCotizacionDetalle.horasDiurnas }}</td>
+                                        <td>{{ arCotizacionDetalle.horasNocturnas }}</td>
+                                        <td class="numero-v2">{{ arCotizacionDetalle.vrPrecioMinimo |  number_format(0, '.', ',') }}</td>
+                                        <td class="numero-v2">{{ arCotizacionDetalle.vrSubtotal |  number_format(0, '.', ',') }}</td>
+                                        <td class="text-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="ChkSeleccionarDetalles[]" class="custom-control-input"
+                                                       value="{{ arCotizacionDetalle.codigoCotizacionDetallePk }}"
+                                                       id="{{ arCotizacionDetalle.codigoCotizacionDetallePk }}"/>
+                                                <label class="custom-control-label"
+                                                       for="{{ arCotizacionDetalle.codigoCotizacionDetallePk }}"></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

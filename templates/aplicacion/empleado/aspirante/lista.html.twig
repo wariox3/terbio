@@ -1,0 +1,250 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}ASPIRANTE{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                {% if arAspirante != null %}
+                    <a href="{{ path('aspirante_nuevo', {'id':arAspirante.codigoAspirantePk }) }}"
+                       class=" btn btn-sm btn-default" title="Editar información"><i class="fa fa-pencil"></i>
+                        Editar</a>
+                    <a disabled class="btn btn-default btn-sm"
+                       href="javascript:abrirVentana3('{{ path('documental_general_general_lista', { 'tipo': clase.clase,  'codigo': clase.codigo }) }}', 'Archivos', 800, 1250)">
+                        <i class="fa fa-upload"></i> Subir archivo
+                    </a>
+                {% else %}
+                    <a href="{{ path('aspirante_nuevo', {'id':0 }) }}" class=" btn btn-sm btn-default"
+                       title="Editar información"><i class="fa fa-pencil"></i> Nuevo</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if arAspirante != null %}
+        <div class="row mt-2">
+            <div class="col-xl-12">
+                <div class="tabs tabs-primary">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#informacionGeneral" data-toggle="tab">Información general</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="informacionGeneral" class="tab-pane active">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed table-bordered tabla-informacion w-100">
+                                            <tr>
+                                                <td class="titulo">ID:</td>
+                                                <td class="td-in-well">{{ arAspirante.codigoAspirantePk }}</td>
+                                                <td class="titulo">FECHA:</td>
+                                                <td class="td-in-well">{{ arAspirante.fecha | date("Y-m-d") }}</td>
+                                                <td class="titulo">CIUDAD:</td>
+                                                <td class="td-in-well"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">NOMBRE:</td>
+                                                <td class="td-in-well">{{ arAspirante.nombreCorto }}</td>
+                                                <td class="titulo">CELULAR:</td>
+                                                <td class="td-in-well">{{ arAspirante.celular }}</td>
+                                                <td class="titulo">DIRECCIÓN:</td>
+                                                <td class="td-in-well">{{ arAspirante.direccion }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">IDENTIFICACIÓN:</td>
+                                                <td class="td-in-well">{{ arAspirante.numeroIdentificacion }}</td>
+                                                <td class="titulo">TELÉFONO:</td>
+                                                <td class="td-in-well">{{ arAspirante.telefono }}</td>
+                                                <td class="titulo">BARRIO:</td>
+                                                <td class="td-in-well">{{ arAspirante.barrio }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">LIBRETA MILITAR:</td>
+                                                <td class="td-in-well">{{ arAspirante.libretaMilitar }}</td>
+                                                <td class="titulo">CIUDAD EXPEDICIÓN:</td>
+                                                <td class="td-in-well"></td>
+                                                <td class="titulo">RH:</td>
+                                                <td class="td-in-well"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">FECHA NACIMIENTO:</td>
+                                                <td class="td-in-well">{{ arAspirante.fechaNacimiento | date('Y-m-d') }}</td>
+                                                <td class="titulo">CIUDAD NACIMIENTO:</td>
+                                                <td class="td-in-well"></td>
+                                                <td class="titulo">CORREO:</td>
+                                                <td class="td-in-well">{{ arAspirante.correo }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">ESTADO CIVIL:</td>
+                                                <td class="td-in-well"></td>
+                                                <td class="titulo">SEXO:</td>
+                                                <td class="td-in-well"></td>
+                                                <td class="titulo">CARGO QUE ASPIRA:</td>
+                                                <td class="td-in-well">{{ arAspirante.cargoAspira }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">LICENCIA CARRO:</td>
+                                                <td class="td-in-well">{{ arAspirante.licenciaCarro ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo">LICENCIA MOTO:</td>
+                                                <td class="td-in-well">{{ arAspirante.licenciaMoto ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo"></td>
+                                                <td class="td-in-well"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">CARRO:</td>
+                                                <td class="td-in-well">{{ arAspirante.carro ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo">MOTO:</td>
+                                                <td class="td-in-well">{{ arAspirante.moto ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo">POSIBILIDAD DE VIAJAR:</td>
+                                                <td class="td-in-well">{{ arAspirante.posibilidadViajar ? 'SI' : 'NO' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">DISCAPACIDAD:</td>
+                                                <td class="td-in-well">{{ arAspirante.discapacidad ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo">CABEZA DE FAMILIA:</td>
+                                                <td class="td-in-well">{{ arAspirante.cabezaHogar ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo">PADRE DE FAMILIA:</td>
+                                                <td class="td-in-well">{{ arAspirante.padreFamilia ? 'SI' : 'NO' }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">NÚMERO DE HIJOS:</td>
+                                                <td class="td-in-well">{{ arAspirante.numeroHijos | default("0") }}</td>
+                                                <td class="titulo">CURSO DE VIGILANCIA:</td>
+                                                <td class="td-in-well">{{ arAspirante.cursoVigilancia ? 'SI' : 'NO' }}</td>
+                                                <td class="titulo"></td>
+                                                <td class="td-in-well"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">ÚLTIMA EMPRESA LABORA:</td>
+                                                <td class="td-in-well">{{ arAspirante.ultimaEmpresalabora | default("") }}</td>
+                                                <td class="titulo">FECHA VENCIMIENTO CURSO DE VIGILANCIA:</td>
+                                                <td class="td-in-well">{{ arAspirante.fechaVenceCursoVigilancia ? arAspirante.fechaVenceCursoVigilancia | date('Y-m-d') : "" }}</td>
+                                                <td class="titulo"></td>
+                                                <td class="td-in-well"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="titulo">COMENTARIOS</td>
+                                                <td class="td-in-well" COLSPAN="5">{{ arAspirante.comentarios }} </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Estudio
+                                        <a class="btn btn-default btn-sm"
+                                           href="javascript:abrirVentana3('{{ path('aspirante_estudio_nuevo', { 'codigoAspirante': arAspirante.codigoAspirantePk, 'id':0 }) }}', 'Archivos', 800, 1250)">
+                                            Nuevo
+                                        </a>
+                                    </h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-sm table-hover table-striped tabla-datos-v2">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>TITULO</th>
+                                                <th>GRADUADO</th>
+                                                <th>FECHA INICIO</th>
+                                                <th>FECHA TERMINADO</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for arEstudio in arEstudios %}
+                                                <tr>
+                                                    <td>{{ arEstudio.codigoEstudioPk }}</td>
+                                                    <td>{{ arEstudio.titulo }}</td>
+                                                    <td class="text-center">{{ arEstudio.graduado ? "SI" : "NO" }}</td>
+                                                    <td>{{ arEstudio.fechaInicio | date("Y-m-d") }}</td>
+                                                    <td>
+                                                        {% if arEstudio.fechaTerminacion %}
+                                                            {{ arEstudio.fechaTerminacion | date("Y-m-d") }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-default btn-sm"
+                                                           href="javascript:abrirVentana3('{{ path('aspirante_estudio_nuevo', { 'codigoAspirante': arAspirante.codigoAspirantePk, 'id': arEstudio.codigoEstudioPk }) }}', 'Archivos', 800, 1250)"
+                                                           ç
+                                                           title="editar estudio">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="submit" name="OpEliminarEstudio"
+                                                                value="{{ arEstudio.codigoEstudioPk }}"
+                                                                class="btn btn-default btn-sm" title="eliminar estudio">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Idiomas
+                                        <a class="btn btn-default btn-sm"
+                                           href="javascript:abrirVentana3('{{ path('aspirante_idioma_nuevo', { 'codigoAspirante': arAspirante.codigoAspirantePk, 'id':0 }) }}', 'Archivos', 800, 1250)">
+                                            Nuevo
+                                        </a>
+                                    </h4>
+                                    <div class="table-responsive">
+                                        <table class="table table-condensed table-bordered tabla-informacion w-100">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>IDIOMA</th>
+                                                <th>NIVEL</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for arIdioma in arIdiomas %}
+                                                <tr>
+                                                    <td>{{ arIdioma.codigoAspiranteIdiomaPk }}</td>
+                                                    <td>{{ arIdioma.idiomaRel.nombre }}</td>
+                                                    <td>{{ arIdioma.nivel }}</td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-default btn-sm"
+                                                           href="javascript:abrirVentana3('{{ path('aspirante_idioma_nuevo', { 'codigoAspirante': arAspirante.codigoAspirantePk, 'id': arIdioma.codigoAspiranteIdiomaPk }) }}', 'Archivos', 800, 1250)"
+                                                           title="editar idioma">
+                                                            <i class="fa fa-edit"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="submit" name="OpEliminarIdioma"
+                                                                value="{{ arIdioma.codigoAspiranteIdiomaPk }}"
+                                                                class="btn btn-default btn-sm" title="eliminar idioma">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <div class="row mt-2">
+            <div class="col-xl-12">
+                <p>Sin información registrada</p>
+            </div>
+        </div>
+
+    {% endif %}
+    {{ form_end(form) }}
+{% endblock %}

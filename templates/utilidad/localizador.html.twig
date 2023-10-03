@@ -1,0 +1,395 @@
+{% extends 'baseUtilidad.html.twig' %}
+{% block title %}Guias{% endblock %}
+{% block css %}
+    <style>
+        .tm-title {
+            border: solid 1px #0088cc;
+            color: #0088cc;
+        }
+
+        .timeline .tm-items > li .tm-box {
+            position: relative;
+            background: #fff;
+            min-height: 65px;
+            padding: 10px 20px;
+            border: 1px solid #0088cc;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+        }
+
+        .timeline .tm-items > li .tm-box:after {
+            right: 100%;
+            border: solid transparent;
+            content: ' ';
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-right-color: #0088cc;
+            border-width: 8px;
+            top: 50%;
+            margin-top: -8px;
+            z-index: 2;
+        }
+
+        .contenedorTimeLime{
+            width: 100%;
+        }
+
+        header{
+            display: flex;
+            justify-content:
+            space-between; align-items: center
+        }
+
+
+        .table-simetrica > thead > tr > th{
+            width: 50%;
+        }
+
+    </style>
+{% endblock %}
+{% block content %}
+    <header>
+        <img alt="Embedded Image" src="data:image/png;base64,{{ logo }}" width="100" height="100"/>
+        <a href="http://servicioserp.com/index.php/login/{{ arEmpresa.codigoEmpresaPk }}">
+            <i class="fa fa-user"></i>
+            <strong>Ingrese al portal de clientes</strong>
+        </a>
+    </header>
+    <div class="base">
+        <h1>RASTREO Y SEGUIMIENTO</h1>
+        <div class="contenedorPrincipal" >
+            <div class="contenedorFormulario" style="width: 100%">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    <label class="col-md-4 control-label" id="labelLocalizador">Número de guía:</label>
+                    <div class="col-md-8">
+                        <div style="display: flex; ">
+                            {{ form_widget(form.codigoGuia) }}
+                            <div>
+                                <button type="submit" id="form_btnConsulta" name="form[btnConsulta]"
+                                        class="btn btn-primary btn-lg">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <table class="table table-bordered table-simetrica" >
+                <thead>
+                <tr>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% if arGuia %}
+                    <tr>
+                        <td>{{ arGuia.ciudadOrigen }}</td>
+                        <td>{{ arGuia.ciudadDestino }}</td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            {% if arrNovedades is not empty %}
+                <table class="table table-bordered table-simetrica">
+                    <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Novedad</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arrNovedad in arrNovedades %}
+                        <tr>
+                            <td>{{ arrNovedad.fecha | date('Y-m-d') }}</td>
+                            <td>{{ arrNovedad.novedadTipoNombre }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <div class="contenedorTimeLime">
+                {% if arGuia %}
+                    <div class="timeline">
+                        <div class="tm-body">
+                            <div class="tm-title">
+                                <h3 class="h5 text-uppercase">INGRESO</h3>
+                            </div>
+                            <ol class="tm-items">
+                                <li>
+                                    <div class="tm-info">
+                                        <div class="tm-icon"><i class="fa fa-clipboard"></i></div>
+                                        <time class="tm-datetime">
+                                            {% if arGuia.fechaRecogido is defined %}
+                                                <div class="tm-datetime-date">{{ arGuia.fechaRecogido | date('Y-m-d') }}</div>
+                                                <div class="tm-datetime-time"></div>
+                                            {% else %}
+                                                <div class="tm-datetime-date">{{ arGuia.fechaIngreso | date('Y-m-d') }}</div>
+                                                <div class="tm-datetime-time"></div>
+                                            {% endif %}
+                                        </time>
+                                    </div>
+                                    <div class="tm-box appear-animation fadeInRight appear-animation-visible"
+                                         data-appear-animation="fadeInRight" data-appear-animation-delay="100"
+                                         style="animation-delay: 100ms;">
+                                        <p>Recogida
+                                        </p>
+                                        <div class="tm-meta">
+                                    <span>
+                                        <i class="fa fa-user"></i> Por <a href="#">{{ arGuia.usuario }}</a>
+                                    </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="tm-info">
+                                        <div class="tm-icon"><i class="fa fa-home"></i></div>
+                                        <time class="tm-datetime" datetime="2013-11-19 18:13">
+                                            {% if arGuia.fechaIngresoOperacion is defined %}
+                                                <div class="tm-datetime-date">{{ arGuia.fechaIngresoOperacion | date('Y-m-d') }}</div>
+                                                <div class="tm-datetime-time">{{ arGuia.fechaIngreso | date('H:i') }}</div>
+                                            {% else %}
+                                                <div class="tm-datetime-date">{{ arGuia.fechaIngreso | date('Y-m-d') }}</div>
+                                                <div class="tm-datetime-time">{{ arGuia.fechaIngreso | date('H:i') }}</div>
+                                            {% endif %}
+                                        </time>
+                                    </div>
+                                    <div class="tm-box appear-animation fadeInRight appear-animation-visible"
+                                         data-appear-animation="fadeInRight" data-appear-animation-delay="250"
+                                         style="animation-delay: 250ms;">
+                                        <p>
+                                            Ingreso a bodega de origen
+                                        </p>
+                                    </div>
+                                </li>
+                            </ol>
+                            <div class="tm-title">
+                                <h3 class="h5 text-uppercase">TRANSPORTE</h3>
+                            </div>
+                            <ol class="tm-items">
+                                <li>
+                                    <div class="tm-info">
+                                        <div class="tm-icon"><i class="fa fa-car"></i></div>
+                                        <time class="tm-datetime" datetime="2013-11-19 18:13">
+{#                                            <div class="tm-datetime-date">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('Y-m-d'):'N/A':'N/A' }}</div>#}
+{#                                            <div class="tm-datetime-time">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('H:i'):'N/A':'N/A' }}</div>#}
+                                        </time>
+                                    </div>
+                                    <div class="tm-box appear-animation fadeInRight appear-animation-visible"
+                                         data-appear-animation="fadeInRight" data-appear-animation-delay="250"
+                                         style="animation-delay: 250ms;">
+                                        {% if arrDespachos is not empty %}
+                                            <table class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th>Número</th>
+                                                    <th>Fecha</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for arrDespacho in arrDespachos %}
+                                                    <tr>
+                                                        <td>{{ arrDespacho.numero }}</td>
+                                                        <td>{{ arrDespacho.fechaSalida | date('Y-m-d') }}</td>
+                                                        <td>
+                                                            {% if arrDespacho.codigoDespachoClaseFk == 'VIA' %}
+                                                                <p>En transporte nacional</p>
+                                                            {% endif %}
+                                                            {% if arrDespacho.codigoDespachoClaseFk == 'REP' %}
+                                                                <p>En reparto urbano/local</p>
+                                                            {% endif %}
+                                                            {% if arrDespacho.codigoDespachoClaseFk == 'REC' %}
+                                                                <p>Recogida</p>
+                                                            {% endif %}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ol>
+                            <div class="tm-title">
+                                <h3 class="h5 text-uppercase">ENTREGA</h3>
+                            </div>
+                            <ol class="tm-items">
+                                <li>
+                                    <div class="tm-info">
+                                        <div class="tm-icon"><i class="fa fa-thumbs-up"></i></div>
+                                        <time class="tm-datetime" datetime="2013-11-19 18:13">
+                                            <div class="tm-datetime-date">{{ arGuia.estadoEntregado?arGuia.fechaEntrega?arGuia.fechaEntrega | date('Y-m-d'):'N/A':'N/A' }}</div>
+                                            <div class="tm-datetime-time">{{ arGuia.estadoEntregado?arGuia.fechaEntrega?arGuia.fechaEntrega | date('H:i'):'N/A':'N/A' }}</div>
+                                        </time>
+                                    </div>
+                                    <div class="tm-box appear-animation fadeInRight appear-animation-visible"
+                                         data-appear-animation="fadeInRight" data-appear-animation-delay="250"
+                                         style="animation-delay: 250ms;">
+                                        <p>
+                                            {{ arGuia.estadoEntregado?'Entregada al destinatario':'Sin entregar' }}
+                                        </p>
+                                        <hr>
+                                        {% if arrFirmas %}
+                                            <h6>Firmas</h6>
+                                            <div style="display: flex; gap: 2em">
+                                                {% for arrFirma in arrFirmas %}
+                                                    <div class="img-thumbnail">
+                                                        <a href="data:image/jpg;base64,{{ arrFirma.base64 }}"
+                                                           class="test-popup-link">
+                                                            <img src="data:{{ arrFirma.tipo }};base64,{{ arrFirma.base64 }}"
+                                                                 alt=""
+                                                                 width="215" height="112">
+                                                        </a>
+                                                        <div style="display: flex; align-content: center; justify-content: space-between; margin-top: 10px">
+                                            <span>
+                                                <p>{{ arrFirma.nombre }}</p>
+                                                <p>{{ arrFirma.fecha | date('Y-m-d') }}</p>
+                                            </span>
+                                                            <span class="imgOpciones btnDescargarImagen"
+                                                                  data-nombre="{{ arrFirma.nombre }}"
+                                                                  data-img="data:image/jpg;base64,{{ arrFirma.base64 }}">
+                                                        <i class="fa fa-download"
+                                                           data-nombre="{{ arrFirma.nombre }}"
+                                                           data-img="data:image/jpg;base64,{{ arrFirma.base64 }}"></i>
+                                            </span>
+                                                        </div>
+
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        {% if arrSeguimientos %}
+                                            {% if arrSeguimientos|length > 0 %}
+                                                <hr>
+                                                <h6>Seguimiento</h6>
+                                                {% for arrSeguimientos in arrSeguimientos %}
+                                                    <div class="table-responsive">
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                {% for cabecera in arrSeguimientos.cabeceras %}
+                                                                    <th>{{ cabecera }}</th>
+                                                                {% endfor %}
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for cabecera in arrSeguimientos.contenido %}
+                                                                <th>{{ cabecera }}</th>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if arGuia.usuarioEntrega != '' %}
+                                            <div class="tm-meta">
+                                            <span>
+                                                <i class="fa fa-user"></i> Entregada por <a
+                                                        href="#">{{ arGuia.usuarioEntrega }}</a>
+                                            </span>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </li>
+                            </ol>
+                            <div class="tm-title">
+                                <h3 class="h5 text-uppercase">CUMPLIDO</h3>
+                            </div>
+                            <ol class="tm-items">
+                                <li>
+                                    <div class="tm-info">
+                                        <div class="tm-icon"><i class="fa fa-heart"></i></div>
+                                        <time class="tm-datetime" datetime="2013-09-08 16:13">
+                                            <div class="tm-datetime-date">{{ arGuia.estadoCumplido?arGuia.fechaCumplido?arGuia.fechaCumplido | date('Y-m-d'):'N/A':'N/A' }}</div>
+                                            <div class="tm-datetime-time">{{ arGuia.estadoCumplido?arGuia.fechaCumplido?arGuia.fechaCumplido | date('H:i'):'N/A':'N/A' }}</div>
+                                        </time>
+                                    </div>
+                                    <div class="tm-box appear-animation fadeInRight appear-animation-visible"
+                                         data-appear-animation="fadeInRight">
+                                        <p>
+                                            {% if arrArchivos is defined %}
+                                                {% if arrArchivos is not empty %}
+                                                    En hora buena! aqui estan sus cumplidos!
+                                                {% else %}
+                                                    No se encuentras archivos digitalizados
+                                                {% endif %}
+                                            {% endif %}
+                                        </p>
+                                        <div class="thumbnail-gallery">
+                                            {% if arrArchivos is defined %}
+                                                {% for arrArchivo in arrArchivos %}
+                                                    <a class="img-thumbnail">
+                                                        <img width="215" height="112"
+                                                             src="data:image/jpg;base64,{{ arrArchivo.base64 }}">
+                                                        <div style="display: flex; align-content: center; justify-content: flex-end;">
+                                                        <span class="imgOpciones">
+                                                            <i class="fa fa-photo test-popup-link"
+                                                               href="data:image/jpg;base64,{{ arrArchivo.base64 }}"></i>
+                                                        </span>
+                                                            <span class="imgOpciones btnDescargarImagen"
+                                                                  data-nombre="{{ arrArchivo.nombre }}"
+                                                                  data-img="data:image/jpg;base64,{{ arrArchivo.base64 }}">
+                                                            <i class="fa fa-download"
+                                                               data-nombre="{{ arrArchivo.nombre }}"
+                                                               data-img="data:image/jpg;base64,{{ arrArchivo.base64 }}"></i>
+                                                        </span>
+                                                        </div>
+                                                    </a>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                {% else %}
+                    {% if inicio == false %}
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <strong>El número de guía no existe!,</strong> está seguro que este es el número
+                            proporcionado por la empresa de transporte?, verifique el número y vuelva a intentarlo.
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <hr>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $(() => {
+            $('.test-popup-link').magnificPopup({
+                type: 'image'
+            });
+
+            $(".btnDescargarImagen").click((evento) => {
+                let elemento = evento.target
+                let linkSource = elemento.dataset.img;
+                let downloadLink = document.createElement("a");
+                let fileName = elemento.dataset.nombre;
+                downloadLink.href = linkSource;
+                downloadLink.download = fileName;
+                downloadLink.click();
+                downloadLink.remove();
+            })
+
+            $("#btnConsultaHeader").click(() => {
+                $(".contenedorLink").css("display", "none");
+                $("#contenedorBuscador").css("display", "block");
+            })
+
+            $("#btnCerarConsultaHeader").click(() => {
+                $("#contenedorBuscador").css("display", "none");
+                $(".contenedorLink").css("display", "block");
+            })
+        });
+    </script>
+{% endblock %}

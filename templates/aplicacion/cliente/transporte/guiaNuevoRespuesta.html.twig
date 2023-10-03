@@ -1,0 +1,60 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Guia nueva{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-4">
+            <h5 class="text-semibold text-dark text-uppercase mb-md mt-lg">Mensaje</h5>
+            <section class="visible-md panel panel-featured-left panel-featured-primary">
+                <div class="panel-body">
+                    <div class="widget-summary widget-summary-xlg">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-primary">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Support Questions</h4>
+                                <div class="info">
+                                    <strong class="amount">1281</strong>
+                                    <span class="text-primary">(14 unread)</span>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a class="text-muted text-uppercase">(view all)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hidden-md panel panel-featured-left panel-featured-primary">
+                <div class="panel-body">
+                    <div class="widget-summary widget-summary-xlg">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon bg-primary">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Se creo la guia con exito</h4>
+                                <div class="info">
+                                    <strong class="amount">{{ codigoGuia }}</strong>
+                                    <span class="text-primary"><a href="{{ path('cliente_transporte_guia_nuevo', {'id':0 }) }}">(Nueva guia)</a></span>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a class="text-muted text-uppercase" href="{{ path('cliente_transporte_guia_lista') }}">(ver lista)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+
+
+    </div>
+{% endblock %}

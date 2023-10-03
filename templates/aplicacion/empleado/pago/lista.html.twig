@@ -1,0 +1,57 @@
+{% extends 'aplicacion/base.html.twig' %}
+
+{% block title %}Pagos{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Pagos</h2>
+    </div>
+    {% if app.user.empresaRel.pago %}
+        <div class="row">
+            <div class="table-responsive mt-2">
+                <table class="table table-bordered table-hover tabla-datos-v2">
+                    <thead>
+                    <tr class="">
+                        <th title="Código del registro">ID</th>
+                        <th>TIPO</th>
+                        <th>NÚMERO</th>
+                        <th title="Fecha desde">DESDE</th>
+                        <th title="Fecha hasta">HASTA</th>
+                        <th title="Salario del empleado al momento de realizado el pago">SALARIO</th>
+                        <th title="Valor devengado">DEVENGADO</th>
+                        <th title="Valor de las deducciones">DEDUCCIONES</th>
+                        <th title="Valor neto del pago">NETO</th>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arPago in arPagos %}
+                        <tr>
+                            <td> {{ arPago.codigoPagoPk }}</td>
+                            <td> {{ arPago.pagoTipo }}</td>
+                            <td> {{ arPago.numero }}</td>
+                            <td> {{ arPago.fechaDesde | date("Y-m-d") }}</td>
+                            <td> {{ arPago.fechaHasta | date("Y-m-d") }}</td>
+                            <td class="text-right"> {{ arPago.vrSalarioContrato | number_format(0, '.', ',') }}</td>
+                            <td class="text-right"> {{ arPago.vrDevengado| number_format(0, '.', ',') }}</td>
+                            <td class="text-right"> {{ arPago.vrDeduccion| number_format(0, '.', ',') }}</td>
+                            <td class="text-right"> {{ arPago.vrNeto| number_format(0, '.', ',') }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('pago_detalle', {'codigoPago': arPago.codigoPagoPk }) }}">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> </a>
+                            </td>
+                            <td style="display: flex; justify-content: center">
+                                <button class="btn btn-default btn-xs" type="submit" name="opImprimir"
+                                        value="{{ arPago.codigoPagoPk }}"><i class="fa fa-print"></i></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Visitas{% endblock %}
+{% block content %}
+    {#    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }} #}
+    <div class="btn-toolbar" style="float:left">
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('cliente_crm_visita_lista') }}">
+                <i class="fa fa-reply" aria-hidden="true"></i>
+                Volver
+            </a>
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm"
+               href="javascript:abrirVentana3('{{ path('cliente_crm_visita_archivo', { 'tipo': 'CrmVisita', 'codigo': arVisita.codigoVisitaPk }) }}', 'Archivos', 500, 800)">
+                archivos
+            </a>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-bordered tabla-datos-v2 mt-2">
+                <tbody>
+                <tr>
+                    <td class="dark">CÓDIGO:</td>
+                    <td class="">{{ arVisita.codigoVisitaPk }}</td>
+                    <td class="dark">FECHA:</td>
+                    <td class="">{{ arVisita.fecha| date("Y-m-d") }}</td>
+                    <td class="dark">TIPO:</td>
+                    <td class="">{{ arVisita.visitaTipoNombre }}</td>
+                    <td class="dark">ASESOR:</td>
+                    <td class="">{{ arVisita.asesorNombre }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12">
+    <div class="tabs tabs-primary">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#reportes" data-toggle="tab">Reportes</a>
+            </li>
+            <li>
+                <a href="#compromisos" data-toggle="tab">Compromisos</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="reportes" class="tab-pane active">
+                <div class="table-responsive">
+                    <table class="table table-no-more table-bordered table-striped mb-none tabla-datos-v2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>FECHA-HORA</th>
+                            <th>CARGO</th>
+                            <th>REPORTE</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arReporte in arVisitaReportes %}
+                            <tr>
+                                <td>{{ arReporte.codigoVisitaReportePk }}</td>
+                                <td>{{ arReporte.fecha | date('Y-m-d H:i') }}</td>
+                                <td>{{ arReporte.cargo }}</td>
+                                <td>{{ arReporte.reporte }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary btn-sm"
+                                       href="javascript:abrirVentana3('{{ path('cliente_crm_visita_archivo', { 'tipo': 'CrmVisitaReporte', 'codigo': arReporte.codigoVisitaReportePk }) }}', 'Archivos', 500, 800)">
+                                        <i class="fa fa-files-o" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="compromisos" class="tab-pane">
+                <div class="table-responsive">
+                    <table class="table table-no-more table-bordered table-striped mb-none tabla-datos-v2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>FECHA</th>
+                            <th>NOMBRE</th>
+                            <th>DETALLE</th>
+                            <th>ATENDIDO</th>
+                            <th>CLIENTE</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arCompromiso in arVisitaCompromisos %}
+                            <tr>
+                                <td>{{ arCompromiso.codigoVisitaCompromisoPk }}</td>
+                                <td>{{ arCompromiso.fecha | date('Y-m-d') }}</td>
+                                <td>{{ arCompromiso.nombre }}</td>
+                                <td>{{ arCompromiso.detalle }}</td>
+                                <td class="estado-v2">{{ arCompromiso.estadoAtendido ? 'SI':'NO' }}</td>
+                                <td class="estado-v2">{{ arCompromiso.cliente ? 'SI':'NO' }}</td>
+                                <td class="text-center">
+                                    <a class="btn btn-primary btn-sm"
+                                       href="javascript:abrirVentana3('{{ path('cliente_crm_visita_archivo', { 'tipo': 'CrmVisitaCompromiso', 'codigo': arCompromiso.codigoVisitaCompromisoPk }) }}', 'Archivos', 500, 800)">
+                                        <i class="fa fa-files-o" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    {{ form_end(form) }} #}
+{% endblock %}

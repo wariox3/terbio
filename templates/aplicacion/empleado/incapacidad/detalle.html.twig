@@ -1,0 +1,48 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}INCAPACIDAD{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">INCAPACIDAD DETALLE</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                <a href="{{ path('empleado_incapacidad_lista') }}" class=" btn btn-sm btn-default"
+                   title="regresar a la lista"><i class="fa fa-arrow-left"></i> Volver</a>
+            </div>
+            <div class="btn-group btn-group-sm pull-left">
+{#                <a class="btn btn-default btn-sm"#}
+{#                   href="javascript:abrirVentana3('{{ path('documental_general_general_lista', { 'tipo': clase.clase,  'codigo': clase.codigo }) }}', 'Archivos', 800, 1250)">#}
+{#                    <i class="fa fa-upload"></i> Subir archivo#}
+{#                </a>#}
+                {% if app.user.empresaRel.firma %}
+                    <a class="btn btn-default btn-sm"
+                       href="javascript:abrirVentana3('{{ path('empleado_incapacidad_firma', {'id':arIncapacidad.codigoIncapacidadPk}) }}', 'Firma', 800, 1250)">
+                        <i class="fa fa-upload"></i>Firma
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                <td class="titulo">TIPO</td>
+                <td>{{ arIncapacidad.incapacidadTipoRel.nombre | default('') }}</td>
+                <td class="titulo">NÚMERO EPS</td>
+                <td>{{ arIncapacidad.numeroEps }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">DESDE</td>
+                <td>{{ arIncapacidad.fechaDesde|date("Y/m/d") }}</td>
+                <td class="titulo">HASTA</td>
+                <td>{{ arIncapacidad.fechaHasta|date("Y/m/d") }}</td>
+            </tr>
+            <tr>
+                <td class="titulo">COMENTARIOS:</td>
+                <td colspan="5">{{ arIncapacidad.comentarios }}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

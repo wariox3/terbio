@@ -1,0 +1,127 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Pagos{% endblock %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="btn-toolbar" style="float:left">
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm" href="{{ path('empleado_pago_lista') }}">
+                <i class="fa fa-reply" aria-hidden="true"></i>
+                Volver
+            </a>
+        </div>
+        <div class="btn-group">
+            {{ form_widget(form.btnImprimir) }}
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-bordered tabla-datos-v2 mt-2">
+                <tbody>
+                <tr>
+                    <td class="dark">CÓDIGO:</td>
+                    <td class="">{{ arPago.codigoPagoPk }}</td>
+                    <td class="dark">NÚMERO:</td>
+                    <td class="">{{ arPago.numero }}</td>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                </tr>
+                <tr>
+                    <td class="dark">EMPLEADO:</td>
+                    <td class="">{{ arPago.empleado }}</td>
+                    <td class="dark">DESDE:</td>
+                    <td class="">{{ arPago.fechaDesde| date("Y-m-d") }}</td>
+                    <td class="dark">IBC:</td>
+                    <td class=""></td>
+                    <td class="dark">TOTAL DEVENGADO:</td>
+                    <td class="text-right">{{ arPago.vrDevengado | number_format(0, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td class="dark">GRUPO PAGO</td>
+                    <td class="">{{ arPago.grupo }}</td>
+                    <td class="dark">HASTA:</td>
+                    <td class="">{{ arPago.fechaHasta | date("Y-m-d") }}</td>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                    <td class="dark">TOTAL DEDUCCIONES:</td>
+                    <td class="text-right">{{ arPago.vrDeduccion | number_format(0, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                    <td class="dark"></td>
+                    <td class=""></td>
+                    <td class="dark">TOTAL NETO:</td>
+                    <td class="text-right">{{ arPago.vrNeto | number_format(0, '.', ',') }}</td>
+                </tr>
+                <tr>
+                    <td class="dark">COMENTARIOS:</td>
+                    <td colspan="7">{{ arPago.comentario }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="tabs tabs-primary">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#Detalle" data-toggle="tab">Detalle</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="Detalle" class="tab-pane active">
+                        <table class="table table-no-more table-bordered table-striped mb-none tabla-datos-v2">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>CONCEPTO DE PAGO</th>
+                                <th>HORAS</th>
+                                <th>DIAS</th>
+                                <th>VR.HORA</th>
+                                <th>PORCENTAJE</th>
+                                <th>DEVENGADO</th>
+                                <th>DEDUCCION</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for arPagoDetalle in arPagoDetalles %}
+                                <tr>
+                                    <td>{{ arPagoDetalle.codigoPagoDetallePk }}</td>
+                                    <td>{{ arPagoDetalle.conceptoNombre }}</td>
+                                    <td>{{ arPagoDetalle.horas }}</td>
+                                    <td>{{ arPagoDetalle.dias }}</td>
+                                    <td class="text-right">{{ arPagoDetalle.vrHora  |number_format(0, '.', ',') }}</td>
+                                    <td>{{ arPagoDetalle.porcentaje }}</td>
+                                    {% if arPagoDetalle.operacion == 1 %}
+                                        <td class="text-right">{{ arPagoDetalle.vrPago | number_format(0, '.', ',') }}</td>
+                                        <td class="text-right">0</td>
+                                    {% endif %}
+                                    {% if arPagoDetalle.operacion == -1 %}
+                                        <td class="text-right">0</td>
+                                        <td class="text-right">{{ arPagoDetalle.vrPago | number_format(0, '.', ',') }}</td>
+                                    {% endif %}
+                                    {% if arPagoDetalle.operacion == 0 %}
+                                        <td class="text-right">0</td>
+                                        <td class="text-right">0</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div style="display: flex; flex-direction: row; align-items: center">
+{#                            <span style="margin-right: 4px">registros: {{ arPagoDetalles.getTotalItemCount }}</span>#}
+{#                            {{ knp_pagination_render(arPagoDetalles) }}#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

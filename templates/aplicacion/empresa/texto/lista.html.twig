@@ -1,0 +1,44 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="row mt-2">
+        <div class="col-xl-12">
+            <div class="table-responsive-sm">
+                <table class="table table-bordered table-hover table-sm table-hover table-striped tabla-datos-v2 encabezadoFijo">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>DESCRIPCIÓN</th>
+                        <th>TEXTO</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arTexto in arTextos %}
+                        <tr>
+                            <td>{{ arTexto.codigoTextoPk }}</td>
+                            <td>{{ arTexto.descripcion }}</td>
+                            <td>{{ arTexto.texto }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('empresa_texto_nuevo', {'id':arTexto.codigoTextoPk }) }}"
+                                   class="btn btn-sm btn-default" title="editar">
+                                    <i class="fa fa-pencil"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            Total {{ arTextos.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arTextos) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

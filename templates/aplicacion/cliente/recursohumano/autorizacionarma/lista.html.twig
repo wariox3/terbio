@@ -1,0 +1,52 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm" style="float: right">
+                {{ form_widget(form.btnImprimirTodos, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col-xl-12">
+            <div class="table-responsive-sm">
+                <table class="table table-bordered table-hover table-sm table-hover table-striped tabla-datos-v2 encabezadoFijo">
+                    <thead>
+                    <tr>
+                        <th>CÓDIGO</th>
+                        <th>IDENTIFICACIÓN</th>
+                        <th>EMPLEADO</th>
+                        <th>CARGO</th>
+                        <th>ACREDITACIÓN</th>
+                        <th>POLÍGONO</th>
+                        <th>PSICOFÍSICO</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arEmpleado in  arEmpleados %}
+                        <tr>
+                            <td><input type="hidden" name="LblCodigo[]"
+                                       value="{{ arEmpleado.codigoEmpleadoPk }}">{{ arEmpleado.codigoEmpleadoPk }} </td>
+                            <td>{{ arEmpleado.numeroIdentificacion }}</td>
+                            <td>{{ arEmpleado.nombreCorto }}</td>
+                            <td>{{ arEmpleado.cargoNombre }}</td>
+                            <td>{{ arEmpleado.fechaAcreditacion |date("Y/m/d") }}</td>
+                            <td>{{ arEmpleado.fechaPoligono |date("Y/m/d") }}</td>
+                            <td>{{ arEmpleado.fechaPsicofisico |date("Y/m/d") }}</td>
+                            <td>
+                                <button class="btn btn-default btn-xs" type="submit" name="btnImprimir"
+                                        value="{{ arEmpleado.codigoEmpleadoPk }}">Imprimir
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+{% endblock %}

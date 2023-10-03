@@ -1,0 +1,36 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block title %}CAMBIAR CONTRASEÑA {% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Información General</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nueva clave:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.txtNuevaClave) }}
+                        {{ form_errors(form.txtNuevaClave) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Confirmar nueva clave:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.txtConfirmacionClave) }}
+                        {{ form_errors(form.txtConfirmacionClave) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="row form-group form-group-sm">
+            <div class="col-xl-12 col-sm-12 text-right mt-2">
+                <a href="{{ path('empresa_usuario_lista') }}" class=" btn btn-sm btn-default"
+                   title="regresar a la lista">Cancelar</a>
+                {{ form_widget(form.btnActualizar) }}
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}SEGURIDAD SOCIAL{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">SEGURIDAD SOCIAL</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-1 control-label">Mes:</label>
+                    <div class="col-sm-3">
+                        <input type="month" id="mes" name="mes" class="form-control"
+                               max="{{ mesActualFijo }}"   value="{{ mesActual}}">
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                    <tr>
+                        <th title="Código contrato">ID</th>
+                        <th title="Código empleado">COD</th>
+                        <th>IDENTIFICACIÓN</th>
+                        <th>EMPLEADO</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for arContrato in arrContratos %}
+                    <tr>
+                        <td>{{ arContrato.codigoAporteContratoPk }}</td>
+                        <td>{{ arContrato.codigoEmpleadoFk }}</td>
+                        <td>{{ arContrato.numeroIdentificacion }}</td>
+                        <td>{{ arContrato.empleado }}</td>
+                        <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpDescargar" value="{{ arContrato.codigoAporteContratoPk }}">Descargar</button></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block content %}
+    {{ form_start(form) }}
+
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>COD</th>
+                    <th>ARCHIVO</th>
+                    <th>FECHA</th>
+                    <th>IDENTIFICADOR</th>
+                    <th>TAMAÑO</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arrMasivo in arrMasivos %}
+                    <tr>
+                        <td>{{ arrMasivo.codigoMasivoPk }}</td>
+                        <td>{{ arrMasivo.archivo }}</td>
+                        <td>{{ arrMasivo.fecha }}</td>
+                        <td>{{ arrMasivo.identificador }}</td>
+                        <td>{{ arrMasivo.tamano }}</td>
+                        <td class="text-center">
+                            <button class="btn btn-xs btn-default" title="Descargar archivo" name="btnDescargar" value="{{ arrMasivo.codigoMasivoPk }}">
+                                <i class="fa fa-download"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -1,0 +1,5 @@
+framework:
+    cache:
+        pools:
+            my_cache_pool: # Cambia "cache.app" por un nombre personalizado
+                adapter: 'cache.adapter.filesystem'

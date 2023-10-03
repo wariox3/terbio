@@ -1,0 +1,40 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Visitas{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">VISITAS</h2>
+    </div>
+    <div class="row mt-2">
+        <table class="table table-bordered table-hover tabla-datos-v2">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>FECHA</th>
+                <th>TIPO</th>
+                <th>MOTIVO</th>
+                <th>ASESOR</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for arrVisita in arrVisitas %}
+                <tr>
+                    <td>{{ arrVisita.codigoVisitaPk }}</td>
+                    <td>{{ arrVisita.fecha | date('Y-m-d H:i') }}</td>
+                    <td>{{ arrVisita.visitaTipoNombre }}</td>
+                    <td>{{ arrVisita.visitaMotivoNombre }}</td>
+                    <td>{{ arrVisita.asesorNombre }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('cliente_crm_visita_detalle', {'codigovisita': arrVisita.codigoVisitaPk }) }}">
+                            <i class="fa fa-eye" aria-hidden="true"></i> </a>
+                    </td>
+                    <td class="text-center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arrVisita.codigoVisitaPk }}">Imprimir</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

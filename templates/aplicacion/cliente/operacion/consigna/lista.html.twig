@@ -1,0 +1,27 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Consignas{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">CONSIGNAS</h2>
+    </div>
+    <div class="row mt-2">
+        <table class="table table-bordered table-hover tabla-datos-v2">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>PUESTO</th>
+                <th>CONSIGNA</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for arrConsigna in arrConsignas %}
+                <tr>
+                    <td>{{ arrConsigna.codigoConsignaPk }}</td>
+                    <td>{{ arrConsigna.puestoNombre }}</td>
+                    <td>{{ arrConsigna.consigna }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

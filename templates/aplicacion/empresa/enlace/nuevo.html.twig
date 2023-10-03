@@ -1,0 +1,35 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}EMPRESAS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">ENLACE NUEVO</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Enlace:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.enlace) }}
+                        {{ form_errors(form.enlace) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-xl-12 col-sm-12 text-right mt-2">
+                        <a href="{{ path('empresa_enlace_lista') }}" class=" btn btn-sm btn-default"
+                           title="regresar a la lista"> Cancelar</a>
+                        {{ form_widget(form.btnGuardar) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Facturas{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">FACTURAS</h2>
+    </div>
+    <div class="row mt-2">
+        <table class="table table-bordered table-hover tabla-datos-v2">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>TIPO</th>
+                <th>NÚMERO</th>
+                <th>FECHA</th>
+                <th>CÓD</th>
+                <th>NIT</th>
+                <th>TERCERO</th>
+                <th>CLASE</th>
+                <th>SUBTOTAL</th>
+                <th>AIU</th>
+                <th>IVA</th>
+                <th>NETO</th>
+                <th>TOTAL</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for arFactura in arrFacturas %}
+                <tr>
+                    <td>{{ arFactura.codigoFacturaPk }}</td>
+                    <td>{{ arFactura.facturaTipoNombre }}</td>
+                    <td>{{ arFactura.numero }}</td>
+                    <td>{{ arFactura.fecha | date('Y-m-d') }}</td>
+                    <td>{{ arFactura.codigoTerceroFk }}</td>
+                    <td>{{ arFactura.terceroNumeroIdentificacion }}</td>
+                    <td>{{ arFactura.terceroNombre }}</td>
+                    <td>{{ arFactura.claseNombre }}</td>
+                    <td style="text-align: right">{{ arFactura.vrSubtotal | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arFactura.vrBaseAiu | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arFactura.vrIva | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arFactura.vrNeto | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: right">{{ arFactura.vrTotal | number_format(0, '.', ',') }}</td>
+                    <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arFactura.codigoFacturaPk }}">Imprimir</button></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

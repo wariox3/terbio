@@ -1,0 +1,47 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CLIENTES{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">CLIENTE DETALLE</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                <a href="{{ path('administrador_empresa_lista') }}" class=" btn btn-sm btn-default" title="regresar a la lista"><i class="fa fa-arrow-left"></i> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                {% if logo  %}
+                    <td colspan="3" rowspan="3" class="text-center">
+                        <img alt="Embedded Image" src="data:image/png;base64,{{  logo }}" width="200"  height="200"/>
+                    </td>
+                {% endif %}
+                <td>CODIGO:</td>
+                <td>{{ arRegistro.codigoEmpresaPk }}</td>
+                <td>IDENTIFICACIÓN:</td>
+                <td>{{ arRegistro.nombre}}</td>
+                <td>IDENTIFICACIÓN:</td>
+                <td>{{ arRegistro.nombre}}</td>
+            </tr>
+            <tr>
+                <td>DIRRECCION:</td>
+                <td>{{ arRegistro.direccion}}</td>
+                <td>TELÉFONO:</td>
+                <td>{{ arRegistro.telefono}}</td>
+                <td>ABREVIATURA:</td>
+                <td>{{ arRegistro.abreviatura}}</td>
+            </tr>
+            <tr>
+                <td>URL SERVICIOS:</td>
+                <td>{{ arRegistro.urlServicio}}</td>
+                <td>CIUDAD:</td>
+                <td>{{ arRegistro.ciudad }}</td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

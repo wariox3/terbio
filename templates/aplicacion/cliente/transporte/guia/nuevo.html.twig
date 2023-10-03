@@ -1,0 +1,474 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Guia nueva{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <input type="hidden" id="codigoTercero" value="{{ codigoTercero }}">
+    <input type="hidden" id="codigoPrecio" value="{{ codigoPrecio }}">
+    <input type="hidden" id="codigoOrigen" value="{{ codigoOrigen }}">
+    <div class="row mt-2">
+    <section class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h2 class="panel-title">GUIA NUEVA</h2>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div id="divInformacion" class="row form-group form-group-sm" style=" display: none;">
+            <label class="col-md-2 control-label"></label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-3 ">
+                        <div class="input-group input-group-icon">
+                            <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-info-circle"  style="color:#5bc0de"></i></span>
+                            </span>
+                            <input type="text" id="txtPesoMinimo" class="form-control" placeholder="" readonly>
+                            <span class="help-block text-info">Peso mínimo.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group input-group-icon">
+                            <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-info-circle"  style="color:#5bc0de"></i></span>
+                            </span>
+                            <input type="text" id="txtPesoMinimoGuia" class="form-control" placeholder="" readonly>
+                            <span class="help-block text-info">Peso mínimo guia.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group input-group-icon">
+                            <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-info-circle"  style="color:#5bc0de"></i></span>
+                            </span>
+                            <input type="text" id="txtManejoMinimoUnidad" class="form-control" placeholder="" readonly>
+                            <span class="help-block text-info">Manejo mínimo unidad.</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group input-group-icon">
+                            <span class="input-group-addon">
+                                <span class="icon"><i class="fa fa-info-circle"  style="color:#5bc0de"></i></span>
+                            </span>
+                            <input type="text" id="txtManejoMinimoDespacho" class="form-control" placeholder="" readonly>
+                            <span class="help-block text-info">Manejo mínimo guia.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Tipo:</label>
+            <div class="col-sm-4">
+                {{ form_widget(form.guiaTipoRel) }}
+                {{ form_errors(form.guiaTipoRel) }}
+            </div>
+            <label class="col-sm-2 control-label">Liquidacion:</label>
+            <div class="col-sm-4">
+                {{ form_widget(form.liquidacionRel) }}
+                {{ form_errors(form.liquidacionRel) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Adquiriente:</label>
+            <div class="col-sm-10">
+                <div style="display: flex">
+                    <div style="flex: 5">
+                        {{ form_widget(form.codigoAdquiriente) }}
+                    </div>
+                    <div style="flex: 10">
+                        {{ form_widget(form.tipoIdentificacionAdquiriente) }}
+                    </div>
+                    <div style="flex: 10">
+                        {{ form_widget(form.identificacionAdquiriente) }}
+                    </div>
+                    <div style="flex: 20">
+                        {{ form_widget(form.nombreAdquiriente) }}
+                    </div>
+                    {% if app.user.permiteCambiarAdquiriente %}
+                    <div style="flex: 1">
+                        <span class="input-group-btn">
+                            <a class="btn btn-sm btn-default"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_buscaradquiriente')}}', 'buscarAdquiriente', 600, 1200)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </span>
+                    </div>
+                    {% endif %}
+
+                </div>
+                <span>* Adquiriente para la factura electrónica</span>
+
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Documento cliente:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.documentoCliente, { 'attr': {'class': 'form-control','autofocus':true} }) }}
+                {{ form_errors(form.documentoCliente) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Remitente:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.remitente) }}
+                {{ form_errors(form.remitente) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Destinatario:</label>
+                <div class="col-sm-10">
+                    <div class="mb-md" style="display: flex">
+                        <div style="flex: 2">
+                            {{ form_widget(form.identificacionTipo) }}
+                        </div>
+                        <div style="flex: 10">
+                            {{ form_widget(form.identificacion) }}
+                        </div>
+                        <div style="flex: 20">
+                            {{ form_widget(form.destinatario) }}
+                        </div>
+                        <div style="flex: 1">
+                        <span class="input-group-btn">
+                                        <a class="btn btn-sm btn-default"
+                       href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_buscardestinatario')}}', 'buscarDestinatario', 600, 1200)">
+                        <i class="fa fa-search"></i></a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Direccion:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.direccion) }}
+                {{ form_errors(form.direccion) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Telefono:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.telefono) }}
+                {{ form_errors(form.telefono) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Producto:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.productoRel) }}
+                {{ form_errors(form.productoRel) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Destino:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.destinoRel) }}
+                {{ form_errors(form.destinoRel) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Unidades:</label>
+            <div class="col-sm-10">
+                <div class="mb-md" style="display: flex">
+                <div style="flex: 20">
+                    {{ form_widget(form.unidades) }}
+                    {{ form_errors(form.unidades) }}
+                </div>
+                <div style="flex: 1">
+                    {{ form_widget(form.vrUnidad) }}
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Peso real:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.pesoReal) }}
+                {{ form_errors(form.pesoReal) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Peso volumen:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.pesoVolumen) }}
+                {{ form_errors(form.pesoVolumen) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Peso facturado:</label>
+                <div class="col-sm-10">
+                <div class="mb-md" style="display: flex">
+                <div style="flex: 20">
+                    {{ form_widget(form.pesoFacturado) }}
+                    {{ form_errors(form.pesoFacturado) }}
+                </div>
+                <div style="flex: 1">
+                    {{ form_widget(form.vrPeso) }}
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Declarado:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.declarado) }}
+                {{ form_errors(form.declarado) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Flete:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.flete) }}
+                {{ form_errors(form.flete) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Manejo:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.manejo) }}
+                {{ form_errors(form.manejo) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Total:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.total) }}
+                {{ form_errors(form.total) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Recaudo:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.recaudo) }}
+                {{ form_errors(form.recaudo) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Comentario:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.comentario) }}
+                {{ form_errors(form.comentario) }}
+            </div>
+        </div>
+        <div class="col-xl-12 col-sm-12 text-right mt-2">
+            <a href="{{ path('cliente_transporte_guia_lista') }}" class=" btn btn-sm btn-default"
+               title="Regresar a la lista"> Cancelar</a>
+            {{ form_widget(form.btnGuardar) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $("#form_liquidacionRel").blur(function(){
+                $('#form_vrUnidad').val(0);
+                $('#form_vrPeso').val(0);
+                $('#form_flete').val(0);
+                $('#form_manejo').val(0);
+                $('#form_total').val(0);
+                $('#form_destinoRel').val('');
+                $('#form_destinoRel').trigger('change');
+            });
+
+            $("#form_productoRel").blur(function(){
+                $('#form_vrUnidad').val(0);
+                $('#form_vrPeso').val(0);
+                $('#form_flete').val(0);
+                $('#form_manejo').val(0);
+                $('#form_total').val(0);
+                $('#form_destinoRel').val('');
+                $('#form_destinoRel').trigger('change');
+            });
+
+
+
+            $("#form_destinoRel").blur(function(){
+                var destino = $(this).val();
+                var guiaTipo = $("#form_guiaTipoRel").val();
+                var producto = $("#form_productoRel").val();
+                var codigoTercero = $("#codigoTercero").val();
+                var codigoPrecio = $("#codigoPrecio").val();
+                var origen = $("#codigoOrigen").val();
+                var manejo = parseFloat($('#form_manejo').val());
+                $('#form_flete').val(0);
+                $('#form_total').val(manejo);
+                $.ajax({
+                    url: "{{ path('cliente_transporte_guia_condicion') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        arrParametros: JSON.stringify({
+                            'codigoTercero': codigoTercero,
+                            'origen': origen,
+                            'destino': destino,
+                            'codigoPrecio': codigoPrecio,
+                            'codigoProducto': producto,
+                            'guiaTipo': guiaTipo
+                        })
+                    },
+                    success: function (data) {
+                        sessionStorage.setItem('condicionEspecialFlete', data.condicionEspecialFlete != null ? data.condicionEspecialFlete : 0 );
+                        sessionStorage.setItem('condicionEspecialManejo', data.condicionEspecialManejo != null ? data.condicionEspecialManejo : 0 );
+                        $("#form_vrPeso").val(data.vrPeso != null ? data.vrPeso : 0);
+                        $("#form_vrUnidad").val(data.vrUnidad != null ? data.vrUnidad : 0);
+                        pesoMinimo = data.pesoMinimo != null ? data.pesoMinimo : 0;
+                        pesoMinimoGuia = 0;
+                        porcentajeManejo = data.porcentajeManejo != null ? data.porcentajeManejo : 0;
+                        manejoMinimoUnidad = data.manejoMinimoUnidad != null ? data.manejoMinimoUnidad : 0;
+                        manejoMinimoDespacho = data.manejoMinimoGuia != null ? data.manejoMinimoGuia : 0;
+                        if(data.condicionEspecialFlete) {
+                            pesoMinimo = data.pesoMinimo != null ? data.pesoMinimo : 0;
+                            pesoMinimoGuia = data.pesoMinimoGuia != null ? data.pesoMinimoGuia : 0;
+                            sessionStorage.setItem('descuentoPeso', data.descuentoPeso != null ? data.descuentoPeso : 0  );
+                            sessionStorage.setItem('descuentoUnidad', data.descuentoUnidad != null ? data.descuentoUnidad : 0  );
+                            sessionStorage.setItem('fleteMinimo', data.fleteMinimo != null ? data.fleteMinimo : 0  );
+                            sessionStorage.setItem('fleteMinimoGuia', data.fleteMinimoGuia != null ? data.fleteMinimoGuia : 0  );
+                        }
+                        if(data.condicionEspecialManejo) {
+                            porcentajeManejo =  data.porcentajeManejo != null ? data.porcentajeManejo : 0;
+                            manejoMinimoUnidad = data.manejoMinimoUnidad != null ? data.manejoMinimoUnidad : 0;
+                            manejoMinimoDespacho = data.manejoMinimoGuia != null ? data.manejoMinimoGuia : 0;
+                        }
+
+                        //Guardar variables
+                        sessionStorage.setItem('pesoMinimo', pesoMinimo != null ? pesoMinimo : 0  );
+                        sessionStorage.setItem('pesoMinimoGuia', pesoMinimoGuia != null ? pesoMinimoGuia : 0  );
+                        sessionStorage.setItem('porcentajeManejo', porcentajeManejo != null ? porcentajeManejo : 0  );
+                        sessionStorage.setItem('manejoMinimoUnidad', manejoMinimoUnidad != null ? manejoMinimoUnidad : 0  );
+                        sessionStorage.setItem('manejoMinimoGuia', manejoMinimoDespacho != null ? manejoMinimoDespacho : 0  );
+                        $("#divInformacion").fadeIn( "slow" );
+                        $("#txtPesoMinimo").val(sessionStorage.getItem("pesoMinimo"));
+                        $("#txtPesoMinimoGuia").val(sessionStorage.getItem("pesoMinimoGuia"));
+                        $("#txtManejoMinimoUnidad").val(manejoMinimoUnidad);
+                        $("#txtManejoMinimoDespacho").val(manejoMinimoDespacho);
+                    }
+                });
+            });
+
+            $("#form_unidades").blur(function(){
+                var unidades = $(this).val();
+                var minimos = sessionStorage.getItem('pesoMinimo');
+                var manejo = parseFloat($('#form_manejo').val());
+                $('#form_flete').val(0);
+                $('#form_total').val(manejo);
+                $('#form_pesoReal').val(unidades * minimos);
+            });
+
+            $("#form_pesoReal").blur(function(){
+                var pesoReal = parseFloat($(this).val());
+                var pesoVolumen = parseFloat($('#form_pesoVolumen').val());
+                var manejo = parseFloat($('#form_manejo').val());
+                $('#form_flete').val(0);
+                $('#form_total').val(manejo);
+                if(pesoVolumen <= 0) {
+                    $('#form_pesoVolumen').val(pesoReal);
+                }
+                $('#form_pesoFacturado').val(pesoReal);
+                if(pesoVolumen > pesoReal) {
+                    $('#form_pesoFacturado').val(pesoVolumen);
+                }
+            });
+
+            $("#form_pesoVolumen").blur(function(){
+                var pesoVolumen = parseFloat($(this).val());
+                var pesoReal = parseFloat($('#form_pesoReal').val());
+                var manejo = parseFloat($('#form_manejo').val());
+                $('#form_flete').val(0);
+                $('#form_total').val(manejo);
+                if(pesoVolumen > pesoReal) {
+                    $('#form_pesoFacturado').val(pesoVolumen);
+                }
+            });
+
+            $("#form_pesoFacturado").blur(function() {
+                var pesoFacturado = parseFloat($(this).val());
+                var vrPeso = parseFloat($('#form_vrPeso').val());
+                var vrUnidad = parseFloat($('#form_vrUnidad').val());
+                var descuentoPeso = sessionStorage.getItem('descuentoPeso');
+                var descuentoUnidad = sessionStorage.getItem('descuentoUnidad');
+                var fleteMinimoGuia = sessionStorage.getItem('fleteMinimoGuia');
+                var unidades = $('#form_unidades').val();
+                var minimos = sessionStorage.getItem('pesoMinimo');
+                var pesoVolumen = parseFloat($('#form_pesoVolumen').val());
+                var pesoMinimoTotal = unidades * minimos;
+                var liquidacion = $("#form_liquidacionRel").val();
+                var vrFlete = 0;
+                var manejo = parseFloat($('#form_manejo').val());
+                if(pesoFacturado < pesoMinimoTotal) {
+                    pesoFacturado = pesoMinimoTotal;
+                    $('#form_pesoFacturado').val(pesoFacturado);
+                }
+
+                if(pesoFacturado < pesoVolumen && pesoVolumen > pesoMinimoTotal) {
+                    pesoFacturado = pesoVolumen;
+                    $('#form_pesoFacturado').val(pesoFacturado);
+                }
+                if(liquidacion == 'K') {
+                    vrFlete = pesoFacturado * vrPeso;
+                    if(descuentoPeso > 0) {
+                        vrFlete -= vrFlete * descuentoPeso / 100;
+                    }
+                }
+                if(liquidacion == 'U') {
+                    vrFlete = unidades * vrUnidad;
+                    if(descuentoUnidad > 0) {
+                        vrFlete -= vrFlete * descuentoUnidad / 100;
+                    }
+                }
+                if(fleteMinimoGuia > vrFlete) {
+                    vrFlete = fleteMinimoGuia;
+                }
+                vrFlete = Math.round(vrFlete);
+
+                $('#form_flete').val(vrFlete);
+                $('#form_total').val(vrFlete + manejo);
+            });
+
+            $("#form_declarado").blur(function(){
+                var declarado = $(this).val();
+                var flete = $('#form_flete').val();
+                var unidades = $('#form_unidades').val();
+                var manejo = $('#form_manejo').val();
+                var porcentajeManejo = sessionStorage.getItem('porcentajeManejo');
+                var manejoMinimoUnidad = sessionStorage.getItem('manejoMinimoUnidad');
+                var manejoMinimoGuia = sessionStorage.getItem('manejoMinimoGuia');
+                manejo = declarado * porcentajeManejo / 100;
+                if(manejo < (unidades * manejoMinimoUnidad)) {
+                    manejo = unidades * manejoMinimoUnidad;
+                }
+                if(manejo < manejoMinimoGuia) {
+                    manejo = manejoMinimoGuia;
+                }
+                manejo = Math.round(manejo);
+                $('#form_manejo').val(manejo);
+                var total = parseFloat(flete) + parseFloat(manejo);
+                $('#form_total').val(total);
+            });
+
+            $("#form_flete").blur(function(){
+                var flete = $('#form_flete').val();
+                var manejo = $('#form_manejo').val();
+                var total = parseFloat(flete) + parseFloat(manejo);
+                $('#form_total').val(total);
+            });
+
+            $("#form_manejo").blur(function(){
+                var flete = $('#form_flete').val();
+                var manejo = $('#form_manejo').val();
+                var total = parseFloat(flete) + parseFloat(manejo);
+                $('#form_total').val(total);
+            });
+        });
+
+        function selecionarCiudad(codigoCiudad){
+            $('#form_destinoRel').val(codigoCiudad);
+            $('#form_productoRel').trigger('change');
+            $('#form_destinoRel').trigger('change');
+        };
+
+
+    </script>
+{% endblock %}

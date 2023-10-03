@@ -1,0 +1,98 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CLIENTES{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2>Usuarios</h2>
+    </div>
+    <div class="row">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-1 control-label">Usuario:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.codigoUsuario) }}
+                    </div>
+                    <label class="col-sm-1 control-label">Identificación:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.numeroIdentificacion) }}
+                    </div>
+                    <label class="col-sm-1 control-label">Nombre:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.nombre) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+            <a href="{{ path('administrador_empresa_usuario_nuevo', {'id':0 }) }}" class="btn btn-default btn-sm pull-right">
+                Nuevo
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>COD</th>
+                    <th>NI</th>
+                    <th>NOMBRE</th>
+                    <th>EMPRESA</th>
+                    <th>CLIENTE</th>
+                    <th>EMPLEADO</th>
+                    <th>PROVEEDOR</th>
+                    <th>EMPRESA</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arUsuario in arUsuarios %}
+                    <tr>
+                        <td>{{ arUsuario.codigoUsuarioPk }}</td>
+                        <td>{{ arUsuario.codigoIdentificacionFk }}</td>
+                        <td>{{ arUsuario.numeroIdentificacion }}</td>
+                        <td>{{ arUsuario.nombres }}</td>
+                        <td>{{ arUsuario.empresaNombre }}</td>
+                        <td class="text-center">{{ arUsuario.cliente ? "SI":"NO"  }}</td>
+                        <td class="text-center">{{ arUsuario.empleado ? "SI":"NO"  }}</td>
+                        <td class="text-center">{{ arUsuario.proveedor ? "SI":"NO" }}</td>
+                        <td class="text-center">{{ arUsuario.empresa ? "SI":"NO" }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('administrador_empresa_usuario_nuevo', {'id':arUsuario.codigoUsuarioPk }) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('administrador_empresa_usuario_detalle', {'id':arUsuario.codigoUsuarioPk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arUsuarios.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arUsuarios) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

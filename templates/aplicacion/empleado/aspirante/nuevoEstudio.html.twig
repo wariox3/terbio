@@ -1,0 +1,76 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block content %}
+    <div class="container">
+        {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+        {{ form_errors(form) }}
+        <div class="row">
+            <div class="col-xl-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <h2 class="panel-title">Información estudio</h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">Institulo: <span class="indicardorInputObligatorio">*</span></label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.institucion) }}
+                            </div>
+                        </div>
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">Tipo de estudios: <span class="indicardorInputObligatorio">*</span></label>
+                            <div class="col-sm-10">
+                                <select name="estudioTipo" class="form-control">
+                                    {% for arrEstudioTipo in arrEstudioTipos %}
+                                        <option value="{{ arrEstudioTipo.clave }}" {% if arrEstudioTipo.clave == arEstudio.estudioTipo %} selected {% endif %}>{{ arrEstudioTipo.valor }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">Estado: <span class="indicardorInputObligatorio">*</span></label>
+                            <div class="col-sm-10">
+                                {% for arrEstudioEstado in arrEstudioEstados %}
+                                    <label class="radio-inline">
+                                        <input type="radio" name="estadoEstudio" id="{{ arrEstudioEstado.clave }}" value="{{ arrEstudioEstado.clave }}" {% if arrEstudioEstado.clave == arEstudio.estadoEstudio %} checked {% endif %}> {{ arrEstudioEstado.valor }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">titulo: <span class="indicardorInputObligatorio">*</span></label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.titulo) }}
+                            </div>
+                        </div>
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">Duracion del estudio:</label>
+                            <div class="col-sm-10">
+                                {{ form_widget(form.duracionEstudio) }}
+                            </div>
+                        </div>
+                        <div class="row form-group form-group-sm">
+                            <label class="col-sm-2 control-label">Fecha inicio: <span class="indicardorInputObligatorio">*</span></label>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.fechaInicio) }}
+                            </div>
+                            <label class="col-sm-2 control-label">Fecha terminación:</label>
+                            <div class="col-sm-4">
+                                {{ form_widget(form.fechaTerminacion) }}
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-sm btn-default" onclick="window.close()">Cancelar</button>
+                                {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
+                            </div>
+                        </div>
+                    </footer>
+                </section>
+
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

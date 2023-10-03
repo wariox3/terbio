@@ -1,0 +1,74 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Solicitud{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">SOLICITUD NUEVO</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label for="form_recogidaTipoRel" class="col-sm-2 control-label">Tipo:</label>
+                    <div class="col-sm-4">
+                        <select id="solicitudTipo" name="solicitudTipo" class="form-control">
+                            <option value="CON" selected="selected" data-select2-id="2">CONTROL</option>
+                            <option value="DEN">DENUNCIA</option>
+                            <option value="FEL">FELICITACIÓN</option>
+                            <option value="PET">PETICIÓN</option>
+                            <option value="QUE">QUEJA</option>
+                            <option value="REC">RECLAMO</option>
+                            <option value="SUG">SUGERENCIA</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombreContacto) }}
+                        {{ form_errors(form.nombreContacto) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Teléfono:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.telefonoContacto) }}
+                        {{ form_errors(form.telefonoContacto) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Identificación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacionContacto) }}
+                        {{ form_errors(form.numeroIdentificacionContacto) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Cargo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.cargoContacto) }}
+                        {{ form_errors(form.cargoContacto) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Correo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.correoContacto) }}
+                        {{ form_errors(form.correoContacto) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Descripción:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.descripcion) }}
+                        {{ form_errors(form.descripcion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-xl-12 col-sm-12 text-right mt-2">
+                        <a href="{{ path('cliente_crm_solicitud_lista') }}" class=" btn btn-sm btn-default"
+                           title="regresar a la lista"> Cancelar</a>
+                        {{ form_widget(form.btnGuardar) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

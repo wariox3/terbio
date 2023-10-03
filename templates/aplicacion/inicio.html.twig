@@ -1,0 +1,440 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block content %}
+    {% if booEmpleado %}
+        {% if app.user.empresaRel.mostrarInformacionEmpleado %}
+            <div class="col-md-9">
+                <section class="panel panel-featured-right panel-featured-primary">
+                    <div class="panel-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-primary">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Información recurso</h4>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                        <tr>
+                                            <td>Zona:</td>
+                                            <td> {{ arrRecurso.zona }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Subzona:</td>
+                                            <td> {{ arrRecurso.subzona }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cargo:</td>
+                                            <td> {{ arrRecurso.cargo }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-9">
+                {% set modalidad = '' %}
+                {% for arrTurno in arrTurnos %}
+                    <section class="panel panel-horizontal">
+                        <header class="panel-heading bg-primary">
+                            <div class="panel-heading-icon">
+                                <i><b>{{ arrTurno.turno }}</b></i>
+                            </div>
+                        </header>
+                        <div class="panel-body p-lg">
+                            <h3 class="text-semibold mt-sm">TURNO DEL DÍA</h3>
+                            <table class="table table-bordered table-striped table-condensed mb-none">
+                                <tbody>
+                                <tr>
+                                    <td>Cliente:</td>
+                                    <td>{{ arrTurno.clienteNombre }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Puesto:</td>
+                                    <td>
+                                        {{ arrTurno.codigoPuestoFk }} | {{ arrTurno.puestoNombre }}
+                                        <span class="label label-primary text-normal">{{ arrTurno.modalidadNombre }}</span>
+                                        {% set modalidad = arrTurno.modalidadNombre %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>{{ arrTurno.puestoDireccion | default('NO REGISTRA DIRECCION') }} {{ arrTurno.ciudadNombre | default('NO REGISTRA CIUDAD') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Coordinador:</td>
+                                    <td>{{ arrTurno.coordinadorNombre | default('SIN COORDINADOR ASIGNADO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Programador:</td>
+                                    <td>{{ arrTurno.programadorNombre | default('SIN PROGRAMADOR ASIGNADO') }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr class="mt-md mb-md">
+                            {% if app.user.empresaRel.programacion %}
+                                {% if arrTurno.turnoDescanso %}
+                                    <strong><h2>DESCANSO</h2></strong>
+                                {% else %}
+                                    <strong><h2>DESDE {{ arrTurno.horaDesde }}
+                                            HASTA {{ arrTurno.horaHasta }}</h2>
+                                    </strong>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </section>
+                {% endfor %}
+            </div>
+            <div class="col-md-9">
+                {% for arrTurno in arrTurnos %}
+                    <section class="panel panel-horizontal">
+                        <header class="panel-heading bg-primary">
+                            <div class="panel-heading-icon">
+                                <i><b>{{ arrTurno.proximoTurno }}</b></i>
+                            </div>
+                        </header>
+                        <div class="panel-body p-lg">
+                            <h3 class="text-semibold mt-sm">PRÓXIMO TURNO</h3>
+                            <table class="table table-bordered table-striped table-condensed mb-none">
+                                <tbody>
+                                <tr>
+                                    <td>Cliente:</td>
+                                    <td>{{ arrTurno.clienteNombre }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Puesto:</td>
+                                    <td>
+                                        {{ arrTurno.codigoPuestoFk }} | {{ arrTurno.puestoNombre }}
+                                        <span class="label label-primary text-normal">{{ arrTurno.modalidadNombre }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td>{{ arrTurno.puestoDireccion | default('NO REGISTRA DIRECCION') }} {{ arrTurno.ciudadNombre | default('NO REGISTRA CIUDAD') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Coordinador:</td>
+                                    <td>{{ arrTurno.coordinadorNombre | default('SIN COORDINADOR ASIGNADO') }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Programador:</td>
+                                    <td>{{ arrTurno.programadorNombre | default('SIN PROGRAMADOR ASIGNADO') }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr class="mt-md mb-md">
+                            {% if app.user.empresaRel.programacion %}
+                                {% if arrTurno.proximoTurnoDescanso %}
+                                    <strong><h2>DESCANSO</h2></strong>
+                                {% else %}
+                                    <strong><h2>DESDE {{ arrTurno.proximoTurnoHoraDesde }}
+                                            HASTA {{ arrTurno.proximoTurnoHoraHasta }}</h2>
+                                    </strong>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </section>
+                {% endfor %}
+            </div>
+        </div>
+        {% if arrRecurso.habilitadoTurno %}
+            <div class="col-md-9">
+                <section class="panel panel-featured-right panel-featured-primary">
+                    <div class="panel-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-primary">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Formación y control</h4>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                        <tr>
+                                            <td>Vence curso:</td>
+                                            {% if arrRecurso.venceCurso == null %}
+                                                <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
+                                            {% elseif arrRecurso.venceCurso | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td bgcolor="red">
+                                                    <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
+                                            {% else %}
+                                                {% set diferenciaDiasCurso = date(arrRecurso.venceCurso).diff(date("now")) %}
+                                                {% set diferenciaDiasCurso = diferenciaDiasCurso.days %}
+                                                {% if diferenciaDiasCurso >= 0 and diferenciaDiasCurso < 30 %}
+                                                    <td bgcolor="orange">
+                                                        <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasCurso >= 30 and diferenciaDiasCurso < 60 %}
+                                                    <td bgcolor="yellow">
+                                                        <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasCurso > 60 %}
+                                                    <td class="alert-success">
+                                                        <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }} </b></td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                            <td>Vence acreditación:</td>
+                                            {% if arrRecurso.venceAcreditacion == null %}
+                                                <td class="alert-dark"><b>{{ 'Sin definir' }} </b></td>
+                                            {% elseif arrRecurso.venceAcreditacion | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td bgcolor="red">
+                                                    <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b></td>
+                                            {% else %}
+                                                {% set diferenciaDiasAcreditacion = date(arrRecurso.venceAcreditacion).diff(date("now")) %}
+                                                {% set diferenciaDiasAcreditacion = diferenciaDiasAcreditacion.days %}
+                                                {% if diferenciaDiasAcreditacion >= 0 and diferenciaDiasAcreditacion < 30 %}
+                                                    <td bgcolor="orange">
+                                                        <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b>
+                                                    </td>
+                                                {% endif %}
+                                                {% if diferenciaDiasAcreditacion >= 30 and diferenciaDiasAcreditacion < 60 %}
+                                                    <td bgcolor="yellow">
+                                                        <b>  {{ arrRecurso.venceAcreditacion|date('Y-m-d') }}</b>
+                                                    </td>
+                                                {% endif %}
+                                                {% if diferenciaDiasAcreditacion > 60 %}
+                                                    <td class="alert-success">
+                                                        <b>{{ arrRecurso.venceAcreditacion|date('Y-m-d') }} </b>
+                                                    </td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                            <td>Vence polígono:</td>
+                                            {% if arrRecurso.vencePoligono == null %}
+                                                <td class="alert-dark"><b>{{ 'Sin definir' }}</b></td>
+                                            {% elseif arrRecurso.vencePoligono | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td bgcolor="red">
+                                                    <b> {{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
+                                            {% else %}
+                                                {% set diferenciaDiasPoligono = date(arrRecurso.vencePoligono).diff(date("now")) %}
+                                                {% set diferenciaDiasPoligono = diferenciaDiasPoligono.days %}
+                                                {% if diferenciaDiasPoligono >= 0 and diferenciaDiasPoligono < 30 %}
+                                                    <td bgcolor="orange">
+                                                        <b>{{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPoligono >= 30 and diferenciaDiasPoligono < 60 %}
+                                                    <td bgcolor="yellow">
+                                                        <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }} </b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPoligono > 60 %}
+                                                    <td class="alert-success">
+                                                        <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        {% if modalidad == 'CON ARMA' %}
+                                            <tr>
+                                                <td>Vence psicofísico:</td>
+                                                {% if arrRecurso.vencePsicofisico == null %}
+                                                    <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
+                                                {% elseif arrRecurso.vencePsicofisico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                    <td bgcolor="red">
+                                                        <b> {{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b></td>
+                                                {% else %}
+                                                    {% set diferenciaDiasPsicofisico = date(arrRecurso.vencePsicofisico).diff(date("now")) %}
+                                                    {% set diferenciaDiasPsicofisico = diferenciaDiasPsicofisico.days %}
+                                                    {% if diferenciaDiasPsicofisico >= 0 and diferenciaDiasPsicofisico < 30 %}
+                                                        <td bgcolor="orange">
+                                                            <b>{{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPsicofisico >= 30 and diferenciaDiasPsicofisico < 60 %}
+                                                        <td bgcolor="yellow">
+                                                            <b>  {{ arrRecurso.vencePsicofisico|date('Y-m-d') }} </b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPsicofisico > 60 %}
+                                                        <td class="alert-success">
+                                                            <b> {{ arrRecurso.vencePsicofisico|date('Y-m-d') }}</b></td>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </tr>
+                                        {% endif %}
+                                        <tr>
+                                            <td>Vence psicosensométrico:</td>
+                                            {% if arrRecurso.vencePsicosensometrico == null %}
+                                                <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
+                                            {% elseif arrRecurso.vencePsicosensometrico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td bgcolor="red">
+                                                    <b> {{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
+                                                </td>
+                                            {% else %}
+                                                {% set diferenciaDiasPsicosensometrico = date(arrRecurso.vencePsicosensometrico).diff(date("now")) %}
+                                                {% set diferenciaDiasPsicosensometrico = diferenciaDiasPsicosensometrico.days %}
+                                                {% if diferenciaDiasPsicosensometrico >= 0 and diferenciaDiasPsicosensometrico < 30 %}
+                                                    <td bgcolor="orange">
+                                                        <b>{{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
+                                                    </td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPsicosensometrico >= 30 and diferenciaDiasPsicosensometrico < 60 %}
+                                                    <td bgcolor="yellow">
+                                                        <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
+                                                    </td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPsicosensometrico > 60 %}
+                                                    <td class="alert-success">
+                                                        <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
+                                                    </td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-muted text-uppercase">(ver todo)</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% else %}
+            <div class="col-md-9">
+                <section class="panel panel-featured-right panel-featured-primary">
+                    <div class="panel-body">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon bg-primary">
+                                    <i class="fa fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">Control</h4>
+                                    <table class="table table-condensed">
+                                        <tbody>
+                                        <tr>
+                                            <td>Vence periódico:</td>
+                                            {% if arrRecurso.vencePeriodico == null %}
+                                                <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
+                                            {% elseif arrRecurso.vencePeriodico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td bgcolor="red">
+                                                    <b> {{ arrRecurso.vencePeriodico | date('Y-m-d') }}</b></td>
+                                            {% else %}
+                                                {% set diferenciaDiasPeriodico = date(arrRecurso.vencePeriodico).diff(date("now")) %}
+                                                {% set diferenciaDiasPeriodico = diferenciaDiasPeriodico.days %}
+                                                {% if diferenciaDiasPeriodico >= 0 and diferenciaDiasPeriodico < 30 %}
+                                                    <td bgcolor="orange">
+                                                        <b> {{ arrRecurso.vencePeriodico | date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPeriodico >= 30 and diferenciaDiasPeriodico < 60 %}
+                                                    <td bgcolor="yellow">
+                                                        <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }}</b></td>
+                                                {% endif %}
+                                                {% if diferenciaDiasPeriodico > 60 %}
+                                                    <td class="alert-success">
+                                                        <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }} </b></td>
+                                                {% endif %}
+                                            {% endif %}
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {% endif %}
+        {% if app.user.empresaRel.menuCapacitacion %}
+            <div class="col-md-9">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+                        <h2 class="panel-title">Capacitaciones virtuales</h2>
+                        <p class="panel-subtitle">En este espacio encontrará información relacionada con las
+                            capacitaciones pendientes</p>
+                    </header>
+                    <div class="panel-body">
+                        {% for arrInformacionCapacitacion in arrInformacionCapacitaciones %}
+                            <section class="panel panel-horizontal">
+                                <header class="panel-heading bg-primary" style="width: 181px;">
+                                    <div class="panel-heading-icon">
+                                        <i class="fa fa-file-archive-o"></i>
+                                    </div>
+                                </header>
+                                <div class="panel-body p-lg">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h3 class="text-semibold mt-sm text-center">{{ arrInformacionCapacitacion.tema }}</h3>
+                                            <strong>Objetivo:</strong>
+                                            <p class="text-justify">{{ arrInformacionCapacitacion.objetivo }}</p>
+                                            <br>
+                                            <strong>Contenido:</strong>
+                                            <p class="text-justify">{{ arrInformacionCapacitacion.contenido }}</p>
+                                            <br>
+                                            <strong>Archivos:</strong>
+                                            <br>
+                                            {% for archivo in arrInformacionCapacitacion.archivos %}
+                                                <li style="list-style: none">
+                                                    {{ archivo.nombre }} <input type="hidden" name="LblCodigo[]"
+                                                                                value="{{ archivo.codigoArchivoPk }}">{{ archivo.codigoArchivoPk }}
+                                                    <a href="{{ path('descargar_archivo', { 'tipo': "RhuCapacitacion",'codigoArchivo': arrInformacionCapacitacion.codigoCapacitacionPk }) }}"
+                                                       title="Descargar archivo">
+                                                        <i class="fa fa-download"
+                                                           style="font-size: large;color: black;"></i> </a>
+                                                </li>
+                                            {% endfor %}
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a href="{{ path('empleado_capacitaciones_pendites_confirmarasistencia', {'codigoCapacitacionDetelle':arrInformacionCapacitacion.codigoCapacitacionDetallePk }) }}"
+                                               onclick="return confirm('¿Está seguro de confirmar asistencia para la capacitación, esta acción no se puede deshacer?')"
+                                               class="btn btn-info">
+                                                Confirmar asistencia
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        {% endif %}
+        <div class="col-md-9">
+            {% for arrTurno in arrTurnos %}
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+                        <h2 class="panel-title">Consignas puesto</h2>
+                        <p class="panel-subtitle">Recuerde seguir atentamente las consignas del puesto.</p>
+                    </header>
+                    <div class="panel-body">
+                        <ul>
+                            {% for arrConsigna in arrTurno.consignas %}
+                                <li>{{ arrConsigna.consigna }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </section>
+            {% endfor %}
+        </div>
+        </div>
+    {% endif %}
+    {% if booCliente %}
+    {% endif %}
+    {% if booProveedor %}
+    {% endif %}
+    {% if booEmpresa %}
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}SOLICITUD{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">SOLICITUD</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10">
+            <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
+                <a href="{{ path('empleado_solicitud_nuevo', {'codigoSolicitud':0 }) }}"
+                   class="btn btn-sm btn-default ">
+                    Nuevo
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TIPO</th>
+                    <th>DESDE</th>
+                    <th>HASTA</th>
+                    <th>COMENTARIO</th>
+                    <th title="Estado autorizado">AUT</th>
+                    <th title="Estado aprobado">APR</th>
+                    <th title="Estado solicitud">EST</th>
+                    <th>COMENTARIO RECHAZO</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arSolicitud in arrSolicitudes %}
+                    <tr>
+                        <td>{{ arSolicitud.codigoSolicitudEmpleadoPk }}</td>
+                        <td>{{ arSolicitud.solicitudEmpleadoTipo }}</td>
+                        <td>{{ arSolicitud.fechaDesde | date('Y-m-d H:i:s') }}</td>
+                        <td>{{ arSolicitud.fechaHasta | date('Y-m-d H:i:s') }}</td>
+                        <td>{{ arSolicitud.comentario }}</td>
+                        <td>{{ arSolicitud.estadoAutorizado ? "SI":"NO" }}</td>
+                        <td>{{ arSolicitud.estadoAprobado ? "SI":"NO" }}</td>
+                        <td>{{ arSolicitud.estadoSolicitud}}</td>
+                        <td>{{ arSolicitud.comentarioRechazo | default('')}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}INCAPACIDAD{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">INFORMACIÓN GENERAL</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Tipo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.incapacidadTipoRel) }}
+                        {{ form_errors(form.incapacidadTipoRel) }}
+                    </div>
+                        <label class="col-sm-2 control-label">Número eps:</label>
+                        <div class="col-sm-4">
+                            {{ form_widget(form.numeroEps) }}
+                            {{ form_errors(form.numeroEps) }}
+                        </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaDesde) }}
+                        {{ form_errors(form.fechaDesde) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaHasta) }}
+                        {{ form_errors(form.fechaHasta) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Comentario:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(form.comentarios) }}
+                        {{ form_errors(form.comentarios) }}
+                    </div>
+                </div>
+                <div class="col-xl-12 col-sm-12 text-right mt-2">
+                    <a href="{{ path('empleado_incapacidad_lista') }}" class=" btn btn-sm btn-default"
+                       title="regresar a la lista"> Cancelar</a>
+                    {{ form_widget(form.btnGuardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

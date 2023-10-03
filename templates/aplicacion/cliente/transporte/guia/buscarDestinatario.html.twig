@@ -1,0 +1,151 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block title %}Destinatarios{% endblock %}
+{% block content %}
+    <script language="javascript">
+        function selDestinatario(tipoIdentificacion, identificacion, nombre, direccion, telefono, codigoCiudad) {
+            opener.document.getElementById('form_identificacionTipo').value = tipoIdentificacion;
+            opener.document.getElementById('form_identificacion').value = identificacion;
+            opener.document.getElementById('form_destinatario').value = nombre;
+            opener.document.getElementById('form_direccion').value = direccion;
+            opener.document.getElementById('form_telefono').value = telefono;
+            opener.document.getElementById('form_destinoRel').focus();
+            window.opener.selecionarCiudad(codigoCiudad);
+            self.close();
+        }
+    </script>
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Lista destinatarios</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.nombre, { 'attr': {'class': 'form-control','autofocus':true,'onblur':'javascript:this.value=this.value.toUpperCase()'} }) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Código:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoDestinatario) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Identifiación:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.numeroIdentificacionLista) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th title="Tipo identificación">TI</th>
+                    <th>IDENTIFICACIÓN</th>
+                    <th>NOMBRE</th>
+                    <th>DIRECCION</th>
+                    <th>TELEFONO</th>
+                    <th>CIUDAD</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arDestinatario in arDestinatarios %}
+                    <tr>
+                        <td>{{ arDestinatario.codigoDestinatarioPk }}</td>
+                        <td>{{ arDestinatario.codigoIdentificacionFk }}</td>
+                        <td>{{ arDestinatario.numeroIdentificacion }}</td>
+                        <td>{{ arDestinatario.nombreCorto }}</td>
+                        <td>{{ arDestinatario.direccion }}</td>
+                        <td>{{ arDestinatario.telefono }}</td>
+                        <td>{{ arDestinatario.ciudadNombre }}</td>
+                        <td class="text-center" title="Seleccionar registro">
+                            <a href="javascript:selDestinatario('{{ arDestinatario.codigoIdentificacionFk }}','{{ arDestinatario.numeroIdentificacion }}','{{ arDestinatario.nombreCorto }}', '{{ arDestinatario.direccion }}','{{ arDestinatario.telefono }}','{{ arDestinatario.codigoCiudadFk }}')">
+                                <i style="font-size: large;color: black;" class="fa fa-search"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arDestinatarios.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arDestinatarios) }}
+        </div>
+    </div>
+    <hr>
+    {{ form_start(formNuevo) }}
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">DESTINATARIO NUEVO</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Numero identificacion:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.numeroIdentificacion) }}
+                        {{ form_errors(formNuevo.numeroIdentificacion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Nombre:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.nombreCorto) }}
+                        {{ form_errors(formNuevo.nombreCorto) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Direccion:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.direccion) }}
+                        {{ form_errors(formNuevo.direccion) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Telefono:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.telefono) }}
+                        {{ form_errors(formNuevo.telefono) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Destino:</label>
+                    <div class="col-sm-10">
+                        {{ form_widget(formNuevo.ciudadRel, { 'attr' : {'class': 'form-control to-select-2'}}) }}
+                        {{ form_errors(formNuevo.ciudadRel) }}
+                    </div>
+                </div>
+                <div class="col-xl-12 col-sm-12 text-right mt-2">
+                    {{ form_widget(formNuevo.btnGuardar) }}
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_rest(formNuevo) }}
+    {{ form_end(formNuevo) }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

@@ -1,0 +1,211 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Guias{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">Lista guias</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Fecha desde:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.fechaDesde) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Documento:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.documentoCliente) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Ciudad origen:</label>
+                    <div class="col-sm-2">
+                        <div style="display: flex; align-items: baseline">
+                            {{ form_widget(form.ciudadOrigen, { 'attr': {'style': 'width: 65%'}} ) }}
+                            <input id="form_nombreCiudadOrigen" class="form-control" readonly="" >
+                            <a class="btn btn-default btn-sm"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_buscar_ciudad', {'campoCodigo':'form_ciudadOrigen', 'campoNombre': 'form_nombreCiudadOrigen'}) }}', 'CotizacionAdicionarDetalle', 600, 900)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Fecha hasta:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.fechaHasta) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Guia tipo:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.codigoGuiaTipo) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Ciudad destino:</label>
+                    <div class="col-sm-2">
+                        <div style="display: flex; align-items: baseline">
+                            {{ form_widget(form.ciudadDestino, { 'attr': {'style': 'width: 65%'}} ) }}
+                            <input id="form_nombreCiudadDestino" class="form-control" readonly="">
+                            <a class="btn btn-default btn-sm"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_buscar_ciudad', {'campoCodigo':'form_ciudadDestino', 'campoNombre': 'form_nombreCiudadDestino' }) }}', 'CotizacionAdicionarDetalle', 600, 900)">
+                                <i class="fa fa-search"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Limite registros:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.limiteRegistros) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Guia:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.codigo) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Despacho:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.codigoDespacho) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+            <div class="btn-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> Rotulo <span
+                                class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>{{ form_widget(form.btnRotulo1, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                    </ul>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> Formatos <span
+                                class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>{{ form_widget(form.btnFormato1, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                        <li>{{ form_widget(form.btnFormato2, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                        <li>{{ form_widget(form.btnFormato3, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                        <li>{{ form_widget(form.btnFormato4, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                    </ul>
+                </div>
+                {{ form_widget(form.btnExcel, { 'attr': {'class': 'btn btn-default btn-sm'}} ) }}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> Pdf <span
+                                class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>{{ form_widget(form.btnPdf, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                        <li>{{ form_widget(form.btnPdf2, { 'attr': {'class': 'btn btn-link'}} ) }}</li>
+                    </ul>
+                </div>
+                {% if app.user.guiaNuevo %}
+                    <a href="{{ path('cliente_transporte_guia_nuevo', {'id':0 }) }}"
+                       class="btn btn-default btn-sm pull-right">
+                        Nuevo
+                    </a>
+                {% endif %}
+            </div>
+
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>TIPO</th>
+                    <th>GUIA</th>
+                    <th>FECHA</th>
+                    <th>DOCUMENTO</th>
+                    <th>SERVICIO</th>
+                    <th title="Código ciudad origen">COD</th>
+                    <th>ORIGEN</th>
+                    <th>COD</th>
+                    <th  title="Código ciudad destino">DESTINO</th>
+                    <th>DESTINATARIO</th>
+                    <th title="Operación cliente">OPC</th>
+                    <th>COMENTARIO</th>
+                    <th>UND</th>
+                    <th>PES</th>
+                    <th>VOL</th>
+                    <th>RECAUDO</th>
+                    <th>DECLARA</th>
+                    <th>FLETE</th>
+                    <th>MANEJO</th>
+                    <th>TOTAL</th>
+                    <th title="Recogida">R</th>
+                    <th title="Salida ubicacion cliente">S</th>
+                    <th title="Despachada">D</th>
+                    <th title="Entregada">E</th>
+                    <th title="Cumplida">C</th>
+                    <th title="Facturada">F</th>
+                    <th title="Novedad">N</th>
+                    <th title="Anulada">A</th>
+                    <th title="Digitalizada">G</th>
+                    <th title="Firma">F</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arGuia in arGuias %}
+                    <tr>
+                        <td>{{ arGuia.codigoGuiaTipoFk }}</td>
+                        <td>{{ arGuia.codigoGuiaPk }}</td>
+                        <td>{{ arGuia.fechaIngreso | date('Y-m-d H:i') }}</td>
+                        <td>{{ arGuia.documentoCliente }}</td>
+                        <td>{{ arGuia.guiaServicio }}</td>
+                        <td>{{ arGuia.codigoCiudadOrigenFk }}</td>
+                        <td>{{ arGuia.ciudadOrigen }}</td>
+                        <td>{{ arGuia.codigoCiudadDestinoFk }}</td>
+                        <td>{{ arGuia.ciudadDestino }}</td>
+                        <td>{{ arGuia.nombreDestinatario }}</td>
+                        <td>{{ arGuia.terceroOperacionCodigo | default("") }}</td>
+                        <td>{{ arGuia.comentario | slice(0,40) }}</td>
+                        <td style="text-align: right">{{ arGuia.unidades }}</td>
+                        <td style="text-align: right">{{ arGuia.pesoReal }}</td>
+                        <td style="text-align: right">{{ arGuia.pesoVolumen }}</td>
+                        <td style="text-align: right">{{ arGuia.vrRecaudo | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arGuia.vrDeclara | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arGuia.vrFlete | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arGuia.vrManejo | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ (arGuia.vrFlete+arGuia.vrManejo) | number_format(0, '.', ',') }}</td>
+                        <td>{{ arGuia.estadoRecogido?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoSalidaCliente?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoDespachado?arGuia.fechaDespacho?arGuia.fechaDespacho|date('Y-m-d'):'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoEntregado?arGuia.fechaEntrega?arGuia.fechaEntrega|date('Y-m-d'):'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoCumplido?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoFacturado?'SI':'NO' }}</td>
+                        <td style="color: red; font-weight: bold;">{{ arGuia.estadoNovedad?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoAnulado?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoDigitalizado?'SI':'NO' }}</td>
+                        <td>{{ arGuia.estadoFirma?'SI':'NO' }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('cliente_transporte_guia_detalle', {'id': arGuia.codigoGuiaPk }) }}"
+                               class="btn btn-xs btn-default" title="Ver detalle"><i class="fa fa-eye"></i> </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-xs btn-default" title="Ver archivos masivos"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_archivosmasivos', { 'codigoGuia': arGuia.codigoGuiaPk }) }}', 'ArchivosMasivos', 800, 1250)">
+                                <i class="fa fa-upload"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

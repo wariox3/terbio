@@ -1,0 +1,98 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Despachos{% endblock %}
+{% block content %}
+    {{ form_start(form)}}
+    <div class="row">
+        <h2 class="panel-title">Lista despachos</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Placa:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoVehiculo) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-xl-11 offset-1">
+
+            <a href="{{ path('cliente_transporte_despacho_nuevo', {'id':0 }) }}" class="btn btn-default btn-sm pull-right">
+                Nuevo
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NUMERO</th>
+                    <th>FECHA</th>
+                    <th>PLACA</th>
+                    <th>ORIGEN</th>
+                    <th>DESTINO</th>
+                    <th>AUT</th>
+                    <th>APR</th>
+                    <th>ENT</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arDespacho in arDespachos %}
+                    <tr>
+                        <td>{{ arDespacho.codigoDespachoPk }}</td>
+                        <td>{{ arDespacho.numero }}</td>
+                        <td>{{ arDespacho.fechaSalida | date('Y-m-d') }}</td>
+                        <td>{{ arDespacho.codigoVehiculoFk }}</td>
+                        <td>{{ arDespacho.ciudadOrigen }}</td>
+                        <td>{{ arDespacho.ciudadDestino }}</td>
+                        <td>{{ arDespacho.estadoAutorizado ? 'SI':'NO' }}</td>
+                        <td>{{ arDespacho.estadoAprobado ? 'SI':'NO' }}</td>
+                        <td>{{ arDespacho.estadoEntregado ? 'SI':'NO' }}</td>
+                        <td class="text-center">
+                            {% if arDespacho.estadoAutorizado == 0 %}
+                                <a href="{{ path('cliente_transporte_despacho_nuevo', {'id': arDespacho.codigoDespachoPk }) }}"
+                                   class="btn btn-xs btn-default" title="editar"><i class="fa fa-pencil"></i>
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('cliente_transporte_despacho_detalle', {'id': arDespacho.codigoDespachoPk }) }}"
+                            class="btn btn-xs btn-default" title="Ver detalle"><i class="fa fa-eye"></i> </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col">
+        Total {{ arDespachos.getTotalItemCount }} registros
+    </div>
+    <div class="col">
+        {{ knp_pagination_render(arDespachos) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

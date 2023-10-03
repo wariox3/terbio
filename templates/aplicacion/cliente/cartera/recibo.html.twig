@@ -1,0 +1,49 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}RECIBOS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2 class="panel-title">RECIBOS</h2>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TIPO</th>
+                    <th>NUM</th>
+                    <th title="Fecha documento">FECHA DOC</th>
+                    <th>SOPORTE</th>
+                    <th title="Valor total bruto">BRUTO</th>
+                    <th>TOTAL</th>
+                    <th>COMENTARIOS</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arRecibo in arRecibos %}
+                    <tr>
+                        <td>{{ arRecibo.codigoMovimientoPk }}</td>
+                        <td>{{ arRecibo.movimientoTipoNombre }}</td>
+                        <td>{{ arRecibo.numero }}</td>
+                        <td>{{ arRecibo.fechaDocumento | date('Y-m-d') }}</td>
+                        <td>{{ arRecibo.soporte }}</td>
+                        <td style="text-align: right">{{ arRecibo.vrTotalBruto | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arRecibo.vrTotalNeto | number_format(0, '.', ',') }}</td>
+                        <td>{{ arRecibo.comentarios }}</td>
+                        <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpImprimir" value="{{ arRecibo.codigoMovimientoPk }}">Imprimir</button></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arRecibos.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arRecibos) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

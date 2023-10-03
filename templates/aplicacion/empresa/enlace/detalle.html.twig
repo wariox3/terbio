@@ -1,0 +1,28 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CLIENTES{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">CLIENTE DETALLE</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="btn-group btn-group-sm pull-left">
+                <a href="{{ path('empresa_enlace_lista') }}" class=" btn btn-sm btn-default" title="regresar a la lista"><i class="fa fa-arrow-left"></i> Volver</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                <td>CODIGO:</td>
+                <td>{{ arRegistro.codigoEnlacePk }}</td>
+                <td>NOMBRE:</td>
+                <td>{{ arRegistro.nombre}}</td>
+            </tr>
+            <tr>
+                <td>ENLACE:</td>
+                <td colspan="3">{{ arRegistro.enlace}}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

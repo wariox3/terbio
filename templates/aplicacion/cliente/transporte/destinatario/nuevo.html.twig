@@ -1,0 +1,63 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Destinatario nuevo{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <input type="hidden" id="codigoTercero" value="{{ codigoTercero }}">
+    <div class="row mt-2">
+    <section class="panel">
+    <div class="panel-heading">
+        <div class="panel-title">
+            <h2 class="panel-title">DESTINATARIO NUEVO</h2>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Numero identificación:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.numeroIdentificacion) }}
+                {{ form_errors(form.numeroIdentificacion) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Nombre:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.nombreCorto) }}
+                {{ form_errors(form.nombreCorto) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Dirección:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.direccion) }}
+                {{ form_errors(form.direccion) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Teléfono:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.telefono) }}
+                {{ form_errors(form.telefono) }}
+            </div>
+        </div>
+        <div class="row form-group form-group-sm">
+            <label class="col-sm-2 control-label">Destino:</label>
+            <div class="col-sm-10">
+                {{ form_widget(form.ciudadRel) }}
+                {{ form_errors(form.ciudadRel) }}
+            </div>
+        </div>
+        <div class="col-xl-12 col-sm-12 text-right mt-2">
+            <a href="{{ path('cliente_transporte_destinatario_lista') }}" class=" btn btn-sm btn-default"
+               title="Regresar a la lista"> Cancelar</a>
+            {{ form_widget(form.btnGuardar) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+    <script>
+
+    </script>
+{% endblock %}

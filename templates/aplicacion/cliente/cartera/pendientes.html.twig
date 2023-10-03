@@ -1,0 +1,84 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CUENTAS PENDIENTES{% endblock %}
+{% block content %}
+    {{ form_start(form)}}
+    <div class="row">
+        <h2 class="panel-title">CUENTAS PENDIENTES</h2>
+    </div>
+    <div class="row">
+        <!-- Split button -->
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default btn-sm">PDF</button>
+            <button type="button" class="btn btn-default btn-sm  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a>{{ form_widget(form.btnEstadoCuentaFormal) }}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NUM</th>
+                    <th>NUM_REF</th>
+                    <th>TIPO</th>
+                    <th>FECHA</th>
+                    <th>VENCE</th>
+                    <th>SOPORTE</th>
+                    <th>NIT</th>
+                    <th>TERCERO</th>
+                    <th>PLAZO
+                    <th>VALOR</th>
+                    <th>ABONO</th>
+                    <th>SALDO</th>
+                    <th>SALDO(O)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% set saldo = 0 %}
+                {% for arCuentasCobrarPendiente in arCuentasCobrarPendientes %}
+                    <tr>
+                        <td>
+                            {{ arCuentasCobrarPendiente.codigoCuentaCobrarPk }}
+                        </td>
+                        <td>{{ arCuentasCobrarPendiente.numeroDocumento }}</td>
+                        <td>{{ arCuentasCobrarPendiente.numeroReferencia }}</td>
+                        <td>{{ arCuentasCobrarPendiente.tipo }}</td>
+                        <td>{{ arCuentasCobrarPendiente.fecha | date('Y-m-d') }}</td>
+                        <td>{{ arCuentasCobrarPendiente.fechaVence | date('Y-m-d') }}</td>
+                        <td>{{ arCuentasCobrarPendiente.soporte }}</td>
+                        <td>{{ arCuentasCobrarPendiente.numeroIdentificacion }}</td>
+                        <td>{{ arCuentasCobrarPendiente.nombreCorto }}</td>
+                        <td>{{ arCuentasCobrarPendiente.plazo }}</td>
+                        <td style="text-align: right">{{ arCuentasCobrarPendiente.vrSaldoOriginal | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arCuentasCobrarPendiente.vrAbono | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arCuentasCobrarPendiente.vrSaldo | number_format(0, '.', ',') }}</td>
+                        <td style="text-align: right">{{ arCuentasCobrarPendiente.vrSaldoOperado | number_format(0, '.', ',') }}</td>
+                    </tr>
+                    {% set saldo = saldo + arCuentasCobrarPendiente.vrSaldoOperado %}
+                {% endfor %}
+                <tr>
+                    <td colspan="13"></td>
+                    <td style="text-align: right">{{ saldo | number_format(0, '.', ',') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+            <div class="col">
+                Total {{ arCuentasCobrarPendientes.getTotalItemCount }} registros
+            </div>
+            <div class="col">
+                {{ knp_pagination_render(arCuentasCobrarPendientes) }}
+            </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

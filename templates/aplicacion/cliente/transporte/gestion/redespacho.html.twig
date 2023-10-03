@@ -1,0 +1,47 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Redespacho{% endblock %}
+{% block content %}
+    {{ form_start(form)}}
+    <div class="row">
+        <h2 class="panel-title">Redespacho</h2>
+    </div>
+    <div class="row mt-2">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Motivo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.redespachoMotivoRel) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Codigo guia:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoGuia) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Documento cliente:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.documentoCliente) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnRedespacho, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script>
+    </script>
+{% endblock %}

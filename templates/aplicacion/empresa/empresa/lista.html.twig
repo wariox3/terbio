@@ -1,0 +1,94 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}EMPRESAS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2>Empresas</h2>
+    </div>
+    <div class="row">
+        <section class="panel">
+            <header class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-filter"></i> Filtros</h3>
+            </header>
+            <div class="panel-body">
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-1 control-label">Código:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.codigo) }}
+                    </div>
+                    <label class="col-sm-1 control-label">Identificación:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.identificacion) }}
+                    </div>
+                    <label class="col-sm-1 control-label">Nombre:</label>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.nombre) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <div class="col-sm-12">
+                        {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10" >
+            <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
+                <a href="{{ path('administrador_empresa_nuevo', {'id':0 }) }}" class="btn btn-sm btn-default ">
+                    Nuevo
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>ABREVIATURA</th>
+                    <th>NOMBRE</th>
+                    <th>N I</th>
+                    <th>DIGITO VERIFICACIÓN</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arEmpresa in arEmpresas %}
+                    <tr>
+                        <td>
+                            {{ arEmpresa.codigoEmpresaPk }}
+                        </td>
+                        <td>{{ arEmpresa.abreviatura }}</td>
+                        <td>{{ arEmpresa.nombre }}</td>
+                        <td>{{ arEmpresa.nit }}</td>
+                        <td>{{ arEmpresa.digitoVerificacion }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('administrador_empresa_nuevo', {'id':arEmpresa.codigoEmpresaPk }) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('administrador_empresa_detalle', {'id':arEmpresa.codigoEmpresaPk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arEmpresas.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arEmpresas) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

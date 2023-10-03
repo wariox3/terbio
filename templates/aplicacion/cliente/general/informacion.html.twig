@@ -1,0 +1,23 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}CLIENTES{% endblock %}
+{% block content %}
+    <div class="row">
+        <h2 class="panel-title">CLIENTE DETALLE</h2>
+    </div>
+    <div class="row">
+        <table class="table table-condensed table-bordered tabla-informacion w-100">
+            <tr>
+                <td>NOMBRE:</td>
+                <td>{{ arrTercero.nombreCorto }}</td>
+            </tr>
+            <tr>
+                <td>ASESOR/CONSULTOR:</td>
+                <td>{{ arrTercero.asesorNombre }}</td>
+                <td>CELULAR:</td>
+                <td>{{ arrTercero.asesorCelular }}</td>
+                <td>CORREO:</td>
+                <td>{{ arrTercero.asesorCorreo }}</td>
+            </tr>
+        </table>
+    </div>
+{% endblock %}

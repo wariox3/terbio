@@ -1,0 +1,127 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}Programación turno{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-md-12">
+            {% if app.user.empresaRel.programacion %}
+                {% for arrProgramacion in arrProgramaciones %}
+                    <section class="panel">
+                        <header class="panel-heading">
+                            <div class="panel-actions">
+                                <a href="#" class="fa fa-caret-down"></a>
+                                <a href="#" class="fa fa-times"></a>
+                            </div>
+                            {% set mes = mesLetras(arrProgramacion.mes) %}
+                            <h2 class="panel-title">{{ mes }} {{ arrProgramacion.anio }}</h2>
+                            <p class="panel-subtitle">Programación</p>
+                        </header>
+                        <div class="panel-body">
+                            <div class="container">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-condensed mb-none">
+                                        <thead>
+                                        <tr>
+                                            <th>Cliente</th>
+                                            <th>Puesto</th>
+                                            {% for arrDiaSemana in arrProgramacion.diasSemana %}
+                                                <th {{ arrDiaSemana.festivo? 'class="dia-festivo"' : '' }}>{{ arrDiaSemana.dia }}{{ arrDiaSemana.diaSemana|upper }}</th>
+                                            {% endfor %}
+                                            <th title="Horas diurnas">D</th>
+                                            <th title="Horas nocturnas">N</th>
+                                            {% if "now"|date('m') == arrProgramacion.mes %}
+                                                <th></th>
+                                            {% endif %}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for arrDetalle in arrProgramacion.programacion %}
+                                            <tr>
+                                                <td>{{ arrDetalle.clienteNombre }}</td>
+                                                <td>{{ arrDetalle.codigoPuestoFk }} | {{ arrDetalle.puestoNombre }}</td>
+                                                <td>{{ arrDetalle.dia1 }}</td>
+                                                <td>{{ arrDetalle.dia2 }}</td>
+                                                <td>{{ arrDetalle.dia3 }}</td>
+                                                <td>{{ arrDetalle.dia4 }}</td>
+                                                <td>{{ arrDetalle.dia5 }}</td>
+                                                <td>{{ arrDetalle.dia6 }}</td>
+                                                <td>{{ arrDetalle.dia7 }}</td>
+                                                <td>{{ arrDetalle.dia8 }}</td>
+                                                <td>{{ arrDetalle.dia9 }}</td>
+                                                <td>{{ arrDetalle.dia10 }}</td>
+                                                <td>{{ arrDetalle.dia11 }}</td>
+                                                <td>{{ arrDetalle.dia12 }}</td>
+                                                <td>{{ arrDetalle.dia13 }}</td>
+                                                <td>{{ arrDetalle.dia14 }}</td>
+                                                <td>{{ arrDetalle.dia15 }}</td>
+                                                <td>{{ arrDetalle.dia16 }}</td>
+                                                <td>{{ arrDetalle.dia17 }}</td>
+                                                <td>{{ arrDetalle.dia18 }}</td>
+                                                <td>{{ arrDetalle.dia19 }}</td>
+                                                <td>{{ arrDetalle.dia20 }}</td>
+                                                <td>{{ arrDetalle.dia21 }}</td>
+                                                <td>{{ arrDetalle.dia22 }}</td>
+                                                <td>{{ arrDetalle.dia23 }}</td>
+                                                <td>{{ arrDetalle.dia24 }}</td>
+                                                <td>{{ arrDetalle.dia25 }}</td>
+                                                <td>{{ arrDetalle.dia26 }}</td>
+                                                <td>{{ arrDetalle.dia27 }}</td>
+                                                <td>{{ arrDetalle.dia28 }}</td>
+                                                <td>{{ arrDetalle.dia29 }}</td>
+                                                <td>{{ arrDetalle.dia30 }}</td>
+                                                <td>{{ arrDetalle.dia31 }}</td>
+                                                <td>{{ arrDetalle.horasDiurnas }}</td>
+                                                <td>{{ arrDetalle.horasNocturnas }}</td>
+                                                {% if "now"|date('m') == arrDetalle.mes %}
+                                                    <td class="text-center">
+                                                        <a class="btn btn-danger btn-xs"
+                                                           id="{{ path('turno_programacion_reportar', {'codigoProgramacion': arrDetalle.codigoProgramacionPk }) }}"
+                                                           data-toggle="modal"
+                                                           data-target="#modalBootstrap">Reportar</a>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <table class="table table-bordered table-striped table-condensed mb-none">
+                                                    <thead>
+                                                    <tr>
+                                                        <th title="Código turno">Cod</th>
+                                                        <th title="Código puesto">Nombre</th>
+                                                        <th>Horario</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for arrDetalle in arrProgramacion.turnos %}
+                                                        <tr>
+                                                            <td>{{ arrDetalle.codigoTurno }}</td>
+                                                            <td>{{ arrDetalle.nombre }}</td>
+                                                            <td>{{ arrDetalle.horario }}</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </th>
+                                            <th colspan="34"></th>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block css %}
+    <style>
+        .container {
+            overflow-x: scroll;
+        }
+    </style>
+{% endblock %}

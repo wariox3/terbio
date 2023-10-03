@@ -1,0 +1,69 @@
+{% extends 'aplicacion/base.html.twig' %}
+{% block title %}EMPRESAS{% endblock %}
+{% block content %}
+    {{ form_start(form) }}
+    <div class="row">
+        <h2>Enlaces</h2>
+    </div>
+    <div class="row">
+        <div class="col-sm-2 col-sm-offset-10" >
+            <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
+                <a href="{{ path('empresa_enlace_nuevo', {'id':0 }) }}" class="btn btn-sm btn-default ">
+                    Nuevo
+                </a>
+                {{ form_widget(form.btnEliminar) }}-
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive mt-2">
+            <table class="table table-bordered table-hover tabla-datos-v2">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NOMBRE</th>
+                    <th>ENLACE</th>
+                    <th></th>
+                    <th></th>
+                        <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for arEnlace in arEnlaces %}
+                    <tr>
+                        <td>
+                            {{ arEnlace.codigoEnlacePk }}
+                        </td>
+                        <td>{{ arEnlace.nombre }}</td>
+                        <td>{{ arEnlace.enlace }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('empresa_enlace_nuevo', {'id':arEnlace.codigoEnlacePk }) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ path('empresa_enlace_detalle', {'id':arEnlace.codigoEnlacePk}) }}"
+                               class="btn btn-sm btn-default" title="editar">
+                                <i class="fa fa-eye"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <input type="checkbox" name="ChkSeleccionar[]" class="custom-control-input"
+                                   value="{{ arEnlace.codigoEnlacePk }}"
+                                   id="{{ arEnlace.codigoEnlacePk }}"/>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col">
+            Total {{ arEnlaces.getTotalItemCount }} registros
+        </div>
+        <div class="col">
+            {{ knp_pagination_render(arEnlaces) }}
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

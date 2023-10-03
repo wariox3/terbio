@@ -1,0 +1,434 @@
+<aside id="sidebar-left" class="sidebar-left">
+    <div class="sidebar-header">
+        <div class="sidebar-title ">
+            <span style="color: white">Menú</span>
+        </div>
+        <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html"
+             data-fire-event="sidebar-left-toggle">
+            <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
+                <ul class="nav nav-main">
+                    <li class="nav-active">
+                        <a href="{{ path('inicio') }}">
+                            <i class="fa fa-home" aria-hidden="true"></i>
+                            <span class="text-white">Inicio</span>
+                        </a>
+                    </li>
+                    {% if app.user.codigoEmpresaFk != null %}
+                        {% if app.user.empleado %}
+                            <li class="nav-parent">
+                            <a>
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                <span>Empleado</span>
+                            </a>
+                            <ul class="nav nav-children" style="">
+                            {% if app.user.empresaRel.mostrarSubmenu %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Pagos</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('empleado_pago_lista') }}"></i>
+                                                <span>Pago</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="nav nav-main">
+                                    <a>
+                                        <a href="{{ path('empleado_pago_lista') }}">
+                                            <span>Pago</span>
+                                        </a>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.mostrarSubmenu %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Reclamos</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('empleado_reclamo_lista') }}"></i>
+                                                <span>Reclamos</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="nav nav-main">
+                                    <a>
+                                        <a href="{{ path('empleado_reclamo_lista') }}"></i>
+                                            <span>Reclamos</span>
+                                        </a>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.menuIncapacidad %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Incapacidades</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('empleado_incapacidad_lista') }}"></i>
+                                                <span>Incapacidades</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.menuSolicitud %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Solicitudes</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('empleado_solicitud_lista') }}"></i>
+                                                <span>Solicitudes</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.menuCapacitacion %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Capacitaciones</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('empleado_capacitaciones_pendites_lista') }}"></i>
+                                                <span>Pendientes</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.menuCertificado %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Certificados</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="{{ path('certificadolaboral_lista') }}"></i>
+                                                <span>Laboral</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                            {% if app.user.empresaRel.menuCertificadoOtro %}
+                                <li>
+                                    <a href="{{ path('retirolaboral_lista') }}">
+                                        <span>Retiro</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('certificadohistorico_lista') }}">
+                                        <span>Histórico</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('empleado_autorizacionarma_lista') }}">
+                                        <span>Autorización arma</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-parent">
+                                <a>
+                                    <span>Programación</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a href="{{ path('turno_programacion_lista') }}"></i>
+                                            <span>Turnos</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('turno_programacionreporte_lista') }}"></i>
+                                            <span>Reporte</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            {% if app.user.empresaRel.menuInformacionPersonal %}
+                                <li class="nav-parent">
+                                    <a><span>Información personal</span></a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="{{ path('empleado_informacion_personal') }}"></i>
+                                                <span>Actualizar información personal</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                </ul>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        {% if app.user.cliente %}
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-users" aria-hidden="true"></i>
+                                    <span>Clientes</span>
+                                </a>
+                                <ul class="nav nav-children" style="">
+                                    {% if app.user.empresaRel.menuGeneral %}
+                                        <li class="nav-parent">
+                                            <a><span>General</span></a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_general_informacion') }}"></i>
+                                                        <span>Información</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuCrm %}
+                                        <li class="nav-parent">
+                                            <a><span>CRM</span></a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_crm_visita_lista') }}"></i>
+                                                        <span>Visita</span>
+                                                    </a>
+                                                    <a href="{{ path('cliente_crm_contratacion_lista') }}"></i>
+                                                        <span>Cotización</span>
+                                                    </a>
+                                                    <a href="{{ path('cliente_crm_solicitud_lista') }}"></i>
+                                                        <span>PQRS</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuOperacion %}
+                                        <li class="nav-parent">
+                                            <a><span>Operación</span></a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_operacion_consigna_lista') }}"></i>
+                                                        <span>Consigna</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuProgramacion %}
+                                        <li class="nav-parent">
+                                            <a><span>Programación</span></a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_programacion_lista') }}"></i>
+                                                        <span>Empleados</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuVenta %}
+                                        <li class="nav-parent">
+                                            <a><span>Ventas</span></a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_venta_factura_lista') }}"></i>
+                                                        <span>Facturas</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuCartera %}
+                                        <li class="nav-parent">
+                                            <a>
+                                                <span>Cartera</span>
+                                            </a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_cartera_lista') }}"></i>
+                                                        <span>Pendientes</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('cliente_cartera_recibos_lista') }}"></i>
+                                                        <span>Recibos</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuRecursoHumano %}
+                                        <li class="nav-parent">
+                                            <a>
+                                                <span>Recurso humano</span>
+                                            </a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_recursohumano_autorizacionarma_lista') }}"></i>
+                                                        <span>Autorización arma</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_recursohumano_seguridadsocial_lista') }}"></i>
+                                                        <span>Seguridad social</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                    {% if app.user.empresaRel.menuTransporte %}
+                                        <li class="nav-parent">
+                                            <a>
+                                                <span>Transporte</span>
+                                            </a>
+                                            <ul class="nav nav-children">
+                                                <li>
+                                                    <a href="{{ path('cliente_transporte_guia_lista') }}"></i>
+                                                        <span>Guía</span>
+                                                    </a>
+                                                    <a href="{{ path('cliente_transporte_novedad_lista') }}"></i>
+                                                        <span>Novedad</span>
+                                                    </a>
+                                                    <a href="{{ path('cliente_transporte_destinatario_lista') }}"></i>
+                                                        <span>Destinatario</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        {% if app.user.gestionTranporte %}
+                                            <li class="nav-parent">
+                                                <a>
+                                                    <span>Gestión logística</span>
+                                                </a>
+                                                <ul class="nav nav-children">
+                                                    <li>
+                                                        <a href="{{ path('cliente_transporte_despacho_lista') }}"></i>
+                                                            <span>Despacho</span>
+                                                        </a>
+                                                        <a href="{{ path('cliente_transporte_gestion_guia_soporte') }}"></i>
+                                                            <span>Soporte</span>
+                                                        </a>
+                                                        <a href="{{ path('cliente_transporte_gestion_guia_redespacho') }}"></i>
+                                                            <span>Redespacho</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if app.user.proveedor %}
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-sitemap" aria-hidden="true"></i>
+                                    <span>Proveedor</span>
+                                </a>
+                                <ul class="nav nav-children" style="">
+                                    <li class="nav-parent">
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if app.user.empresa %}
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-institution" aria-hidden="true"></i>
+                                    <span>Empresa</span>
+                                </a>
+                                <ul class="nav nav-children" style="">
+                                    <li>
+                                        <a href="{{ path('empresa_usuario_lista') }}">Usuarios</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('empresa_enlace_lista') }}">Enlaces</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        {% endif %}
+                        {% if app.user.empresaRel.menuInformacion %}
+                            {% if app.user.persona or app.user.empleado %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-address-card-o" aria-hidden="true"></i>
+                                        <span>Información</span>
+                                    </a>
+                                    <ul class="nav nav-children" style="">
+                                        <li>
+                                            <a href="{{ path('aspirante_lista') }}"></i>
+                                                <span>Hoja de vida</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endif %}
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <span>Administrador</span>
+                                </a>
+                                <ul class="nav nav-children" style="">
+                                    <li>
+                                        <a href="{{ path('administrador_empresa_lista') }}"></i>
+                                            <span>Empresa</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('administrador_empresa_usuario_lista') }}"></i>
+                                            <span>Usuario</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </nav>
+            {% if app.user.codigoEmpresaFk != null %}
+                {% if app.user.empresaRel.acceso %}
+                    <li class="nav-parent">
+                        <ul class="nav nav-main">
+                            <li>
+                                <a href="https://feseracis.com/">
+                                    <i class="fa fa-child"></i>
+                                    <span class="text-white">Fondo de empleados</span>
+                                </a>
+                                <a href="https://capacitacionescolaboradores.seracis.com/">
+                                    <i class="fa fa-graduation-cap"></i>
+                                    <span class="text-white">Capacitaciones colaboradores</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endif %}
+            {% if app.user.codigoEmpresaFk %}
+                {% if app.user.empresaRel.logoMenu %}
+                    <a href="{{ path('inicio') }}" class="logo">
+                        {% set arLogo = obtenerLogo() %}
+                        {% for key, entity in arLogo %}
+                            <img src="data:image/png;base64,{{ arLogo[key] }}" height="300" width="300"
+                                 alt="{{ asset('img/logosemantica.png') }}"/>
+                        {% endfor %}
+                    </a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</aside>

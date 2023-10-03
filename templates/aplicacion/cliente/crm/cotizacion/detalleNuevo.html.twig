@@ -1,0 +1,74 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+    <div class="row">
+        <div class="col-xl-12">
+            <div id="panel-informacion-general" class="panel">
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="form-group form-group-sm">
+                            <div class="row">
+                                <label class="col-sm-2 control-label">Modalidad:</label>
+                                <div class="col-sm-4">
+                                    <select id="cotizacion_detalle_modalidad" name="cotizacion_detalle_modalidad" class="form-control"><option value="SAR">SIN ARMA</option><option value="CAR">CON ARMA</option><option value="CAN">CANINO</option></select>
+                                </div>
+                                <label class="col-sm-2 control-label">Cantidad:</label>
+                                <div class="col-sm-4">
+                                    {{ form_widget(form.cantidad) }}
+                                    {{ form_errors(form.cantidad) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <div class="row">
+                                <label class="col-sm-2 control-label">Fecha desde:</label>
+                                <div class="col-sm-4">
+                                    {{ form_widget(form.fechaDesde) }}
+                                    {{ form_errors(form.fechaDesde) }}
+                                </div>
+                                <label class="col-sm-2 control-label">H_Desde:</label>
+                                <div class="col-sm-4">
+                                    {{ form_widget(form.horaDesde) }}
+                                    {{ form_errors(form.fechaDesde) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <div class="row">
+                                <label class="col-sm-2 control-label">Fecha hasta:</label>
+                                <div class="col-sm-4">
+                                    {{ form_widget(form.fechaHasta) }}
+                                    {{ form_errors(form.fechaHasta) }}
+                                </div>
+                                <label class="col-sm-2 control-label">H_Hasta:</label>
+                                <div class="col-sm-4">
+                                    {{ form_widget(form.horaHasta) }}
+                                    {{ form_errors(form.horaHasta) }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-sm">
+                            <div class="row">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-4 offset-2">
+                                    {{ form_widget(form.lunes) }}
+                                    {{ form_widget(form.martes) }}
+                                    {{ form_widget(form.miercoles) }}
+                                    {{ form_widget(form.jueves) }}
+                                    {{ form_widget(form.viernes) }}
+                                    {{ form_widget(form.sabado) }}
+                                    {{ form_widget(form.domingo) }}
+                                    {{ form_widget(form.festivo) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        {{ form_widget(form.guardar, { 'attr': {'class': 'btn btn-primary btn-sm'} }) }}
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
