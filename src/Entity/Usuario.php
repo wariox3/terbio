@@ -16,10 +16,6 @@ class Usuario implements UserInterface, \Serializable
         return $this->getCodigoUsuarioPk();
     }
 
-    /**
-     * @ORM\Column(name="codigo_usuario_pk",type="string")
-     * @ORM\Id
-     */
     #[ORM\Id]
     #[ORM\Column(name: "codigo_usuario_pk", type: "integer")]
     private $codigoUsuarioPk;
