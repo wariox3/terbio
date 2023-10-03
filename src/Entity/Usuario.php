@@ -2,31 +2,42 @@
 
 namespace App\Entity;
 
-use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
-#[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario implements UserInterface, \Serializable
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="usuario")
+ *  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
+ */
+    class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public function getUserIdentifier(): string
-    {
-        return $this->getCodigoUsuarioPk();
-    }
+        public function getUserIdentifier(): string
+        {
+            return $this->getCodigoUsuarioPk();
+        }
 
-    #[ORM\Id]
-    #[ORM\Column(name: "codigo_usuario_pk", type: "integer")]
+    /**
+     * @ORM\Column(name="codigo_usuario_pk",type="string")
+     * @ORM\Id
+     */
     private $codigoUsuarioPk;
 
-    #[ORM\Column(name: "correo", type: "string", nullable: true)]
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     */
     private $correo;
 
-    #[ORM\Column(name: "codigo_identificacion_fk", type: "string", length: 3, nullable: true)]
+    /**
+     * @ORM\Column(name="codigo_identificacion_fk", type="string", length=3, nullable=true)
+     */
     private $codigoIdentificacionFk;
 
-    #[ORM\Column(name: "numero_identificacion", type: "string", length: 20, nullable: false)]
+    /**
+     * @ORM\Column(name="numero_identificacion", type="string", length=20 ,nullable=false)
+     */
     private $numeroIdentificacion;
 
     /**
@@ -204,7 +215,7 @@ class Usuario implements UserInterface, \Serializable
         return $this->getCodigoUsuarioPk();
     }
 
-    public function getRoles(): ?array
+    public function getRoles(): array
     {
 
         return array($this->codigoRolFk);

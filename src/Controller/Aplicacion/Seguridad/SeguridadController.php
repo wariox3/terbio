@@ -25,7 +25,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/registro/{codigoEmpresa}", name="registro", requirements={"codigoEmpresa"="\d+"})
      */
-    public function registro(Request $request, $codigoEmpresa = null,  EntityManagerInterface $em)
+    public function registro(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $arRegistro = new Usuario;
         $nitEmpresa = "";
@@ -99,7 +99,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/registrofijo/{codigoEmpresa}", name="registrofijo", requirements={"codigoEmpresa"="\d+"})
      */
-    public function registroFijo(Request $request, $codigoEmpresa = null,  EntityManagerInterface $em)
+    public function registroFijo(Request $request,  EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $arRegistro = new Usuario;
         $nitEmpresa = "";
@@ -198,7 +198,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/recuperarclave/{codigoEmpresa}", name="recuperarclave", requirements={"codigoEmpresa"="\d+"})
      */
-    public function recuperarClave(Request $request, $codigoEmpresa = null,  EntityManagerInterface $em)
+    public function recuperarClave(Request $request , EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $form = $this->createFormBuilder()
             ->add('codigoUsuario', TextType::class, ['required' => true, 'label' => 'Usuario', 'attr' => ['class' => 'form-control']])

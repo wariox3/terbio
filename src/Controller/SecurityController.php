@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/login/{codigoEmpresa}", name="login", requirements={"codigoEmpresa"="\d+"})
      */
-    public function login(AuthenticationUtils $authenticationUtils, $codigoEmpresa,  EntityManagerInterface $em): Response
+    public function login(AuthenticationUtils $authenticationUtils,  EntityManagerInterface $em, $codigoEmpresa = null): Response
     {
         $nombreEmpresa = "";
         $registroFijo = false;
