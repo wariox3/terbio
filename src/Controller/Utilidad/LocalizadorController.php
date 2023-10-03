@@ -25,7 +25,7 @@ class LocalizadorController  extends AbstractController
     /**
      * @Route("/utilidad/localizador/{codigoEmpresa}/{guia}", name="utilidad_localizador")
      */
-    public function lista(Request $request, $codigoEmpresa = null, $guia = null,  EntityManagerInterface $em)
+    public function lista(Request $request, EntityManagerInterface $em, $codigoEmpresa = null, $guia = null)
     {
         if(!$codigoEmpresa) {
             return $this->redirect($this->generateUrl('principal'));
@@ -101,7 +101,7 @@ class LocalizadorController  extends AbstractController
     /**
      * @Route("/utilidad/localizadorv2/{codigoEmpresa}/{guia}", name="utilidad_localizadorv2")
      */
-    public function listav2(Request $request, $codigoEmpresa = null, $guia = null,  EntityManagerInterface $em)
+    public function listav2(Request $request, EntityManagerInterface $em, $codigoEmpresa = null, $guia = null)
     {
         if(!$codigoEmpresa) {
             return $this->redirect($this->generateUrl('principal'));

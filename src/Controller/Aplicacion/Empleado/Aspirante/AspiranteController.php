@@ -26,7 +26,7 @@ class AspiranteController extends AbstractController
     /**
      * @Route("empleado/aspirante/lista/{id}", name="aspirante_lista")
      */
-    public function lista(Request $request, PaginatorInterface $paginator, $id = 0,  EntityManagerInterface $em)
+    public function lista(Request $request, PaginatorInterface $paginator ,  EntityManagerInterface $em, $id = 0)
     {
         $arUsuario = $this->getUser();
         $arAspirante = $em->getRepository(Aspirante::class)->findOneBy(['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion()]);

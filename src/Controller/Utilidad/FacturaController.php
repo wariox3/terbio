@@ -19,7 +19,7 @@ class FacturaController extends AbstractController
     /**
      * @Route("/utilidad/factura/{codigoEmpresa}/{modelo}/{codigoFactura}/{respuestaOrigen}", name="utilidad_factura")
      */
-    public function lista(Request $request, $codigoEmpresa, $modelo, $codigoFactura, $respuestaOrigen = null,  EntityManagerInterface $em)
+    public function lista(Request $request, EntityManagerInterface $em, $codigoEmpresa, $modelo, $codigoFactura, $respuestaOrigen = null)
     {
         if ($codigoEmpresa && $modelo && $codigoFactura) {
             $form = $this->createFormBuilder()
