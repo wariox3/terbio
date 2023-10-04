@@ -121,9 +121,7 @@ class Empresa
     #[ORM\Column(name: "codigo_item", type: "integer", length: 60, nullable: true)]
     private $codigoItem;
 
-    /**
-     * @ORM\Column(name="registro_fijo", type="boolean", options={"default":false})
-     */
+
     #[ORM\Column(name: "registro_fijo", type: "boolean", options: ['default' => false])]
     private $registroFijo = false;
 

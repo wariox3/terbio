@@ -3,86 +3,63 @@
 
 namespace App\Entity;
 
+use App\Repository\DirectorioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DirectorioRepository")
- */
+
+#[ORM\Entity(repositoryClass: DirectorioRepository::class)]
 class Directorio
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(name: "codigo_directorio_pk", type: "integer")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoDirectorioPk;
 
-    /**
-     * @ORM\Column(name="tipo", type="string", length=1, nullable=true)
-     * @Assert\Length(
-     *     max = 1,
-     *     maxMessage="El campo no puede contener más de 1 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "tipo", type: "string", length: 1, nullable: false)]
+    #[Assert\Length(max: 1, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $tipo;
 
-    /**
-     * @ORM\Column(name="clase", type="string", length=50, nullable=true)
-     * @Assert\Length(
-     *     max = 50,
-     *     maxMessage="El campo no puede contener más de 50 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "clase", type: "string", length: 50, nullable: false)]
+    #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $clase;
 
-    /**
-     * @Assert\Regex(
-     *     pattern     = "/^[a-z]+$/i",
-     *     htmlPattern = "^[a-zA-Z]+$"
-     * )
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
-     * @Assert\Length(
-     *     max = 50,
-     *     maxMessage="El campo no puede contener más de 50 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 50, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de 50 caracteres")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z]+$/i", message: "Este campo solo permite letras")]
     private $nombre;
 
-    /**
-     * @ORM\Column(name="codigo_masivo_tipo_fk", type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_masivo_tipo_fk",type: "string", length: 20, nullable: true)]
     private $codigoMasivoTipoFk;
 
-    /**
-     * @ORM\Column(name="codigo_directorio_padre_fk", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_directorio_padre_fk",type: "integer", nullable: true)]
     private $codigoDirectorioPadreFk;
 
-    /**
-     * @ORM\Column(name="directorio", type="integer", options={"default" : 0})
-     */
+
+    #[ORM\Column(name: "directorio",type: "integer", nullable: true, options: ["default" => 0])]
     private $directorio = 0;
 
-    /**
-     * @ORM\Column(name="numero_archivos", type="integer", options={"default" : 0})
-     */
+
+    #[ORM\Column(name: "numero_archivos",type: "integer", nullable: true, options: ["default" => 0])]
     private $numeroArchivos = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Directorio", inversedBy="directorioDirectoriosRel")
-     * @ORM\JoinColumn(name="codigo_directorio_padre_fk",referencedColumnName="codigo_directorio_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Directorio::class, inversedBy: "directorioDirectoriosRel")]
+    #[ORM\JoinColumn(name: "codigo_directorio_padre_fk", referencedColumnName: "codigo_directorio_pk")]
     protected $directorioRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Archivo", mappedBy="directorioRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Archivo::class, mappedBy: "directorioRel")]
     protected $archivoDirectoriosRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Directorio", mappedBy="directorioRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Directorio::class, mappedBy: "directorioRel")]
     protected $directorioDirectoriosRel;
 
     /**

@@ -17,9 +17,7 @@ class Configuracion
     #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoConfiguracionPk;
 
-    /**
-     * @ORM\Column(name="logo", type="blob", nullable=true)
-     */
+
     #[ORM\Column(name: "logo", type: "blob", nullable: true)]
     private $logo;
 

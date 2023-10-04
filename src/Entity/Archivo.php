@@ -3,127 +3,89 @@
 
 namespace App\Entity;
 
+use App\Repository\ArchivoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ArchivoRepository")
- */
 
+#[ORM\Entity(repositoryClass: ArchivoRepository::class)]
 class Archivo
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_archivo_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(name: "codigo_archivo_pk", type: "integer")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoArchivoPk;
 
-    /**
-     * @ORM\Column(name="codigo_archivo_tipo_fk", type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_archivo_tipo_fk", type: "string", length: 50, nullable: true)]
     private $codigoArchivoTipoFk;
 
-    /**
-     * @ORM\Column(name="codigo_directorio_fk", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_directorio_fk", type: "integer", nullable: true)]
     private $codigoDirectorioFk;
 
-    /**
-     * @ORM\Column(name="directorio", type="string", length=200, nullable=true)
-     * @Assert\Length(
-     *     max = 200,
-     *     maxMessage="El campo no puede contener más de 200 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "directorio", type: "string", length: 200, nullable: true)]
+    #[Assert\Length(max: 200, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $directorio;
 
-    /**
-     * @ORM\Column(name="codigo", type="string", length=50, nullable=true)
-     * @Assert\Length(
-     *     max = 50,
-     *     maxMessage="El campo no puede contener más de 50 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "codigo", type: "string", length: 50, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigo;
 
     /**
      * @ORM\Column(name="fecha_hasta", type="datetime", nullable=true)
      */
+    #[ORM\Column(name: "fecha", type: "datetime", nullable: true)]
     private $fecha;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=500, nullable=true)
-     * @Assert\Length(
-     *     max = 500,
-     *     maxMessage="El campo no puede contener más de 500 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 500, nullable: true)]
+    #[Assert\Length(max: 500, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nombre;
 
-    /**
-     * @ORM\Column(name="extension_original", type="string", length=250, nullable=true)
-     * @Assert\Length(
-     *     max = 250,
-     *     maxMessage="El campo no puede contener más de 250 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "extension_original", type: "string", length: 250, nullable: true)]
+    #[Assert\Length(max: 250, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $extensionOriginal;
 
-    /**
-     * @ORM\Column(name="tipo", type="string", length=250, nullable=true)
-     * @Assert\Length(
-     *     max = 250,
-     *     maxMessage="El campo no puede contener más de 250 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "tipo", type: "string", length: 250, nullable: true)]
+    #[Assert\Length(max: 250, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $tipo;
 
-    /**
-     * @ORM\Column(name="tamano", type="float", nullable=true)
-     */
+
+    #[ORM\Column(name: "extension_original", type: "float", nullable: true)]
     private $tamano = 0;
 
-    /**
-     * @ORM\Column(name="descripcion", type="string", length=100, nullable=true)
-     * @Assert\Length(
-     *     max = 100,
-     *     maxMessage="El campo no puede contener más de 100 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "descripcion", type: "string", length: 100, nullable: true)]
+    #[Assert\Length(max: 100, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $descripcion;
 
-    /**
-     * @ORM\Column(name="comentarios", type="string", length=250, nullable=true)
-     * @Assert\Length(
-     *     max = 250,
-     *     maxMessage="El campo no puede contener más de 250 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "comentarios", type: "string", length: 250, nullable: true)]
+    #[Assert\Length(max: 250, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $comentarios;
 
-    /**
-     * @ORM\Column(name="usuario", type="string", length=25, nullable=true)
-     * @Assert\Length(
-     *     max = 25,
-     *     maxMessage="El campo no puede contener más de 25 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "usuario", type: "string", length: 25, nullable: true)]
+    #[Assert\Length(max: 25, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $usuario;
 
-    /**
-     * @ORM\Column(name="soporte", type="string", length=50, nullable=true)
-     * @Assert\Length(
-     *     max = 50,
-     *     maxMessage="El campo no puede contener más de 50 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "soporte", type: "string", length: 50, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $soporte;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Directorio", inversedBy="archivoDirectoriosRel")
      * @ORM\JoinColumn(name="codigo_directorio_fk",referencedColumnName="codigo_directorio_pk")
      */
+    #[ORM\ManyToOne(targetEntity: Directorio::class, inversedBy: "archivoDirectoriosRel")]
+    #[ORM\JoinColumn(name: "codigo_directorio_fk", referencedColumnName: "codigo_directorio_pk")]
     protected $directorioRel;
 
     /**

@@ -3,47 +3,41 @@
 
 namespace App\Entity;
 
+use App\Repository\AspiranteIdiomaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AspiranteIdiomaRepository")
- */
+
+#[ORM\Entity(repositoryClass: AspiranteIdiomaRepository::class)]
 class AspiranteIdioma
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_aspirante_idioma_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(name: "codigo_aspirante_idioma_pk", type: "integer")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoAspiranteIdiomaPk;
 
-    /**
-     * @ORM\Column(name="codigo_usuario_fk", type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_usuario_fk", type: "string", nullable: false)]
     private $codigoUsuarioFk;
 
-    /**
-     * @ORM\Column(name="codigo_idioma_fk", type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_idioma_fk", type: "string", nullable: true)]
     private $codigoIdiomaFk;
 
-    /**
-     * @ORM\Column(name="nivel", type="string", length=150, nullable=true)
-     * @Assert\Length( max = 150, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "nivel", type: "string", length: 150, nullable: false)]
+    #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nivel;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", inversedBy="usuarioAspiranteIdiomaRel")
-     * @ORM\JoinColumn(name="codigo_usuario_fk", referencedColumnName="codigo_usuario_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: "usuarioAspiranteIdiomaRel")]
+    #[ORM\JoinColumn(name: "codigo_usuario_fk", referencedColumnName: "codigo_usuario_pk")]
     private $usuarioRel;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Idioma", inversedBy="idiomoAspiranteIdiomaRel")
-     * @ORM\JoinColumn(name="codigo_idioma_fk", referencedColumnName="codigo_idioma_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Idioma::class, inversedBy: "idiomoAspiranteIdiomaRel")]
+    #[ORM\JoinColumn(name: "codigo_idioma_fk", referencedColumnName: "codigo_idioma_pk")]
     private $idiomaRel;
 
     /**
