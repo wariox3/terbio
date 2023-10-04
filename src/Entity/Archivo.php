@@ -57,9 +57,8 @@ class Archivo
     private $tipo;
 
 
-    #[ORM\Column(name: "extension_original", type: "float", nullable: true)]
+    #[ORM\Column(name: "tamano", type: "float", nullable: true)]
     private $tamano = 0;
-
 
     #[ORM\Column(name: "descripcion", type: "string", length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
