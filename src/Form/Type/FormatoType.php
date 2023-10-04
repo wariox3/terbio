@@ -13,7 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormatoType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options):void
     {
         $builder
             ->add('nombre',TextType::class,['label' => 'Nombre:','required' => true])
@@ -25,7 +25,7 @@ class FormatoType extends AbstractType
             ->add('guardar', SubmitType::class, ['label'=>'Guardar','attr' => ['class' => 'btn btn-sm btn-primary']]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver):void
     {
         $resolver->setDefaults([
             'data_class' => Formato::class,

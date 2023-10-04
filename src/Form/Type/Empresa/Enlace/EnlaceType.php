@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnlaceType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options):void
     {
         $builder
             ->add('nombre', TextType::class, ['required' => true, 'label' => 'Nombre', 'attr'=>['class'=>'form-control']])
@@ -23,7 +23,7 @@ class EnlaceType extends AbstractType
     }
 
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver):void
     {
         $resolver->setDefaults([
             'data_class' => Enlace::class,

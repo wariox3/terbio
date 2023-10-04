@@ -16,7 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AspiranteType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options):void
     {
         $builder
             ->add('numeroIdentificacion',NumberType::class,['required' => true,'label' => 'numero identificacion:'])
@@ -49,7 +49,7 @@ class AspiranteType extends AbstractType
             ->add('guardar', SubmitType::class, ['label'=>'Guardar','attr' => ['class' => 'btn btn-sm btn-primary']]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver):void
     {
         $resolver->setDefaults([
             'data_class' => Aspirante::class,
