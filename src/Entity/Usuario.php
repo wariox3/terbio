@@ -12,12 +12,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
     class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
-        public function getUserIdentifier(): string
-        {
-            return $this->getCodigoUsuarioPk();
-        }
+    public function getUserIdentifier(): string
+    {
+        return $this->getCodigoUsuarioPk();
+    }
     #[ORM\Id]
-    #[ORM\Column(type: "string", name: "username")]
+    #[ORM\Column(type: "string", name: "codigo_usuario_pk")]
     private $codigoUsuarioPk;
 
 

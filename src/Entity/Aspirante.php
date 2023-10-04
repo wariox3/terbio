@@ -63,7 +63,7 @@ class Aspirante
     private $telefono;
 
 
-    #[ORM\Column(name: "nombre2", type: "string", length: 20, nullable: true)]
+    #[ORM\Column(name: "celular", type: "string", length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $celular;
 

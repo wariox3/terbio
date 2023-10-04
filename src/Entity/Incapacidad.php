@@ -31,7 +31,7 @@ class Incapacidad
     private $numeroEps;
 
 
-    #[ORM\Column(name: "fecha", type: "datetime", nullable: true)]
+    #[ORM\Column(name: "fecha_registro", type: "datetime", nullable: true)]
     private $fechaRegistro;
 
 

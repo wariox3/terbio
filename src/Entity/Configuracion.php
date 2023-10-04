@@ -13,7 +13,7 @@ class Configuracion
 {
 
     #[ORM\Id]
-    #[ORM\Column(name: "username", type: "integer")]
+    #[ORM\Column(name: "codigo_configuracion_pk", type: "integer")]
     #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoConfiguracionPk;
 
