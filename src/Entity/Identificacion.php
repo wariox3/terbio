@@ -2,27 +2,24 @@
 
 namespace App\Entity;
 
+use App\Repository\IdentificacionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IdentificacionRepository")
- */
+
+#[ORM\Entity(repositoryClass: IdentificacionRepository::class)]
 class Identificacion
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=3, nullable=false, unique=true)
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type: "string", name: "codigo_identificacion_pk", length: 3, nullable: false, unique: true)]
     private $codigoIdentificacionPk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=30, nullable=true)
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 30, nullable: true)]
     private $nombre;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Usuario", mappedBy="identificacionRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "identificacionRel")]
     protected $usuariosIdentificacionRel;
 
     /**

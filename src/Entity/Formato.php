@@ -2,101 +2,82 @@
 
 namespace App\Entity;
 
+use App\Repository\FormatoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="formato")
- *  * @ORM\Entity(repositoryClass="App\Repository\FormatoRepository")
- */
+
+#[ORM\Entity(repositoryClass: FormatoRepository::class)]
 class Formato
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_formato_pk", type="integer")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type: "integer", name: "codigo_formato_pk")]
     private $codigoFormatoPk;
 
-    /**
-     * @ORM\Column(name="codigo_empresa_fk", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_empresa_fk", type: "integer", nullable: true)]
     private $codigoEmpresaFk;
 
-    /**
-     * @ORM\Column(name="codigo_formato_tipo_fk", type="string", length=10, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_formato_tipo_fk", type: "string", length: 10 ,nullable: true)]
     private $codigoFormatoTipoFk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 50 ,nullable: true)]
     private $nombre;
 
-    /**
-     * @ORM\Column(name="titulo", type="string", length=300, nullable=true)
-     */
+
+    #[ORM\Column(name: "titulo", type: "string", length: 300 ,nullable: true)]
     private $titulo;
 
-    /**
-     * @ORM\Column(name="contenido", type="text", nullable=true)
-     */
+
+    #[ORM\Column(name: "contenido", type: "text", nullable: true)]
     private $contenido;
 
-    /**
-     * @ORM\Column(name="fecha", type="datetime", nullable=false)
-     */
+
+    #[ORM\Column(name: "fecha", type: "datetime", nullable: false)]
     private $fecha;
 
-    /**
-     * @ORM\Column(name="fecha_actualizacion", type="datetime", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha_actualizacion", type: "datetime", nullable: true)]
     private $fechaActualizacion;
 
-    /**
-     * @ORM\Column(name="nombre_firma", type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(name: "nombre_firma", type: "string", length: 50 ,nullable: true)]
     private $nombreFirma;
 
-    /**
-     * @ORM\Column(name="cargo_firma", type="string", length=150, nullable=true)
-     */
+
+    #[ORM\Column(name: "cargo_firma", type: "string", length: 50 ,nullable: true)]
     private $cargoFirma;
 
-    /**
-     * @ORM\Column(name="version", type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "version", type: "string", length: 20 ,nullable: true)]
     private $version;
 
-    /**
-     * @ORM\Column(name="codigo_modelo_fk",type="string", length=80, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_modelo_fk", type: "string", length: 80 ,nullable: true)]
     private $codigoModeloFk;
 
-    /**
-     * @ORM\Column(name="codigo",type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo", type: "string", length: 20 ,nullable: true)]
     private $codigo;
 
-    /**
-     * @ORM\Column(name="etiquetas", type="text", nullable=true)
-     */
+
+    #[ORM\Column(name: "etiquetas", type: "text" ,nullable: true)]
     private $etiquetas;
 
-    /**
-     * @ORM\Column(name="firma", type="blob", nullable=true)
-     */
+
+    #[ORM\Column(name: "firma", type: "string", nullable: true)]
     private $firma;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="FormatoTipo", inversedBy="formatosFormatoTipoRel")
-     * @ORM\JoinColumn(name="codigo_formato_tipo_fk", referencedColumnName="codigo_formato_tipo_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: FormatoTipo::class, inversedBy: "formatosFormatoTipoRel")]
+    #[ORM\JoinColumn(name: "codigo_formato_tipo_fk", referencedColumnName: "codigo_formato_tipo_pk")]
     protected $formatoTipoRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\FormatoImagen", mappedBy="formatoRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: FormatoImagen::class, mappedBy: "formatoRel")]
     protected $formatosImagenFormatoRel;
 
     /**

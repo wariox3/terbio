@@ -2,39 +2,34 @@
 
 namespace App\Entity;
 
+use App\Repository\EnlaceRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EnlaceRepository")
- */
+
+#[ORM\Entity(repositoryClass: EnlaceRepository::class)]
 class Enlace
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_enlace_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(name: "codigo_enlace_pk", type: "integer")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoEnlacePk;
 
-    /**
-     * @ORM\Column(name="codigo_empresa_fk", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_empresa_fk", type: "integer", nullable: true)]
     private $codigoEmpresaFk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=500, nullable=true)
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 500, nullable: true)]
     private $nombre;
 
-    /**
-     * @ORM\Column(name="enlace", type="string", length=500, nullable=true)
-     */
+
+    #[ORM\Column(name: "enlace", type: "string", length: 500, nullable: true)]
     private $enlace;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Empresa", inversedBy="enlacesEmpresaRel")
-     * @ORM\JoinColumn(name="codigo_empresa_fk",referencedColumnName="codigo_empresa_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "enlacesEmpresaRel")]
+    #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
 
     /**

@@ -3,28 +3,24 @@
 
 namespace App\Entity;
 
+use App\Repository\TextoTipoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TextoTipoRepository")
- */
+
+#[ORM\Entity(repositoryClass: TextoTipoRepository::class)]
 class TextoTipo
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_texto_tipo_pk", type="string", length=10)
-     */
+
+    #[ORM\Column(type: "string", name: "codigo_texto_tipo_pk", length: 10)]
+    #[ORM\Id]
     private $codigoTextoTipoPk;
 
-    /**
-     * @ORM\Column(name="descripcion", type="string", length=300, nullable=true)
-     */
+
+    #[ORM\Column(name: "descripcion", type: "string", length: 300, nullable: true)]
     private $descripcion;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Texto", mappedBy="textoTipoRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Texto::class, mappedBy: "textoTipoRel")]
     protected $textosTextoTipoRel;
 
     /**

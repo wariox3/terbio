@@ -2,29 +2,24 @@
 
 namespace App\Entity;
 
+use App\Repository\FormatoTipoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="App\Repository\FormatoTipoRepository")
- */
+
+#[ORM\Entity(repositoryClass: FormatoTipoRepository::class)]
 class FormatoTipo
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_formato_tipo_pk", type="string", length=10)
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: "string", name: "codigo_formato_tipo_pk", length: 10)]
     private $codigoFormatoTipoPk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(type: "string", name: "nombre", length: 10, nullable: true)]
     private $nombre;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Formato", mappedBy="formatoTipoRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Formato::class, mappedBy: "formatoTipoRel")]
     protected $formatosFormatoTipoRel;
 
     /**

@@ -3,71 +3,58 @@
 
 namespace App\Entity;
 
+use App\Repository\IncapacidadRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IncapacidadRepository")
- */
+
+#[ORM\Entity(repositoryClass: IncapacidadRepository::class)]
 class Incapacidad
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_incapacidad_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type:"integer", name:"codigo_incapacidad_pk")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoIncapacidadPk;
 
-    /**
-     * @ORM\Column(name="codigo_usuario_fk", type="string", nullable=true)
-     */
+
+    #[ORM\Column(name:"codigo_usuario_fk", type:"string",nullable: true)]
     private $codigoUsuarioFk;
 
-    /**
-     * @ORM\Column(name="codigo_incapacidad_tipo_fk", type="string", length=10, nullable=true)
-     */
+
+    #[ORM\Column(name:"codigo_incapacidad_tipo_fk", type:"string", length: 10, nullable: true)]
     private $codigoIncapacidadTipoFk;
 
-    /**
-     * @ORM\Column(name="numero_eps", type="string", length=50, nullable=true)
-     * @Assert\Length(
-     *     max = 50,
-     *     maxMessage="El campo no puede contener mas de 50 caracteres"
-     * )
-     */
+
+    #[ORM\Column(name: "numero_eps", type: "string", length: 50, nullable: true)]
+    #[Assert\Length(max: 50, maxMessage: "El campo no puede contener mas de 50 caracteres")]
     private $numeroEps;
 
-    /**
-     * @ORM\Column(name="fecha_registro", type="datetime", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha", type: "datetime", nullable: true)]
     private $fechaRegistro;
 
-    /**
-     * @ORM\Column(name="fecha_desde", type="date")
-     */
+
+    #[ORM\Column(name: "fecha_desde", type: "date")]
     private $fechaDesde;
 
-    /**
-     * @ORM\Column(name="fecha_hasta", type="date")
-     */
+
+    #[ORM\Column(name: "fecha_hasta", type: "date")]
     private $fechaHasta;
 
-    /**
-     * @ORM\Column(name="comentarios", type="string", length=2000, nullable=true)
-     * @Assert\Length( max = 2000, maxMessage="El campo no puede contener mas de 2000 caracteres")
-     */
+
+    #[ORM\Column(name: "comentarios", type: "string", length: 2000, nullable: true)]
+    #[Assert\Length(max: 2000, maxMessage: "El campo no puede contener mas de 2000 caracteres")]
     private $comentarios;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", inversedBy="usuarioIncapacidadesRel")
-     * @ORM\JoinColumn(name="codigo_usuario_fk", referencedColumnName="codigo_usuario_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: "usuarioIncapacidadesRel")]
+    #[ORM\JoinColumn(name: "codigo_usuario_fk", referencedColumnName: "codigo_usuario_pk")]
     private $usuarioRel;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\IncapacidadTipo", inversedBy="incapacidadesIncapacidadTipoRel")
-     * @ORM\JoinColumn(name="codigo_incapacidad_tipo_fk",referencedColumnName="codigo_incapacidad_tipo_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: IncapacidadTipo::class, inversedBy: "incapacidadesIncapacidadTipoRel")]
+    #[ORM\JoinColumn(name: "codigo_incapacidad_tipo_fk", referencedColumnName: "codigo_incapacidad_tipo_pk")]
     protected $incapacidadTipoRel;
 
     /**

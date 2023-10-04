@@ -3,52 +3,43 @@
 
 namespace App\Entity;
 
+use App\Repository\RespuestaElectronicaRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RespuestaElectronicaRepository")
- */
+
+#[ORM\Entity(repositoryClass: RespuestaElectronicaRepository::class)]
 class RespuestaElectronico
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_respuesta_electronico_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy:"AUTO")]
+    #[ORM\Column(type:"integer", name:"codigo_respuesta_electronico_pk", unique:true)]
     private $codigoRespuestaElectronicoPk;
 
-    /**
-     * @ORM\Column(name="codigo_empresa_fk", type="integer", nullable=false)
-     */
+
+    #[ORM\Column(name:"codigo_empresa_fk", type:"integer", nullable: true)]
     private $codigoEmpresaFk;
 
-    /**
-     * @ORM\Column(name="codigo_factura_fk", type="integer", nullable=false)
-     */
+
+    #[ORM\Column(name:"codigo_factura_fk", type:"integer", nullable: false)]
     private $codigoFacturaFk;
 
-    /**
-     * @ORM\Column(name="modelo", type="string", length=100, nullable=false)
-     * @ORM\Column(name="modelo", type="string", length=100, options={"default" : "P"}, nullable=false)
-     */
+
+    #[ORM\Column(name: "modelo", type: "string", length: 100 ,nullable: false, options: ["default" => "P"])]
     private $modelo;
 
-    /**
-     * @ORM\Column(name="fecha_respuesta_electronico", type="datetime", nullable=true)
-     */
+
+    #[ORM\Column(name:"fecha_respuesta_electronico", type:"datetime", nullable: true)]
     private $fechaRespuestaElectronico;
 
-    /**
-     * @ORM\Column(name="ip", type="string", length=300, nullable=true)
-     * @Assert\Length( max = 300, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "ip", type: "string", length: 300, nullable: true)]
+    #[Assert\Length(max: 300, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $ip;
 
-    /**
-     * @ORM\Column(name="respuesta_electronico", type="string", length=3, options={"default" : "P"}, nullable=true)
-     */
+
+    #[ORM\Column(name: "respuesta_electronico", type: "string", length: 3, nullable: true, options: ["default" => "P"])]
     private $respuestaElectronico = 'P';
 
     /**

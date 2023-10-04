@@ -3,78 +3,66 @@
 
 namespace App\Entity;
 
+use App\Repository\EstudioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EstudioRepository")
- */
+
+#[ORM\Entity(repositoryClass: EstudioRepository::class)]
 class Estudio
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_estudio_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type: "integer", name: "codigo_estudio_pk")]
+    #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoEstudioPk;
 
-    /**
-     * @ORM\Column(name="codigo_usuario_fk", type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_usuario_fk", type: "string", nullable: true)]
     private $codigoUsuarioFk;
 
-    /**
-     * @ORM\Column(name="estudio_tipo", type="string", length=50, nullable=true)
-     */
+
+    #[ORM\Column(name: "estudio_tipo", type: "string", length: 50 ,nullable: true)]
     private $estudioTipo;
 
-    /**
-     * @ORM\Column(name="institucion", type="string", length=150, nullable=true)
-     * @Assert\Length( max = 150, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "institucion", type: "string", length: 150, nullable: true)]
+    #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $institucion;
 
-    /**
-     * @ORM\Column(name="titulo", type="string", length=120, nullable=true)
-     * @Assert\Length( max = 120, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "titulo", type: "string", length: 120, nullable: true)]
+    #[Assert\Length(max: 120, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $titulo;
 
-    /**
-     * @ORM\Column(name="fecha", type="date", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha", type: "date", nullable: true)]
     private $fecha;
 
-    /**
-     * @ORM\Column(name="fecha_inicio", type="date", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha_inicio", type: "date", nullable: true)]
     private $fechaInicio;
 
-    /**
-     * @ORM\Column(name="fecha_terminacion", type="date", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha_terminacion", type: "date", nullable: true)]
     private $fechaTerminacion;
 
-    /**
-     * @ORM\Column(name="graduado", type="boolean",options={"default" : false}, nullable=true)
-     */
+
+    #[ORM\Column(name: "graduado", type: "boolean", options: ["default" => false], nullable: true)]
     private $graduado = false;
 
-    /**
-     * @ORM\Column(name="duracion_estudio", type="string", length=60, nullable=true)
-     * @Assert\Length( max = 60, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "duracion_estudio", type: "string", length: 60, nullable: true)]
+    #[Assert\Length(max: 60, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $duracionEstudio;
 
-    /**
-     * @ORM\Column(name="estado_estudio", type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "estado_estudio", type: "string", length: 20, nullable: true)]
     private $estadoEstudio;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Usuario", inversedBy="usuarioEstudiosRel")
-     * @ORM\JoinColumn(name="codigo_usuario_fk", referencedColumnName="codigo_usuario_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: "usuarioEstudiosRel")]
+    #[ORM\JoinColumn(name: "codigo_usuario_fk", referencedColumnName: "codigo_usuario_pk")]
     protected $usuarioRel;
 
     /**

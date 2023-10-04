@@ -3,30 +3,27 @@
 
 namespace App\Entity;
 
+use App\Repository\IncapacidadTipoRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IncapacidadTipoRepository")
- */
+
+#[ORM\Entity(repositoryClass: IncapacidadTipoRepository::class)]
 class IncapacidadTipo
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_incapacidad_tipo_pk", type="string", length=10)
-     * @Assert\Length( max = 10, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type:"string", name:"codigo_incapacidad_tipo_pk", length: 10)]
+    #[Assert\Length(max: 10, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigoIncapacidadTipoPk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=80, nullable=true)
-     * @Assert\Length( max = 80, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name:"nombre", type:"string", length: 80, nullable: true)]
+    #[Assert\Length(max: 80, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nombre;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Incapacidad", mappedBy="incapacidadTipoRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Incapacidad::class, mappedBy: "incapacidadTipoRel")]
     protected $incapacidadesIncapacidadTipoRel;
 
     /**

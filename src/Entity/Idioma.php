@@ -3,32 +3,29 @@
 
 namespace App\Entity;
 
+use App\Repository\IdiomaRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\IdiomaRepository")
- * @DoctrineAssert\UniqueEntity(fields={"codigoCanalPk"},message="El código de idioma ingresado, ya se encuentra registrado")
- */
+
+#[ORM\Entity(repositoryClass: IdiomaRepository::class)]
+#[DoctrineAssert\UniqueEntity(fields: ["codigoIdiomaPk"], message: "El código de idioma ingresado ya se encuentra registrado")]
 class Idioma
 {
-    /**
-     * @ORM\Id()
-     * @ORM\Column(type="string", name="codigo_idioma_pk", length=10, unique=true)
-     * @Assert\Length(max = 10, maxMessage="El campo no puede contener más de 10 caracteres")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type: "string", name: "codigo_idioma_pk", length: 10, nullable: false, unique: true)]
+    #[Assert\Length(max: 10, maxMessage: "El campo no puede contener más de 10 caracteres")]
     private $codigoIdiomaPk;
 
-    /**
-     * @ORM\Column(name="nombre", type="string", length=150, nullable=true)
-     * @Assert\Length( max = 150, maxMessage = "El campo no puede contener más de {{ limit }} caracteres")
-     */
+
+    #[ORM\Column(name: "nombre", type: "string", length: 150, nullable: false)]
+    #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de 150 caracteres")]
     private $nombre;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AspiranteIdioma", mappedBy="idiomaRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: AspiranteIdioma::class, mappedBy: "idiomaRel")]
     private $idiomoAspiranteIdiomaRel;
 
 

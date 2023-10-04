@@ -2,191 +2,154 @@
 
 namespace App\Entity;
 
+use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="usuario")
- *  * @ORM\Entity(repositoryClass="App\Repository\UsuarioRepository")
- */
+#[ORM\Table(name: "usuario")]
+#[ORM\Entity(repositoryClass: UsuarioRepository::class)]
     class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
         public function getUserIdentifier(): string
         {
             return $this->getCodigoUsuarioPk();
         }
-
-    /**
-     * @ORM\Column(name="codigo_usuario_pk",type="string")
-     * @ORM\Id
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: "string", name: "username")]
     private $codigoUsuarioPk;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "correo", type: "string", nullable: true)]
     private $correo;
 
-    /**
-     * @ORM\Column(name="codigo_identificacion_fk", type="string", length=3, nullable=true)
-     */
+    #[ORM\Column(name: "codigo_identificacion_fk", type: "string", length: 3, nullable: true)]
     private $codigoIdentificacionFk;
 
-    /**
-     * @ORM\Column(name="numero_identificacion", type="string", length=20 ,nullable=false)
-     */
+
+    #[ORM\Column(name: "numero_identificacion", type: "string", length: 0, nullable: false)]
     private $numeroIdentificacion;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "nombres", type: "string", nullable: true)]
     private $nombres;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "apellidos", type: "string", nullable: true)]
     private $apellidos;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "clave", type: "string", nullable: true)]
     private $clave;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "verificado", type: "boolean", nullable: true, options: ["default" => false])]
     private $verificado;
 
-    /**
-     * @ORM\Column(name="fecha_registro", type="datetime", nullable=true)
-     */
+
+    #[ORM\Column(name: "fecha_registro", type: "datetime", nullable: true)]
     private $fechaRegistro;
 
-    /**
-     * @ORM\Column(type="string", nullable=true)
-     */
+
+    #[ORM\Column(name: "token", type: "string", nullable: true)]
     private $token;
 
-    /**
-     * @ORM\Column(name="codigo_empresa_fk", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: "codigo_empresa_fk", type: "integer", nullable: true, options: ["default" => null])]
     private $codigoEmpresaFk;
 
-    /**
-     * @ORM\Column(name="codigo_rol_fk", type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_rol_fk", type: "string", length: 20, nullable: true)]
     private $codigoRolFk;
 
-    /**
-     * @ORM\Column(name="control", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "control", type: "boolean", nullable: true, options: ["default" => false])]
     private $control;
 
-    /**
-     * @ORM\Column(name="cliente", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "cliente", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $cliente;
 
-    /**
-     * @ORM\Column(name="empleado", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "empleado", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $empleado;
 
-    /**
-     * @ORM\Column(name="proveedor", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "proveedor", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $proveedor;
 
-    /**
-     * @ORM\Column(name="empresa", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "empresa", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $empresa;
 
-    /**
-     * @ORM\Column(name="persona", type="boolean", nullable=true)
-     */
+
+    #[ORM\Column(name: "persona", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $persona;
 
-    /**
-     * @ORM\Column(name="codigo_tercero_erp_fk", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_tercero_erp_fk", type: "integer", nullable: true)]
     private $codigoTerceroErpFk;
 
-    /**
-     * @ORM\Column(name="codigo_operacion_fk", type="string", length=20, nullable=true)
-     */
+
+    #[ORM\Column(name: "codigo_operacion_fk", type: "string", length: 20 ,nullable: true)]
     private $codigoOperacionFk;
 
-    /**
-     * @ORM\Column(name="gestion_tranporte", type="boolean", options={"default" : false})
-     */
+
+    #[ORM\Column(name: "gestion_tranporte", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $gestionTranporte = false;
 
-    /**
-     * @ORM\Column(name="guia_nuevo", type="boolean", options={"default" : true})
-     */
+
+    #[ORM\Column(name: "guia_nuevo", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $guiaNuevo = true;
 
-    /**
-     * @ORM\Column(name="cambiar_valores_guia", type="boolean", options={"default" : false})
-     */
+
+    #[ORM\Column(name: "cambiar_valores_guia", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $cambiarValoresGuia = false;
 
-    /**
-     * @ORM\Column(name="forzar_cambio_clave", type="boolean", options={"default" : false})
-     */
+
+    #[ORM\Column(name: "forzar_cambio_clave", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $forzarCambioClave = false;
 
-    /**
-     * @ORM\Column(name="permite_cambiar_adquiriente", type="boolean", options={"default" : false})
-     */
+
+    #[ORM\Column(name: "permite_cambiar_adquiriente", type: "boolean",  nullable: true ,options: ["default" => false])]
     private $permiteCambiarAdquiriente = false;
 
-    /**
-     * @ORM\Column(name="estado_recogido", type="boolean", options={"default" : true})
-     */
+
+    #[ORM\Column(name: "estado_recogido", type: "boolean",  nullable: true ,options: ["default" => true])]
     private $estadoRecogido = true;
 
-    /**
-     * @ORM\Column(name="estado_ingreso", type="boolean", options={"default" : true})
-     */
+
+    #[ORM\Column(name: "estado_ingreso", type: "boolean",  nullable: true ,options: ["default" => true])]
     private $estadoIngreso = true;
 
-    /**
-     * @ORM\Column(name="codigo_operacion_cliente_fk", type="string", length=20 ,nullable=true)
-     * @Assert\Length(max = 20, maxMessage="El campo no puede contener más de 20 caracteres")
-     */
+
+    #[ORM\Column(name: "codigo_operacion_cliente_fk", type: "string", length: 20, nullable: true)]
+    #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigoOperacionClienteFk;
 
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Empresa", inversedBy="usuariosEmpresaRel")
-     * @ORM\JoinColumn(name="codigo_empresa_fk",referencedColumnName="codigo_empresa_pk")
-     */
+    #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
+    #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Identificacion", inversedBy="usuariosIdentificacionRel")
      * @ORM\JoinColumn(name="codigo_identificacion_fk",referencedColumnName="codigo_identificacion_pk")
      */
+    #[ORM\ManyToOne(targetEntity: Identificacion::class, inversedBy: "usuariosIdentificacionRel")]
+    #[ORM\JoinColumn(name: "codigo_identificacion_fk", referencedColumnName: "codigo_identificacion_pk")]
     protected $identificacionRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Estudio", mappedBy="usuarioRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Estudio::class, mappedBy: "usuarioRel")]
     private $usuarioEstudiosRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AspiranteIdioma", mappedBy="usuarioRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Aspirante::class, mappedBy: "usuarioRel")]
     private $usuarioAspiranteIdiomaRel;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Incapacidad", mappedBy="usuarioRel")
-     */
+
+    #[ORM\OneToMany(targetEntity: Incapacidad::class, mappedBy: "usuarioRel")]
     private $usuarioIncapacidadesRel;
 
     /**

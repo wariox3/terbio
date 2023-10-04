@@ -2,60 +2,50 @@
 
 namespace App\Entity;
 
+use App\Repository\FormatoImagenRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Form;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\FormatoImagenRepository")
- */
+
+#[ORM\Entity(repositoryClass: FormatoImagenRepository::class)]
 class FormatoImagen
 {
-    /**
-     * @ORM\Id
-     * @ORM\Column(name="codigo_formato_imagen_pk", type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+
+    #[ORM\Id]
+    #[ORM\Column(type: "integer", name: "codigo_formato_imagen_pk")]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $codigoFormatoImagenPk;
 
-    /**
-     * @ORM\Column(name="codigo_formato_fk", type="integer", nullable=false)
-     */
+
+    #[ORM\Column(name: "codigo_formato_fk", type: "integer", nullable: false)]
     private $codigoFormatoFk;
 
-    /**
-     * @ORM\Column(name="imagen", type="blob", nullable=true)
-     */
+
+    #[ORM\Column(name: "imagen", type: "blob", nullable: true)]
     private $imagen;
 
-    /**
-     * @ORM\Column(name="posicion_x", type="integer", nullable=true)
-     */
+    #[ORM\Column(name: "posicion_x", type: "integer", nullable: true)]
     private $posicionX = 0;
 
-    /**
-     * @ORM\Column(name="posicion_y", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "posicion_y", type: "integer", nullable: true)]
     private $posicionY = 0;
 
-    /**
-     * @ORM\Column(name="ancho", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "ancho", type: "integer", nullable: true)]
     private $ancho = 0;
 
-    /**
-     * @ORM\Column(name="alto", type="integer", nullable=true)
-     */
+
+    #[ORM\Column(name: "alto", type: "integer", nullable: true)]
     private $alto = 0;
 
-    /**
-     * @ORM\Column(type="string", length=30, name="extension", nullable=true)
-     */
+
+    #[ORM\Column(name: "extension", type: "string", length: 30,nullable: true)]
     private $extension;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Formato", inversedBy="formatosImagenFormatoRel")
-     * @ORM\JoinColumn(name="codigo_formato_fk", referencedColumnName="codigo_formato_pk")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Form::class, inversedBy: "formatosImagenFormatoRel")]
+    #[ORM\JoinColumn(name: "codigo_formato_fk", referencedColumnName: "codigo_formato_pk")]
     protected $formatoRel;
 
     /**
