@@ -146,7 +146,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 
     #[ORM\OneToMany(targetEntity: Aspirante::class, mappedBy: "usuarioRel")]
-    private $usuarioAspiranteIdiomaRel;
+    private $usuarioAspiranteRel;
 
 
     #[ORM\OneToMany(targetEntity: Incapacidad::class, mappedBy: "usuarioRel")]

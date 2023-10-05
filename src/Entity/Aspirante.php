@@ -178,6 +178,13 @@ class Aspirante
     #[ORM\Column(name: "comentarios", type: "string", length: 300, nullable: true)]
     private $comentarios;
 
+    #[ORM\Column(name: "codigo_usuario_fk", type: "string", nullable: true)]
+    private $codigoUsuarioFk;
+
+    #[ORM\ManyToOne(targetEntity: Usuario::class, inversedBy: "usuarioAspiranteRel")]
+    #[ORM\JoinColumn(name: "codigo_usuario_fk", referencedColumnName: "codigo_usuario_pk")]
+    protected $usuarioRel;
+
     /**
      * @return array
      */
@@ -770,4 +777,38 @@ class Aspirante
     {
         $this->ultimaEmpresaLabora = $ultimaEmpresaLabora;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCodigoUsuarioFk()
+    {
+        return $this->codigoUsuarioFk;
+    }
+
+    /**
+     * @param mixed $codigoUsuarioFk
+     */
+    public function setCodigoUsuarioFk($codigoUsuarioFk): void
+    {
+        $this->codigoUsuarioFk = $codigoUsuarioFk;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsuarioRel()
+    {
+        return $this->usuarioRel;
+    }
+
+    /**
+     * @param mixed $usuarioRel
+     */
+    public function setUsuarioRel($usuarioRel): void
+    {
+        $this->usuarioRel = $usuarioRel;
+    }
+
+
 }
