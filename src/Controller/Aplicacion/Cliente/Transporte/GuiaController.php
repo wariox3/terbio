@@ -548,8 +548,49 @@ class GuiaController extends AbstractController
      */
     public function nuevoRespuesta(Request $request, $codigoGuia)
     {
+        $arUsuario = $this->getUser();
+        $arrBotonRotulo1 = array('label' => 'Rotulo 1', 'disabled' => false);
+
+        $form = $this->createFormBuilder()
+            ->add('btnRotulo1', SubmitType::class, $arrBotonRotulo1)
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            if ($form->get('btnRotulo1')->isClicked()) {
+                $urlRotulo = "/transporte/api/oxigeno/guia/rotulo";
+                $parametrosRotulo = [
+                    'formato' => 1,
+                    'filtros' => [
+                        'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
+                        'codigoGuiaDesde' => $codigoGuia,
+                        'codigoGuiaHasta' => $codigoGuia,
+                        'fechaDesde' => null,
+                        'fechaHasta' => null,
+                        'codigoCiudadOrigen' => null,
+                        'codigoCiudadDestino' => null,
+                        'codigoDespacho' => null
+                    ]
+                ];
+                $respuestaRotulo = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosRotulo, $urlRotulo);
+                if ($respuestaRotulo->error == false) {
+                    $archivo = "/var/www/html/temporal/rotulo.pdf";
+                    $file = fopen($archivo, "wb");
+                    fwrite($file, base64_decode($respuestaRotulo->base64));
+                    fclose($file);
+                    $response = new Response();
+                    $response->headers->set('Cache-Control', 'private');
+                    $response->headers->set('Content-type', 'application/pdf');
+                    $response->headers->set('Content-Disposition', 'attachment; filename="rotulo.pdf";');
+                    $response->sendHeaders();
+                    $response->setContent(readfile($archivo));
+                    return $response;
+                }
+            }
+        }
+
         return $this->render('aplicacion/cliente/transporte/guiaNuevoRespuesta.html.twig', [
-            'codigoGuia' => $codigoGuia
+            'codigoGuia' => $codigoGuia,
+            'form' => $form->createView()
         ]);
     }
 
