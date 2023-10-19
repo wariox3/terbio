@@ -20,7 +20,7 @@ class Idioma
     private $codigoIdiomaPk;
 
 
-    #[ORM\Column(name: "nombre", type: "string", length: 150, nullable: false)]
+    #[ORM\Column(name: "nombre", type: "string", length: 150, nullable: true)]
     #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de 150 caracteres")]
     private $nombre;
 

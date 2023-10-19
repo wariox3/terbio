@@ -17,164 +17,125 @@ class Aspirante
     #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoAspirantePk;
 
-
     #[ORM\Column(name: "fecha", type: "date", nullable: true)]
     private $fecha;
-
 
     #[ORM\Column(name: "numero_identificacion", type: "string", length: 20, nullable: false, unique: true)]
     #[Assert\NotBlank(message: "El campo no puede estar vacio")]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $numeroIdentificacion;
 
-
-    #[ORM\Column(name: "libreta_militar", type: "string", length: 20, nullable: false)]
+    #[ORM\Column(name: "libreta_militar", type: "string", length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $libretaMilitar;
 
-
-    #[ORM\Column(name: "nombre_corto", type: "string", length: 120, nullable: false)]
+    #[ORM\Column(name: "nombre_corto", type: "string", length: 120, nullable: true)]
     #[Assert\Length(max: 120, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nombreCorto;
-
 
     #[ORM\Column(name: "nombre1", type: "string", length: 30, nullable: true)]
     #[Assert\Length(max: 30, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nombre1;
 
-
     #[ORM\Column(name: "nombre2", type: "string", length: 30, nullable: true)]
     #[Assert\Length(max: 30, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nombre2;
-
 
     #[ORM\Column(name: "apellido1", type: "string", length: 30, nullable: true)]
     #[Assert\Length(max: 30, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $apellido1;
 
-
     #[ORM\Column(name: "apellido2", type: "string", length: 30, nullable: true)]
     #[Assert\Length(max: 30, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $apellido2;
-
 
     #[ORM\Column(name: "telefono", type: "string", length: 15, nullable: true)]
     #[Assert\Length(max: 15, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $telefono;
 
-
     #[ORM\Column(name: "celular", type: "string", length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $celular;
-
 
     #[ORM\Column(name: "direccion", type: "string", length: 60, nullable: true)]
     #[Assert\Length(max: 60, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $direccion;
 
-
     #[ORM\Column(name: "barrio", type: "string", length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $barrio;
-
 
     #[ORM\Column(name: "correo", type: "string", length: 80, nullable: true)]
     #[Assert\Length(max: 80, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $correo;
 
-
     #[ORM\Column(name: "fecha_nacimiento", type: "date",  nullable: true)]
     private $fechaNacimiento;
 
-
     #[ORM\Column(name: "codigo_ciudad_nacimiento_fk", type: "integer",  nullable: true)]
     private $codigoCiudadNacimientoFk;
-
 
     #[ORM\Column(name: "peso", type: "string", length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $peso;
 
-
     #[ORM\Column(name: "estatura", type: "string", length: 20, nullable: true)]
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $estatura;
-
 
     #[ORM\Column(name: "cargo_aspira", type: "string", length: 50, nullable: true)]
     #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $cargoAspira;
 
-
     #[ORM\Column(name: "estado_autorizado", type: "boolean", options: ["default" => false])]
     private $estadoAutorizado = false;
-
 
     #[ORM\Column(name: "estado_aprobado", type: "boolean", options: ["default" => false])]
     private $estadoAprobado = false;
 
-
     #[ORM\Column(name: "estado_anulado", type: "boolean", options: ["default" => false])]
     private $estadoAnulado = false;
-
 
     #[ORM\Column(name: "estado_bloqueado", type: "boolean", options: ["default" => false])]
     private $estadoBloqueado = false;
 
-
     #[ORM\Column(name: "curso_vigilancia", type: "boolean", options: ["default" => false])]
     private $cursoVigilancia = false;
-
 
     #[ORM\Column(name: "moto", type: "boolean", options: ["default" => false])]
     private $moto = false;
 
-
     #[ORM\Column(name: "carro", type: "boolean", options: ["default" => false])]
     private $carro = false;
-
 
     #[ORM\Column(name: "posibilidad_viajar", type: "boolean", options: ["default" => false])]
     private $posibilidadViajar = false;
 
-
     #[ORM\Column(name: "licencia_moto", type: "boolean", options: ["default" => false])]
     private $licenciaMoto = false;
-
 
     #[ORM\Column(name: "licencia_carro", type: "boolean", options: ["default" => false])]
     private $licenciaCarro = false;
 
-
     #[ORM\Column(name: "discapacidad", type: "boolean", options: ["default" => false])]
     private $discapacidad = false;
-
 
     #[ORM\Column(name: "cabeza_hogar", type: "boolean", options: ["default" => false])]
     private $cabezaHogar = false;
 
-
     #[ORM\Column(name: "padre_familia", type: "boolean", options: ["default" => false])]
     private $padreFamilia = false;
 
-    /**
-     * @ORM\Column(name="numero_hijos", type="integer", nullable=true, options={"default" : 0})
-     */
     #[ORM\Column(name: "numero_hijos", type: "integer", nullable: true, options: ["default" => 0])]
     private $numeroHijos = false;
-
 
     #[ORM\Column(name: "ultima_empresa_labora", type: "string", length: 80, nullable: true)]
     #[Assert\Length(max: 80, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $ultimaEmpresaLabora;
 
-
     #[ORM\Column(name: "fecha_vence_curso_vigilancia", type: "date", nullable: true)]
     private $fechaVenceCursoVigilancia;
 
-    /**
-     * @ORM\Column(name="comentarios", type="string", length=300, nullable=true)
-     */
     #[ORM\Column(name: "comentarios", type: "string", length: 300, nullable: true)]
     private $comentarios;
 

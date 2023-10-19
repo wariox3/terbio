@@ -18,12 +18,12 @@ class Directorio
     private $codigoDirectorioPk;
 
 
-    #[ORM\Column(name: "tipo", type: "string", length: 1, nullable: false)]
+    #[ORM\Column(name: "tipo", type: "string", length: 1, nullable: true)]
     #[Assert\Length(max: 1, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $tipo;
 
 
-    #[ORM\Column(name: "clase", type: "string", length: 50, nullable: false)]
+    #[ORM\Column(name: "clase", type: "string", length: 50, nullable: true)]
     #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $clase;
 
@@ -42,11 +42,11 @@ class Directorio
     private $codigoDirectorioPadreFk;
 
 
-    #[ORM\Column(name: "directorio",type: "integer", nullable: true, options: ["default" => 0])]
+    #[ORM\Column(name: "directorio",type: "integer", nullable: false, options: ["default" => 0])]
     private $directorio = 0;
 
 
-    #[ORM\Column(name: "numero_archivos",type: "integer", nullable: true, options: ["default" => 0])]
+    #[ORM\Column(name: "numero_archivos",type: "integer", nullable: false, options: ["default" => 0])]
     private $numeroArchivos = 0;
 
 

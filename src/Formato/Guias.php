@@ -79,7 +79,7 @@ class Guias extends \FPDF
         $this->SetFont('', 'B', 7);
 
         //Creamos la cabecera de la tabla.
-        $w = array(20, 10, 20, 20, 30, 40, 10, 10, 10, 20);
+        $w = array(15, 18, 17, 20, 30, 40, 10, 10, 10, 20);
         for ($i = 0; $i < count($header); $i++)
             if ($i == 0 || $i == 1) {
                 $this->Cell($w[$i], 4, $header[$i], 1, 0, 'L', 1);
@@ -106,9 +106,9 @@ class Guias extends \FPDF
         $total = 0;
         foreach ($arGuias as $arGuia) {
             $fechaIngreso = date_create($arGuia->fechaIngreso);
-            $pdf->Cell(20, 4, $arGuia->codigoGuiaPk, 1, 0, 'L');
-            $pdf->Cell(10, 4, $arGuia->codigoGuiaTipoFk, 1, 0, 'L');
-            $pdf->Cell(20, 4, $fechaIngreso->format('Y-m-d'), 1, 0, 'L');
+            $pdf->Cell(15, 4, $arGuia->codigoGuiaPk, 1, 0, 'L');
+            $pdf->Cell(18, 4, substr($arGuia->guiaTipoNombre, 0, 8), 1, 0, 'L');
+            $pdf->Cell(17, 4, $fechaIngreso->format('Y-m-d'), 1, 0, 'L');
             $pdf->Cell(20, 4, $arGuia->documentoCliente, 1, 0, 'L');
             $pdf->Cell(30, 4, utf8_decode($arGuia->ciudadOrigen), 1, 0, 'L');
             $pdf->Cell(40, 4, utf8_decode($arGuia->ciudadDestino), 1, 0, 'L');

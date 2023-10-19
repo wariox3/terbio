@@ -17,15 +17,12 @@ class Imagen
     #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoImagenPk;
 
-
     #[ORM\Column(name: "identificador", type: "string", length: 50, nullable: true)]
     #[Assert\Length(max: 50, maxMessage: "El campo no puede contener mas de 50 caracteres")]
     private $identificador;
 
-
     #[ORM\Column(name: "codigo_modelo_fk", type: "string", length: 80, nullable: false)]
     private $codigoModeloFk;
-
 
     #[ORM\Column(name: "archivo", type: "string", length: 200, nullable: true)]
     #[Assert\Length(max: 200, maxMessage: "El campo no puede contener mas de 200 caracteres")]
@@ -35,38 +32,31 @@ class Imagen
     #[Assert\Length(max: 200, maxMessage: "El campo no puede contener mas de 200 caracteres")]
     private $archivoDestino;
 
-
     #[ORM\Column(name: "directorio", type: "string", length: 200, nullable: true)]
     #[Assert\Length(max: 200, maxMessage: "El campo no puede contener mas de 200 caracteres")]
     private $directorio;
-
 
     #[ORM\Column(name: "extension", type: "string", length: 10, nullable: true)]
     #[Assert\Length(max: 10, maxMessage: "El campo no puede contener mas de 10 caracteres")]
     private $extension;
 
-
     #[ORM\Column(name: "tamano", type: "float", options: ['default' => 0])]
     private $tamano = 0;
-
 
     #[ORM\Column(name: "nombre", type: "string", length: 500, nullable: true)]
     #[Assert\Length(max: 500, maxMessage: "El campo no puede contener mas de 500 caracteres")]
     private $nombre;
 
-
     #[ORM\Column(name: "extension_original", type: "string", length: 250, nullable: true)]
     #[Assert\Length(max: 250, maxMessage: "El campo no puede contener mas de 250 caracteres")]
     private $extensionOriginal;
-
 
     #[ORM\Column(name: "tipo", type: "string", length: 250, nullable: true)]
     #[Assert\Length(max: 250, maxMessage: "El campo no puede contener mas de 250 caracteres")]
     private $tipo;
 
-
-    #[ORM\Column(name: "fecha", type: "datetime", nullable: true)]
-    private $fecha;
+    #[ORM\Column(name: "fecha_hasta", type: "datetime", nullable: true)]
+    private $fechaHasta;
 
     /**
      * @return mixed
@@ -247,16 +237,18 @@ class Imagen
     /**
      * @return mixed
      */
-    public function getFecha()
+    public function getFechaHasta()
     {
-        return $this->fecha;
+        return $this->fechaHasta;
     }
 
     /**
-     * @param mixed $fecha
+     * @param mixed $fechaHasta
      */
-    public function setFecha($fecha): void
+    public function setFechaHasta($fechaHasta): void
     {
-        $this->fecha = $fecha;
+        $this->fechaHasta = $fechaHasta;
     }
+
+
 }

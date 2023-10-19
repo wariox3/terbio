@@ -16,21 +16,14 @@ class Texto
     private $codigoTextoPk;
 
 
-    /**
-     * @ORM\Column(name="texto", type="text", nullable=true)
-     */
     #[ORM\Column(type: "text", name: "texto", nullable: true)]
     private $texto;
 
     #[ORM\Column(type: "integer", name: "codigo_empresa_fk", nullable: true)]
     private $codigoEmpresaFk;
 
-    /**
-     * @ORM\Column(name="codigo_texto_tipo_fk", type="string", length=10, nullable=true)
-     */
     #[ORM\Column(type: "string", name: "codigo_texto_tipo_fk", length: 10, nullable: true)]
     private $codigoTextoTipoFk;
-
 
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "textosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]

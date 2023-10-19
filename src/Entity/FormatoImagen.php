@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\FormatoImagenRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Form\Form;
-
 
 #[ORM\Entity(repositoryClass: FormatoImagenRepository::class)]
 class FormatoImagen
@@ -16,10 +14,8 @@ class FormatoImagen
     #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $codigoFormatoImagenPk;
 
-
     #[ORM\Column(name: "codigo_formato_fk", type: "integer", nullable: false)]
     private $codigoFormatoFk;
-
 
     #[ORM\Column(name: "imagen", type: "blob", nullable: true)]
     private $imagen;
@@ -31,20 +27,16 @@ class FormatoImagen
     #[ORM\Column(name: "posicion_y", type: "integer", nullable: true)]
     private $posicionY = 0;
 
-
     #[ORM\Column(name: "ancho", type: "integer", nullable: true)]
     private $ancho = 0;
-
 
     #[ORM\Column(name: "alto", type: "integer", nullable: true)]
     private $alto = 0;
 
-
     #[ORM\Column(name: "extension", type: "string", length: 30,nullable: true)]
     private $extension;
 
-
-    #[ORM\ManyToOne(targetEntity: Form::class, inversedBy: "formatosImagenFormatoRel")]
+    #[ORM\ManyToOne(targetEntity: Formato::class, inversedBy: "formatosImagenFormatoRel")]
     #[ORM\JoinColumn(name: "codigo_formato_fk", referencedColumnName: "codigo_formato_pk")]
     protected $formatoRel;
 

@@ -35,11 +35,8 @@ class Archivo
     #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigo;
 
-    /**
-     * @ORM\Column(name="fecha_hasta", type="datetime", nullable=true)
-     */
-    #[ORM\Column(name: "fecha", type: "datetime", nullable: true)]
-    private $fecha;
+    #[ORM\Column(name: "fecha_hasta", type: "datetime", nullable: true)]
+    private $fechaHasta;
 
 
     #[ORM\Column(name: "nombre", type: "string", length: 500, nullable: true)]
@@ -79,29 +76,10 @@ class Archivo
     #[Assert\Length(max: 50, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $soporte;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Directorio", inversedBy="archivoDirectoriosRel")
-     * @ORM\JoinColumn(name="codigo_directorio_fk",referencedColumnName="codigo_directorio_pk")
-     */
+
     #[ORM\ManyToOne(targetEntity: Directorio::class, inversedBy: "archivoDirectoriosRel")]
     #[ORM\JoinColumn(name: "codigo_directorio_fk", referencedColumnName: "codigo_directorio_pk")]
     protected $directorioRel;
-
-    /**
-     * @return array
-     */
-    public function getInfoLog(): array
-    {
-        return $this->infoLog;
-    }
-
-    /**
-     * @param array $infoLog
-     */
-    public function setInfoLog(array $infoLog): void
-    {
-        $this->infoLog = $infoLog;
-    }
 
     /**
      * @return mixed
@@ -186,18 +164,20 @@ class Archivo
     /**
      * @return mixed
      */
-    public function getFecha()
+    public function getFechaHasta()
     {
-        return $this->fecha;
+        return $this->fechaHasta;
     }
 
     /**
-     * @param mixed $fecha
+     * @param mixed $fechaHasta
      */
-    public function setFecha($fecha): void
+    public function setFechaHasta($fechaHasta): void
     {
-        $this->fecha = $fecha;
+        $this->fechaHasta = $fechaHasta;
     }
+
+
 
     /**
      * @return mixed

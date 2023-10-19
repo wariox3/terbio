@@ -48,7 +48,7 @@ class Formato
     private $nombreFirma;
 
 
-    #[ORM\Column(name: "cargo_firma", type: "string", length: 50 ,nullable: true)]
+    #[ORM\Column(name: "cargo_firma", type: "string", length: 150, nullable: true)]
     private $cargoFirma;
 
 
@@ -68,7 +68,7 @@ class Formato
     private $etiquetas;
 
 
-    #[ORM\Column(name: "firma", type: "string", nullable: true)]
+    #[ORM\Column(name: "firma", type: "blob", nullable: true)]
     private $firma;
 
 

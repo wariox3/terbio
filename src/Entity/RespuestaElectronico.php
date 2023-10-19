@@ -18,7 +18,7 @@ class RespuestaElectronico
     private $codigoRespuestaElectronicoPk;
 
 
-    #[ORM\Column(name:"codigo_empresa_fk", type:"integer", nullable: true)]
+    #[ORM\Column(name:"codigo_empresa_fk", type:"integer", nullable: false)]
     private $codigoEmpresaFk;
 
 
@@ -26,7 +26,7 @@ class RespuestaElectronico
     private $codigoFacturaFk;
 
 
-    #[ORM\Column(name: "modelo", type: "string", length: 100 ,nullable: false, options: ["default" => "P"])]
+    #[ORM\Column(name: "modelo", type: "string", length: 100, nullable: false)]
     private $modelo;
 
 

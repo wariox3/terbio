@@ -15,82 +15,62 @@ class Empresa
     #[ORM\GeneratedValue(strategy: "AUTO")]
     private $codigoEmpresaPk;
 
-
     #[ORM\Column(name: "nombre", type: "string", length: 60,nullable: true)]
     private $nombre;
-
 
     #[ORM\Column(name: "direccion", type: "string", length: 60,nullable: true)]
     private $direccion;
 
-
     #[ORM\Column(name: "telefono", type: "string", length: 60,nullable: true)]
     private $telefono;
-
 
     #[ORM\Column(name: "nit", type: "string", length: 20,nullable: true)]
     private $nit;
 
-
     #[ORM\Column(name: "digito_verificacion", type: "string", length: 1, nullable: true)]
     private $digitoVerificacion;
-
 
     #[ORM\Column(name: "abreviatura", type: "string", length: 60, nullable: true)]
     private $abreviatura;
 
-
     #[ORM\Column(name: "logo", type: "blob", nullable: true)]
     private $logo;
-
 
     #[ORM\Column(name: "extension", type: "string", length: 5,nullable: true)]
     private $extension;
 
-
     #[ORM\Column(name: "url_servicio", type: "string", length: 500, nullable: true)]
     private $urlServicio;
-
 
     #[ORM\Column(name: "token", type: "string", length: 300,nullable: true)]
     private $token;
 
-
-    #[ORM\Column(name: "usuario_servicio", type: "string", length: 300,nullable: true)]
+    #[ORM\Column(name: "usuario_servicio", type: "string", length: 300, nullable: true)]
     private $usuarioServicio;
 
-
-    #[ORM\Column(name: "clave_servicio", type: "string", length: 300,nullable: true)]
+    #[ORM\Column(name: "clave_servicio", type: "string", length: 300, nullable: true)]
     private $claveServicio;
 
-
-    #[ORM\Column(name: "pago", type: "boolean", options: ["default" => false])]
+    #[ORM\Column(name: "pago", type: "boolean", nullable: false, options: ["default" => true])]
     private $pago = true;
 
-
-    #[ORM\Column(name: "certificado_laboral", type: "boolean", options: ["default" => false])]
+    #[ORM\Column(name: "certificado_laboral", nullable: false, type: "boolean", options: ["default" => true])]
     private $certificadoLaboral = true;
 
-
-    #[ORM\Column(name: "certificado_retiro", type: "boolean", options: ["default" => false])]
+    #[ORM\Column(name: "certificado_retiro", nullable: false, type: "boolean", options: ["default" => true])]
     private $certificadoRetiro = true;
-
 
     #[ORM\Column(name: "programacion", type: "boolean", options: ["default" => true])]
     private $programacion = true;
 
-
     #[ORM\Column(name: "menu_general", type: "boolean", options: ["default" => true])]
     private $menuGeneral = true;
-
 
     #[ORM\Column(name: "menu_crm", type: "boolean", options: ["default" => true])]
     private $menuCrm = true;
 
-
     #[ORM\Column(name: "menu_operacion", type: "boolean", options: ["default" => true])]
     private $menuOperacion = true;
-
 
     #[ORM\Column(name: "menu_programacion", type: "boolean", options: ["default" => true])]
     private $menuProgramacion = true;
@@ -98,10 +78,8 @@ class Empresa
     #[ORM\Column(name: "menu_venta", type: "boolean", options: ["default" => true])]
     private $menuVenta = true;
 
-
     #[ORM\Column(name: "menu_cartera", type: "boolean", options: ["default" => true])]
     private $menuCartera = true;
-
 
     #[ORM\Column(name: "menu_recurso_humano", type: "boolean", options: ["default" => true])]
     private $menuRecursoHumano = true;
@@ -109,82 +87,62 @@ class Empresa
     #[ORM\Column(name: "menu_transporte", type: "boolean", options: ["default" => true])]
     private $menuTransporte = true;
 
-
     #[ORM\Column(name: "menu_informacion", type: "boolean", options: ["default" => true])]
     private $menuInformacion = true;
-
 
     #[ORM\Column(name: "ciudad", type: "string", length: 60, nullable: true)]
     private $ciudad;
 
-
     #[ORM\Column(name: "codigo_item", type: "integer", length: 60, nullable: true)]
     private $codigoItem;
-
 
     #[ORM\Column(name: "registro_fijo", type: "boolean", options: ['default' => false])]
     private $registroFijo = false;
 
-
     #[ORM\Column(name: "logo_menu", type: "boolean", options: ['default' => false])]
     private $logoMenu = false;
-
 
     #[ORM\Column(name: "menu_solicitud", type: "boolean", options: ['default' => true])]
     private $menuSolicitud = true;
 
-
     #[ORM\Column(name: "menu_certificado", type: "boolean", options: ['default' => true])]
     private $menuCertificado = true;
-
 
     #[ORM\Column(name: "menu_certificado_otro", type: "boolean", options: ['default' => true])]
     private $menuCertificadoOtro = true;
 
-
     #[ORM\Column(name: "menu_capacitacion", type: "boolean", options: ['default' => true])]
     private $menuCapacitacion = true;
-
 
     #[ORM\Column(name: "menu_cambio_empresa", type: "boolean", options: ['default' => true])]
     private $menuCambioEmpresa = true;
 
-
     #[ORM\Column(name: "menu_incapacidad", type: "boolean", options: ['default' => true])]
     private $menuIncapacidad = true;
-
 
     #[ORM\Column(name: "menu_informacion_personal", type: "boolean", options: ['default' => true])]
     private $menuInformacionPersonal = true;
 
-
     #[ORM\Column(name: "firma", type: "boolean", options: ['default' => false])]
     private $firma = false;
-
 
     #[ORM\Column(name: "acceso", type: "boolean", options: ['default' => false])]
     private $acceso = false;
 
-
     #[ORM\Column(name: "mostrar_submenu", type: "boolean", options: ['default' => true])]
     private $mostrarSubmenu = true;
-
 
     #[ORM\Column(name: "mostrar_informacion_empleado", type: "boolean", options: ['default' => false])]
     private $mostrarInformacionEmpleado = false;
 
-
     #[ORM\Column(name: "validar_contrato_activo", type: "boolean", options: ['default' => false])]
     private $validarContratoActivo = false;
-
 
     #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "empresaRel")]
     protected $usuariosEmpresaRel;
 
-
     #[ORM\OneToMany(targetEntity: Enlace::class, mappedBy: "empresaRel")]
     protected $enlacesEmpresaRel;
-
 
     #[ORM\OneToMany(targetEntity: Texto::class, mappedBy: "empresaRel")]
     protected $textosEmpresaRel;

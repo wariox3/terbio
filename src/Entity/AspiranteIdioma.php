@@ -18,7 +18,7 @@ class AspiranteIdioma
     private $codigoAspiranteIdiomaPk;
 
 
-    #[ORM\Column(name: "codigo_usuario_fk", type: "string", nullable: false)]
+    #[ORM\Column(name: "codigo_usuario_fk", type: "string", nullable: true)]
     private $codigoUsuarioFk;
 
 
@@ -26,7 +26,7 @@ class AspiranteIdioma
     private $codigoIdiomaFk;
 
 
-    #[ORM\Column(name: "nivel", type: "string", length: 150, nullable: false)]
+    #[ORM\Column(name: "nivel", type: "string", length: 150, nullable: true)]
     #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $nivel;
 

@@ -14,10 +14,8 @@ class FormatoTipo
     #[ORM\Column(type: "string", name: "codigo_formato_tipo_pk", length: 10)]
     private $codigoFormatoTipoPk;
 
-
-    #[ORM\Column(type: "string", name: "nombre", length: 10, nullable: true)]
+    #[ORM\Column(type: "string", name: "nombre", length: 50, nullable: true)]
     private $nombre;
-
 
     #[ORM\OneToMany(targetEntity: Formato::class, mappedBy: "formatoTipoRel")]
     protected $formatosFormatoTipoRel;

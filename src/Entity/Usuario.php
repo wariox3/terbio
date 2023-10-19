@@ -28,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     private $codigoIdentificacionFk;
 
 
-    #[ORM\Column(name: "numero_identificacion", type: "string", length: 0, nullable: false)]
+    #[ORM\Column(name: "numero_identificacion", type: "string", length: 20, nullable: false)]
     private $numeroIdentificacion;
 
 
@@ -44,7 +44,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     private $clave;
 
 
-    #[ORM\Column(name: "verificado", type: "boolean", nullable: true, options: ["default" => false])]
+    #[ORM\Column(name: "verificado", type: "boolean", nullable: true)]
     private $verificado;
 
 
@@ -63,27 +63,27 @@ use Symfony\Component\Validator\Constraints as Assert;
     private $codigoRolFk;
 
 
-    #[ORM\Column(name: "control", type: "boolean", nullable: true, options: ["default" => false])]
+    #[ORM\Column(name: "control", type: "boolean", nullable: true)]
     private $control;
 
 
-    #[ORM\Column(name: "cliente", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "cliente", type: "boolean",  nullable: true)]
     private $cliente;
 
 
-    #[ORM\Column(name: "empleado", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "empleado", type: "boolean",  nullable: true)]
     private $empleado;
 
 
-    #[ORM\Column(name: "proveedor", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "proveedor", type: "boolean",  nullable: true)]
     private $proveedor;
 
 
-    #[ORM\Column(name: "empresa", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "empresa", type: "boolean",  nullable: true)]
     private $empresa;
 
 
-    #[ORM\Column(name: "persona", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "persona", type: "boolean",  nullable: true)]
     private $persona;
 
 
@@ -95,31 +95,31 @@ use Symfony\Component\Validator\Constraints as Assert;
     private $codigoOperacionFk;
 
 
-    #[ORM\Column(name: "gestion_tranporte", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "gestion_tranporte", type: "boolean", options: ["default" => false])]
     private $gestionTranporte = false;
 
 
-    #[ORM\Column(name: "guia_nuevo", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "guia_nuevo", type: "boolean",  options: ["default" => true])]
     private $guiaNuevo = true;
 
 
-    #[ORM\Column(name: "cambiar_valores_guia", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "cambiar_valores_guia", type: "boolean", options: ["default" => false])]
     private $cambiarValoresGuia = false;
 
 
-    #[ORM\Column(name: "forzar_cambio_clave", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "forzar_cambio_clave", type: "boolean", options: ["default" => false])]
     private $forzarCambioClave = false;
 
 
-    #[ORM\Column(name: "permite_cambiar_adquiriente", type: "boolean",  nullable: true ,options: ["default" => false])]
+    #[ORM\Column(name: "permite_cambiar_adquiriente", type: "boolean", options: ["default" => false])]
     private $permiteCambiarAdquiriente = false;
 
 
-    #[ORM\Column(name: "estado_recogido", type: "boolean",  nullable: true ,options: ["default" => true])]
+    #[ORM\Column(name: "estado_recogido", type: "boolean", options: ["default" => true])]
     private $estadoRecogido = true;
 
 
-    #[ORM\Column(name: "estado_ingreso", type: "boolean",  nullable: true ,options: ["default" => true])]
+    #[ORM\Column(name: "estado_ingreso", type: "boolean", options: ["default" => true])]
     private $estadoIngreso = true;
 
 
