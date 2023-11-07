@@ -69,7 +69,7 @@ class ReclamoController extends AbstractController
                                 'id' => $arReclamo->id
                             )
                         ));
-                    if ($respuestaCorreo->envio) {
+                    if ($respuestaCorreo->error === false) {
                         return $this->redirect($this->generateUrl('empleado_reclamo_detalle', ['id' => $arReclamo->id]));
                     } else {
                         Mensajes::error("Error al enviar correo de confirmación de registro de la solicitud{$respuestaCorreo->mensajeError}");

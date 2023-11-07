@@ -101,7 +101,7 @@ class ProgramacionController extends AbstractController
                                 'id' => $programacionReporte->id
                             )
                         ));
-                    if ($respuestaCorreo->envio) {
+                    if ($respuestaCorreo->error === false) {
                         return $this->redirect($this->generateUrl('turno_programacion_lista'));
                     } else {
                         Mensajes::error("Error al enviar correo de confirmación de registro de reporte{$respuestaCorreo->mensajeError}");

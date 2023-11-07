@@ -70,7 +70,7 @@ class SolicitudController extends AbstractController
                                 'id'=> $respuesta->id
                             )
                         ));
-                    if ($respuestaCorreo->envio) {
+                    if ($respuestaCorreo->error === false) {
                         return $this->redirect($this->generateUrl('empleado_solicitud_lista'));
                     } else {
                         Mensajes::error("Error al enviar correo de confirmación de registro de la solicitud{$respuestaCorreo->mensajeError}");

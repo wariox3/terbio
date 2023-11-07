@@ -164,7 +164,7 @@ class SeguridadController extends AbstractController
                                                         'nombreEmpresa' => $arRegistro->getEmpresaRel()->getNombre(),
                                                         'usuario' => $arRegistro->getCodigoUsuarioPk())
                                                 ));
-                                            if ($respuestaCorreo->envio) {
+                                            if ($respuestaCorreo->error === false) {
                                                 $correoFinal = $this->ocultarCorreo($arrEmpleado->correo);
                                                 Mensajes::success("Registro completo, su usuario y contraseña fueron enviados al correo {$correoFinal}");
                                             } else {
@@ -222,7 +222,7 @@ class SeguridadController extends AbstractController
                                     array('clave' => $arUsuario->getClave(),
                                         'nombreEmpresa' => ($arUsuario->getCodigoEmpresaFk() ? $arUsuario->getEmpresaRel()->getNombre() : ''))
                                 ));
-                            if ($respuestaCorreo->envio) {
+                            if ($respuestaCorreo->error === false) {
                                 $correoFinal = $this->ocultarCorreo($correoElectronico);
                                 Mensajes::info("Correo enviado a {$correoFinal}");
                             } else {
