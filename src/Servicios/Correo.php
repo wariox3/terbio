@@ -12,7 +12,7 @@ class Correo
                 "contenido" => $mensaje
             ]);
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'http://104.248.81.122/dubnio/public/index.php/api/correo/enviar');
+            curl_setopt($ch, CURLOPT_URL, 'http://zinc.semantica.com.co/index.php/api/correo/semantica');
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $datosJson);
