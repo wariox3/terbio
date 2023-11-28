@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -340,6 +341,7 @@ class GuiaController extends AbstractController
             ->add('vrPeso', NumberType::class, array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]))
             ->add('vrUnidad', NumberType::class, array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]))
             ->add('recaudo', NumberType::class, array('required' => true, 'data' => 0))
+            ->add('devolverDocumentoCliente', CheckboxType::class, array('required' => false))
             ->add('comentario', TextareaType::class, ['required' => false, 'attr' => ['rows' => '20', 'style' => 'height:100px']])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])
             ->getForm();
@@ -384,7 +386,8 @@ class GuiaController extends AbstractController
                                         'tipoLiquidacion' => $form->get('liquidacionRel')->getData(),
                                         'codigoTerceroOperacionFk' => $this->getUser()->getCodigoOperacionClienteFk(),
                                         'estadoRecogido' => $estadoRecogido,
-                                        'estadoIngreso' => $estadoIngreso
+                                        'estadoIngreso' => $estadoIngreso,
+                                        'devolverDocumentoCliente' => $form->get('devolverDocumentoCliente')->getData()
                                     ];
                                     $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/guia/nuevo");
                                     if ($respuesta->error == false) {
