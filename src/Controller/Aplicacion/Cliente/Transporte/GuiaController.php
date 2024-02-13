@@ -310,9 +310,13 @@ class GuiaController extends AbstractController
         $arrProductos = $this->fuenteChoiceProductos($arrDatos['arrProductos']);
         $arrFlete = array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]);
         $arrManejo = array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]);
+        $arrRecaudo = array('required' => true, 'data' => 0, 'attr' => ['readonly' => false]);
         if ($arUsuario->isCambiarValoresGuia()) {
             $arrFlete['attr']['readonly'] = false;
             $arrManejo['attr']['readonly'] = false;
+        }
+        if ($arUsuario->isBloquearRecaudo()) {
+            $arrRecaudo['attr']['readonly'] = true;
         }
         $form = $this->createFormBuilder()
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
@@ -340,7 +344,7 @@ class GuiaController extends AbstractController
             ->add('total', NumberType::class, array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]))
             ->add('vrPeso', NumberType::class, array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]))
             ->add('vrUnidad', NumberType::class, array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]))
-            ->add('recaudo', NumberType::class, array('required' => true, 'data' => 0))
+            ->add('recaudo', NumberType::class, $arrRecaudo)
             ->add('devolverDocumentoCliente', CheckboxType::class, array('required' => false))
             ->add('comentario', TextareaType::class, ['required' => false, 'attr' => ['rows' => '20', 'style' => 'height:100px']])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])

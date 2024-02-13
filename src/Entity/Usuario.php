@@ -127,27 +127,22 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigoOperacionClienteFk;
 
+    #[ORM\Column(name: "bloquear_recaudo", type: "boolean", options: ["default" => false])]
+    private $bloquearRecaudo = false;
 
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Identificacion", inversedBy="usuariosIdentificacionRel")
-     * @ORM\JoinColumn(name="codigo_identificacion_fk",referencedColumnName="codigo_identificacion_pk")
-     */
     #[ORM\ManyToOne(targetEntity: Identificacion::class, inversedBy: "usuariosIdentificacionRel")]
     #[ORM\JoinColumn(name: "codigo_identificacion_fk", referencedColumnName: "codigo_identificacion_pk")]
     protected $identificacionRel;
 
-
     #[ORM\OneToMany(targetEntity: Estudio::class, mappedBy: "usuarioRel")]
     private $usuarioEstudiosRel;
 
-
     #[ORM\OneToMany(targetEntity: Aspirante::class, mappedBy: "usuarioRel")]
     private $usuarioAspiranteRel;
-
 
     #[ORM\OneToMany(targetEntity: Incapacidad::class, mappedBy: "usuarioRel")]
     private $usuarioIncapacidadesRel;
@@ -778,6 +773,22 @@ use Symfony\Component\Validator\Constraints as Assert;
     public function setEstadoIngreso(bool $estadoIngreso): void
     {
         $this->estadoIngreso = $estadoIngreso;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBloquearRecaudo(): bool
+    {
+        return $this->bloquearRecaudo;
+    }
+
+    /**
+     * @param bool $bloquearRecaudo
+     */
+    public function setBloquearRecaudo(bool $bloquearRecaudo): void
+    {
+        $this->bloquearRecaudo = $bloquearRecaudo;
     }
 
 
