@@ -138,6 +138,9 @@ class Empresa
     #[ORM\Column(name: "validar_contrato_activo", type: "boolean", options: ['default' => false])]
     private $validarContratoActivo = false;
 
+    #[ORM\Column(name: "menu_empleado_programacion", type: "boolean", options: ['default' => true])]
+    private $menuEmpleadoProgramacion = true;
+
     #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "empresaRel")]
     protected $usuariosEmpresaRel;
 
@@ -866,4 +869,22 @@ class Empresa
     {
         $this->validarContratoActivo = $validarContratoActivo;
     }
+
+    /**
+     * @return bool
+     */
+    public function isMenuEmpleadoProgramacion(): bool
+    {
+        return $this->menuEmpleadoProgramacion;
+    }
+
+    /**
+     * @param bool $menuEmpleadoProgramacion
+     */
+    public function setMenuEmpleadoProgramacion(bool $menuEmpleadoProgramacion): void
+    {
+        $this->menuEmpleadoProgramacion = $menuEmpleadoProgramacion;
+    }
+
+
 }
