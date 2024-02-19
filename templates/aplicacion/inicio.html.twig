@@ -143,211 +143,214 @@
                 {% endfor %}
             </div>
         </div>
-        {% if arrRecurso.habilitadoTurno %}
-            <div class="col-md-9">
-                <section class="panel panel-featured-right panel-featured-primary">
-                    <div class="panel-body">
-                        <div class="widget-summary">
-                            <div class="widget-summary-col widget-summary-col-icon">
-                                <div class="summary-icon bg-primary">
-                                    <i class="fa fa-user"></i>
+        {% if app.user.empresaRel.menuEmpleadoProgramacion %}
+            {% if arrRecurso.habilitadoTurno %}
+                <div class="col-md-9">
+                    <section class="panel panel-featured-right panel-featured-primary">
+                        <div class="panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-primary">
+                                        <i class="fa fa-user"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="widget-summary-col">
-                                <div class="summary">
-                                    <h4 class="title">Formación y control</h4>
-                                    <table class="table table-condensed">
-                                        <tbody>
-                                        <tr>
-                                            <td>Vence curso:</td>
-                                            {% if arrRecurso.venceCurso == null %}
-                                                <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
-                                            {% elseif arrRecurso.venceCurso | date('Y-m-d') < "now"|date('Y-m-d') %}
-                                                <td bgcolor="red">
-                                                    <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
-                                            {% else %}
-                                                {% set diferenciaDiasCurso = date(arrRecurso.venceCurso).diff(date("now")) %}
-                                                {% set diferenciaDiasCurso = diferenciaDiasCurso.days %}
-                                                {% if diferenciaDiasCurso >= 0 and diferenciaDiasCurso < 30 %}
-                                                    <td bgcolor="orange">
-                                                        <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
-                                                {% endif %}
-                                                {% if diferenciaDiasCurso >= 30 and diferenciaDiasCurso < 60 %}
-                                                    <td bgcolor="yellow">
-                                                        <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }}</b></td>
-                                                {% endif %}
-                                                {% if diferenciaDiasCurso > 60 %}
-                                                    <td class="alert-success">
-                                                        <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }} </b></td>
-                                                {% endif %}
-                                            {% endif %}
-                                        </tr>
-                                        <tr>
-                                            <td>Vence acreditación:</td>
-                                            {% if arrRecurso.venceAcreditacion == null %}
-                                                <td class="alert-dark"><b>{{ 'Sin definir' }} </b></td>
-                                            {% elseif arrRecurso.venceAcreditacion | date('Y-m-d') < "now"|date('Y-m-d') %}
-                                                <td bgcolor="red">
-                                                    <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b></td>
-                                            {% else %}
-                                                {% set diferenciaDiasAcreditacion = date(arrRecurso.venceAcreditacion).diff(date("now")) %}
-                                                {% set diferenciaDiasAcreditacion = diferenciaDiasAcreditacion.days %}
-                                                {% if diferenciaDiasAcreditacion >= 0 and diferenciaDiasAcreditacion < 30 %}
-                                                    <td bgcolor="orange">
-                                                        <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b>
-                                                    </td>
-                                                {% endif %}
-                                                {% if diferenciaDiasAcreditacion >= 30 and diferenciaDiasAcreditacion < 60 %}
-                                                    <td bgcolor="yellow">
-                                                        <b>  {{ arrRecurso.venceAcreditacion|date('Y-m-d') }}</b>
-                                                    </td>
-                                                {% endif %}
-                                                {% if diferenciaDiasAcreditacion > 60 %}
-                                                    <td class="alert-success">
-                                                        <b>{{ arrRecurso.venceAcreditacion|date('Y-m-d') }} </b>
-                                                    </td>
-                                                {% endif %}
-                                            {% endif %}
-                                        </tr>
-                                        <tr>
-                                            <td>Vence polígono:</td>
-                                            {% if arrRecurso.vencePoligono == null %}
-                                                <td class="alert-dark"><b>{{ 'Sin definir' }}</b></td>
-                                            {% elseif arrRecurso.vencePoligono | date('Y-m-d') < "now"|date('Y-m-d') %}
-                                                <td bgcolor="red">
-                                                    <b> {{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
-                                            {% else %}
-                                                {% set diferenciaDiasPoligono = date(arrRecurso.vencePoligono).diff(date("now")) %}
-                                                {% set diferenciaDiasPoligono = diferenciaDiasPoligono.days %}
-                                                {% if diferenciaDiasPoligono >= 0 and diferenciaDiasPoligono < 30 %}
-                                                    <td bgcolor="orange">
-                                                        <b>{{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
-                                                {% endif %}
-                                                {% if diferenciaDiasPoligono >= 30 and diferenciaDiasPoligono < 60 %}
-                                                    <td bgcolor="yellow">
-                                                        <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }} </b></td>
-                                                {% endif %}
-                                                {% if diferenciaDiasPoligono > 60 %}
-                                                    <td class="alert-success">
-                                                        <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }}</b></td>
-                                                {% endif %}
-                                            {% endif %}
-                                        </tr>
-                                        {% if modalidad == 'CON ARMA' %}
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">Formación y control</h4>
+                                        <table class="table table-condensed">
+                                            <tbody>
                                             <tr>
-                                                <td>Vence psicofísico:</td>
-                                                {% if arrRecurso.vencePsicofisico == null %}
-                                                    <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
-                                                {% elseif arrRecurso.vencePsicofisico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                <td>Vence curso:</td>
+                                                {% if arrRecurso.venceCurso == null %}
+                                                    <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
+                                                {% elseif arrRecurso.venceCurso | date('Y-m-d') < "now"|date('Y-m-d') %}
                                                     <td bgcolor="red">
-                                                        <b> {{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b></td>
+                                                        <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
                                                 {% else %}
-                                                    {% set diferenciaDiasPsicofisico = date(arrRecurso.vencePsicofisico).diff(date("now")) %}
-                                                    {% set diferenciaDiasPsicofisico = diferenciaDiasPsicofisico.days %}
-                                                    {% if diferenciaDiasPsicofisico >= 0 and diferenciaDiasPsicofisico < 30 %}
+                                                    {% set diferenciaDiasCurso = date(arrRecurso.venceCurso).diff(date("now")) %}
+                                                    {% set diferenciaDiasCurso = diferenciaDiasCurso.days %}
+                                                    {% if diferenciaDiasCurso >= 0 and diferenciaDiasCurso < 30 %}
                                                         <td bgcolor="orange">
-                                                            <b>{{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b>
-                                                        </td>
+                                                            <b> {{ arrRecurso.venceCurso | date('Y-m-d') }}</b></td>
                                                     {% endif %}
-                                                    {% if diferenciaDiasPsicofisico >= 30 and diferenciaDiasPsicofisico < 60 %}
+                                                    {% if diferenciaDiasCurso >= 30 and diferenciaDiasCurso < 60 %}
                                                         <td bgcolor="yellow">
-                                                            <b>  {{ arrRecurso.vencePsicofisico|date('Y-m-d') }} </b>
-                                                        </td>
+                                                            <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }}</b></td>
                                                     {% endif %}
-                                                    {% if diferenciaDiasPsicofisico > 60 %}
+                                                    {% if diferenciaDiasCurso > 60 %}
                                                         <td class="alert-success">
-                                                            <b> {{ arrRecurso.vencePsicofisico|date('Y-m-d') }}</b></td>
+                                                            <b>  {{ arrRecurso.venceCurso|date('Y-m-d') }} </b></td>
                                                     {% endif %}
                                                 {% endif %}
                                             </tr>
-                                        {% endif %}
-                                        <tr>
-                                            <td>Vence psicosensométrico:</td>
-                                            {% if arrRecurso.vencePsicosensometrico == null %}
-                                                <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
-                                            {% elseif arrRecurso.vencePsicosensometrico | date('Y-m-d') < "now"|date('Y-m-d') %}
-                                                <td bgcolor="red">
-                                                    <b> {{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
-                                                </td>
-                                            {% else %}
-                                                {% set diferenciaDiasPsicosensometrico = date(arrRecurso.vencePsicosensometrico).diff(date("now")) %}
-                                                {% set diferenciaDiasPsicosensometrico = diferenciaDiasPsicosensometrico.days %}
-                                                {% if diferenciaDiasPsicosensometrico >= 0 and diferenciaDiasPsicosensometrico < 30 %}
-                                                    <td bgcolor="orange">
-                                                        <b>{{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
-                                                    </td>
+                                            <tr>
+                                                <td>Vence acreditación:</td>
+                                                {% if arrRecurso.venceAcreditacion == null %}
+                                                    <td class="alert-dark"><b>{{ 'Sin definir' }} </b></td>
+                                                {% elseif arrRecurso.venceAcreditacion | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                    <td bgcolor="red">
+                                                        <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b></td>
+                                                {% else %}
+                                                    {% set diferenciaDiasAcreditacion = date(arrRecurso.venceAcreditacion).diff(date("now")) %}
+                                                    {% set diferenciaDiasAcreditacion = diferenciaDiasAcreditacion.days %}
+                                                    {% if diferenciaDiasAcreditacion >= 0 and diferenciaDiasAcreditacion < 30 %}
+                                                        <td bgcolor="orange">
+                                                            <b>{{ arrRecurso.venceAcreditacion | date('Y-m-d') }}</b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasAcreditacion >= 30 and diferenciaDiasAcreditacion < 60 %}
+                                                        <td bgcolor="yellow">
+                                                            <b>  {{ arrRecurso.venceAcreditacion|date('Y-m-d') }}</b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasAcreditacion > 60 %}
+                                                        <td class="alert-success">
+                                                            <b>{{ arrRecurso.venceAcreditacion|date('Y-m-d') }} </b>
+                                                        </td>
+                                                    {% endif %}
                                                 {% endif %}
-                                                {% if diferenciaDiasPsicosensometrico >= 30 and diferenciaDiasPsicosensometrico < 60 %}
-                                                    <td bgcolor="yellow">
-                                                        <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
-                                                    </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Vence polígono:</td>
+                                                {% if arrRecurso.vencePoligono == null %}
+                                                    <td class="alert-dark"><b>{{ 'Sin definir' }}</b></td>
+                                                {% elseif arrRecurso.vencePoligono | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                    <td bgcolor="red">
+                                                        <b> {{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
+                                                {% else %}
+                                                    {% set diferenciaDiasPoligono = date(arrRecurso.vencePoligono).diff(date("now")) %}
+                                                    {% set diferenciaDiasPoligono = diferenciaDiasPoligono.days %}
+                                                    {% if diferenciaDiasPoligono >= 0 and diferenciaDiasPoligono < 30 %}
+                                                        <td bgcolor="orange">
+                                                            <b>{{ arrRecurso.vencePoligono | date('Y-m-d') }}</b></td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPoligono >= 30 and diferenciaDiasPoligono < 60 %}
+                                                        <td bgcolor="yellow">
+                                                            <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }} </b></td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPoligono > 60 %}
+                                                        <td class="alert-success">
+                                                            <b> {{ arrRecurso.vencePoligono|date('Y-m-d') }}</b></td>
+                                                    {% endif %}
                                                 {% endif %}
-                                                {% if diferenciaDiasPsicosensometrico > 60 %}
-                                                    <td class="alert-success">
-                                                        <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
-                                                    </td>
-                                                {% endif %}
+                                            </tr>
+                                            {% if modalidad == 'CON ARMA' %}
+                                                <tr>
+                                                    <td>Vence psicofísico:</td>
+                                                    {% if arrRecurso.vencePsicofisico == null %}
+                                                        <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
+                                                    {% elseif arrRecurso.vencePsicofisico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                        <td bgcolor="red">
+                                                            <b> {{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b></td>
+                                                    {% else %}
+                                                        {% set diferenciaDiasPsicofisico = date(arrRecurso.vencePsicofisico).diff(date("now")) %}
+                                                        {% set diferenciaDiasPsicofisico = diferenciaDiasPsicofisico.days %}
+                                                        {% if diferenciaDiasPsicofisico >= 0 and diferenciaDiasPsicofisico < 30 %}
+                                                            <td bgcolor="orange">
+                                                                <b>{{ arrRecurso.vencePsicofisico | date('Y-m-d') }}</b>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if diferenciaDiasPsicofisico >= 30 and diferenciaDiasPsicofisico < 60 %}
+                                                            <td bgcolor="yellow">
+                                                                <b>  {{ arrRecurso.vencePsicofisico|date('Y-m-d') }} </b>
+                                                            </td>
+                                                        {% endif %}
+                                                        {% if diferenciaDiasPsicofisico > 60 %}
+                                                            <td class="alert-success">
+                                                                <b> {{ arrRecurso.vencePsicofisico|date('Y-m-d') }}</b></td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                </tr>
                                             {% endif %}
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="summary-footer">
-                                    <a class="text-muted text-uppercase">(ver todo)</a>
+                                            <tr>
+                                                <td>Vence psicosensométrico:</td>
+                                                {% if arrRecurso.vencePsicosensometrico == null %}
+                                                    <td class="alert-dark"><b> {{ 'Sin definir' }} </b></td>
+                                                {% elseif arrRecurso.vencePsicosensometrico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                    <td bgcolor="red">
+                                                        <b> {{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
+                                                    </td>
+                                                {% else %}
+                                                    {% set diferenciaDiasPsicosensometrico = date(arrRecurso.vencePsicosensometrico).diff(date("now")) %}
+                                                    {% set diferenciaDiasPsicosensometrico = diferenciaDiasPsicosensometrico.days %}
+                                                    {% if diferenciaDiasPsicosensometrico >= 0 and diferenciaDiasPsicosensometrico < 30 %}
+                                                        <td bgcolor="orange">
+                                                            <b>{{ arrRecurso.vencePsicosensometrico | date('Y-m-d') }}</b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPsicosensometrico >= 30 and diferenciaDiasPsicosensometrico < 60 %}
+                                                        <td bgcolor="yellow">
+                                                            <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
+                                                        </td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPsicosensometrico > 60 %}
+                                                        <td class="alert-success">
+                                                            <b> {{ arrRecurso.vencePsicosensometrico|date('Y-m-d') }} </b>
+                                                        </td>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="summary-footer">
+                                        <a class="text-muted text-uppercase">(ver todo)</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
-        {% else %}
-            <div class="col-md-9">
-                <section class="panel panel-featured-right panel-featured-primary">
-                    <div class="panel-body">
-                        <div class="widget-summary">
-                            <div class="widget-summary-col widget-summary-col-icon">
-                                <div class="summary-icon bg-primary">
-                                    <i class="fa fa-user"></i>
+                    </section>
+                </div>
+            {% else %}
+                <div class="col-md-9">
+                    <section class="panel panel-featured-right panel-featured-primary">
+                        <div class="panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-primary">
+                                        <i class="fa fa-user"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="widget-summary-col">
-                                <div class="summary">
-                                    <h4 class="title">Control</h4>
-                                    <table class="table table-condensed">
-                                        <tbody>
-                                        <tr>
-                                            <td>Vence periódico:</td>
-                                            {% if arrRecurso.vencePeriodico == null %}
-                                                <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
-                                            {% elseif arrRecurso.vencePeriodico | date('Y-m-d') < "now"|date('Y-m-d') %}
-                                                <td bgcolor="red">
-                                                    <b> {{ arrRecurso.vencePeriodico | date('Y-m-d') }}</b></td>
-                                            {% else %}
-                                                {% set diferenciaDiasPeriodico = date(arrRecurso.vencePeriodico).diff(date("now")) %}
-                                                {% set diferenciaDiasPeriodico = diferenciaDiasPeriodico.days %}
-                                                {% if diferenciaDiasPeriodico >= 0 and diferenciaDiasPeriodico < 30 %}
-                                                    <td bgcolor="orange">
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">Control</h4>
+                                        <table class="table table-condensed">
+                                            <tbody>
+                                            <tr>
+                                                <td>Vence periódico:</td>
+                                                {% if arrRecurso.vencePeriodico == null %}
+                                                    <td class="alert-dark"><b> {{ 'Sin definir' }}</b></td>
+                                                {% elseif arrRecurso.vencePeriodico | date('Y-m-d') < "now"|date('Y-m-d') %}
+                                                    <td bgcolor="red">
                                                         <b> {{ arrRecurso.vencePeriodico | date('Y-m-d') }}</b></td>
+                                                {% else %}
+                                                    {% set diferenciaDiasPeriodico = date(arrRecurso.vencePeriodico).diff(date("now")) %}
+                                                    {% set diferenciaDiasPeriodico = diferenciaDiasPeriodico.days %}
+                                                    {% if diferenciaDiasPeriodico >= 0 and diferenciaDiasPeriodico < 30 %}
+                                                        <td bgcolor="orange">
+                                                            <b> {{ arrRecurso.vencePeriodico | date('Y-m-d') }}</b></td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPeriodico >= 30 and diferenciaDiasPeriodico < 60 %}
+                                                        <td bgcolor="yellow">
+                                                            <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }}</b></td>
+                                                    {% endif %}
+                                                    {% if diferenciaDiasPeriodico > 60 %}
+                                                        <td class="alert-success">
+                                                            <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }} </b></td>
+                                                    {% endif %}
                                                 {% endif %}
-                                                {% if diferenciaDiasPeriodico >= 30 and diferenciaDiasPeriodico < 60 %}
-                                                    <td bgcolor="yellow">
-                                                        <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }}</b></td>
-                                                {% endif %}
-                                                {% if diferenciaDiasPeriodico > 60 %}
-                                                    <td class="alert-success">
-                                                        <b>  {{ arrRecurso.vencePeriodico|date('Y-m-d') }} </b></td>
-                                                {% endif %}
-                                            {% endif %}
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
+            {% endif %}
         {% endif %}
+
         {% if app.user.empresaRel.menuCapacitacion %}
             <div class="col-md-9">
                 <section class="panel">

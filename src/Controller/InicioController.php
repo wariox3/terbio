@@ -79,17 +79,19 @@ class InicioController extends AbstractController
             $booProveedor = $usuario->getProveedor();
             $booEmpresa = $usuario->getEmpresa();
             if($usuario->getEmpleado()) {
-                $respuesta = $this->turnos();
-                if ($respuesta['turnos']) {
-                    $arrTurnos = $respuesta['turnos'];
-                    $codigoPuesto = $arrTurnos[0]->codigoPuestoFk;
-                }
-                if ($respuesta['recurso']) {
-                    $arrRecurso = $respuesta['recurso'];
-                }
-                $arrCapacitaciones = $this->capacitacionesPendientes();
-                if ($arrCapacitaciones) {
-                    $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
+                if($usuario->getEmpresaRel()->isMenuEmpleadoProgramacion()) {
+                    $respuesta = $this->turnos();
+                    if ($respuesta['turnos']) {
+                        $arrTurnos = $respuesta['turnos'];
+                        $codigoPuesto = $arrTurnos[0]->codigoPuestoFk;
+                    }
+                    if ($respuesta['recurso']) {
+                        $arrRecurso = $respuesta['recurso'];
+                    }
+                    $arrCapacitaciones = $this->capacitacionesPendientes();
+                    if ($arrCapacitaciones) {
+                        $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
+                    }
                 }
             }
         }
