@@ -55,6 +55,9 @@ class SeguridadController extends AbstractController
                                     if ($booValidarIdentifiacion) {
                                         $arRegistro->setEmpresaRel($arEmpresa);
                                         $arRegistro->setEmpleado(true);
+                                        if ($arEmpresa->isForzarCambioClaveRegistro()) {
+                                            $arRegistro->setForzarCambioClave(true);
+                                        }
                                     } else {
                                         Mensajes::error("El tipo de identificación + número de identificación no están registrados como empleado en la empresa seleccionada");
                                         $error = true;
@@ -99,7 +102,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/registrofijo/{codigoEmpresa}", name="registrofijo", requirements={"codigoEmpresa"="\d+"})
      */
-    public function registroFijo(Request $request,  EntityManagerInterface $em, $codigoEmpresa = null)
+    public function registroFijo(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $arRegistro = new Usuario;
         $nitEmpresa = "";
@@ -198,7 +201,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/recuperarclave/{codigoEmpresa}", name="recuperarclave", requirements={"codigoEmpresa"="\d+"})
      */
-    public function recuperarClave(Request $request , EntityManagerInterface $em, $codigoEmpresa = null)
+    public function recuperarClave(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $form = $this->createFormBuilder()
             ->add('codigoUsuario', TextType::class, ['required' => true, 'label' => 'Usuario', 'attr' => ['class' => 'form-control']])
@@ -248,7 +251,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/usuario/cambiarclave", name="usuario_cambiarclave")
      */
-    public function cambiarClave(Request $request,  EntityManagerInterface $em)
+    public function cambiarClave(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
             ->add('claveActual', PasswordType::class, ['required' => true, 'label' => 'Clave actual', 'attr' => ['class' => 'form-control']])
@@ -286,7 +289,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/usuario/forzarcambioclave", name="usuario_forzarcambioclave")
      */
-    public function forzarCambioClave(Request $request,  EntityManagerInterface $em)
+    public function forzarCambioClave(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
             ->add('claveActual', PasswordType::class, ['required' => true, 'label' => 'Clave actual', 'attr' => ['class' => 'form-control']])
@@ -325,7 +328,7 @@ class SeguridadController extends AbstractController
     /**
      * @Route("seguridad/usuario/miperfil/{id}", name="usuario_miperfil")
      */
-    public function miPerfil(Request $request, $id,  EntityManagerInterface $em)
+    public function miPerfil(Request $request, $id, EntityManagerInterface $em)
     {
         if ($this->getUser()->getCodigoUsuarioPk() != $id) {
             Mensajes::info("Usuario incorrecto al ingresar al perfil");

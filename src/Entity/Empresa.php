@@ -141,6 +141,9 @@ class Empresa
     #[ORM\Column(name: "menu_empleado_programacion", type: "boolean", options: ['default' => true])]
     private $menuEmpleadoProgramacion = true;
 
+    #[ORM\Column(name: "forzar_cambio_clave_registro", type: "boolean", options: ['default' => false])]
+    private $forzarCambioClaveRegistro = false;
+
     #[ORM\OneToMany(targetEntity: Usuario::class, mappedBy: "empresaRel")]
     protected $usuariosEmpresaRel;
 
@@ -884,6 +887,16 @@ class Empresa
     public function setMenuEmpleadoProgramacion(bool $menuEmpleadoProgramacion): void
     {
         $this->menuEmpleadoProgramacion = $menuEmpleadoProgramacion;
+    }
+
+    public function isForzarCambioClaveRegistro(): bool
+    {
+        return $this->forzarCambioClaveRegistro;
+    }
+
+    public function setForzarCambioClaveRegistro(bool $forzarCambioClaveRegistro): void
+    {
+        $this->forzarCambioClaveRegistro = $forzarCambioClaveRegistro;
     }
 
 
