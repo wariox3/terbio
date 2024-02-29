@@ -684,28 +684,39 @@ class GuiaController extends AbstractController
         $formNuevo->handleRequest($request);
         if ($formNuevo->isSubmitted() && $formNuevo->isValid()) {
             if ($formNuevo->get('btnGuardar')->isClicked()) {
-                $parametrosTercero = [
-                    'codigoTerceroFk' => $arUsuario->getCodigoTerceroErpFk(),
-                    'numeroIdentificacion' => $formNuevo->get('numeroIdentificacion')->getData(),
-                    'nombreCorto' => $formNuevo->get('nombreCorto')->getData(),
-                    'nombre1' => $formNuevo->get('nombre1')->getData(),
-                    'nombre2' => $formNuevo->get('nombre2')->getData(),
-                    'apellido1' => $formNuevo->get('apellido1')->getData(),
-                    'apellido2' => $formNuevo->get('apellido2')->getData(),
-                    'direccion' => $formNuevo->get('direccion')->getData(),
-                    'telefono' => $formNuevo->get('telefono')->getData(),
-                    'celular' => $formNuevo->get('celular')->getData(),
-                    'correo' => $formNuevo->get('correo')->getData(),
-                    'codigoCiudadFk' => $formNuevo->get('codigoCiudadFk')->getData(),
-                    'codigoIdentificacionFk' => $formNuevo->get('codigoIdentificacionFk')->getData(),
-                    'codigoOperacion' => $this->getUser()->getCodigoOperacionFk(),
-                    'usuario' => $this->getUser()->getUserIdentifier()
-                ];
+                $error = false;
+                $identificacion = $formNuevo->get('codigoIdentificacionFk')->getData();
+                if($identificacion == 'NI') {
+                    $numeroIdentificacion = $formNuevo->get('numeroIdentificacion')->getData();
+                    $caracteresNumeroIdentificacion = strlen($numeroIdentificacion);
+                    if($caracteresNumeroIdentificacion != 9) {
+                        $error = true;
+                        Mensajes::error("El numero de identificacion de NIT debe ser de 9 digitos");
+                    }
+                }
+                if($error == false) {
+                    $parametrosTercero = [
+                        'codigoTerceroFk' => $arUsuario->getCodigoTerceroErpFk(),
+                        'numeroIdentificacion' => $formNuevo->get('numeroIdentificacion')->getData(),
+                        'nombreCorto' => $formNuevo->get('nombreCorto')->getData(),
+                        'nombre1' => $formNuevo->get('nombre1')->getData(),
+                        'nombre2' => $formNuevo->get('nombre2')->getData(),
+                        'apellido1' => $formNuevo->get('apellido1')->getData(),
+                        'apellido2' => $formNuevo->get('apellido2')->getData(),
+                        'direccion' => $formNuevo->get('direccion')->getData(),
+                        'telefono' => $formNuevo->get('telefono')->getData(),
+                        'celular' => $formNuevo->get('celular')->getData(),
+                        'correo' => $formNuevo->get('correo')->getData(),
+                        'codigoCiudadFk' => $formNuevo->get('codigoCiudadFk')->getData(),
+                        'codigoIdentificacionFk' => $identificacion,
+                        'codigoOperacion' => $this->getUser()->getCodigoOperacionFk(),
+                        'usuario' => $this->getUser()->getUserIdentifier()
+                    ];
 
-                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosTercero, "/transporte/api/oxigeno/tercero/nuevo");
+                    $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosTercero, "/transporte/api/oxigeno/tercero/nuevo");
 
-                if ($respuesta->error == false) {
-                    echo "<script>
+                    if ($respuesta->error == false) {
+                        echo "<script>
                         let numeroIdentificacion = '{$formNuevo->get('numeroIdentificacion')->getData()}'
                         let nombreCorto = '{$formNuevo->get('nombreCorto')->getData()}'
                         let IdentificacionFk = '{$formNuevo->get('codigoIdentificacionFk')->getData()}'
@@ -718,8 +729,9 @@ class GuiaController extends AbstractController
                         window.opener.document.getElementById('form_codigoAdquiriente').value = codigoTercero;
                         window.close()
                     </script>";
-                } else {
-                    Mensajes::error($respuesta->error);
+                    } else {
+                        Mensajes::error($respuesta->error);
+                    }
                 }
             }
         }
