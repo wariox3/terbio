@@ -698,7 +698,8 @@ class GuiaController extends AbstractController
                     'correo' => $formNuevo->get('correo')->getData(),
                     'codigoCiudadFk' => $formNuevo->get('codigoCiudadFk')->getData(),
                     'codigoIdentificacionFk' => $formNuevo->get('codigoIdentificacionFk')->getData(),
-                    'codigoOperacion' => $this->getUser()->getCodigoOperacionFk()
+                    'codigoOperacion' => $this->getUser()->getCodigoOperacionFk(),
+                    'usuario' => $this->getUser()->getUserIdentifier()
                 ];
 
                 $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosTercero, "/transporte/api/oxigeno/tercero/nuevo");
