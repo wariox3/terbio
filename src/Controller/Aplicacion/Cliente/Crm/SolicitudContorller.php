@@ -80,7 +80,7 @@ class SolicitudContorller  extends AbstractController
     }
 
     /**
-     * @Route("/cliente/crm/solicitud/detalle/{codigoSolicitud}", name="cliente_crm_solicitud_detalle")
+     * @Route("/cliente/crm/solicitud/detalle/{id}", name="cliente_crm_solicitud_detalle")
      */
     public function detalle(Request $request, $id)
     {
