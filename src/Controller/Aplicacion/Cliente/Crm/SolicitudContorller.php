@@ -82,8 +82,13 @@ class SolicitudContorller  extends AbstractController
     /**
      * @Route("/cliente/crm/solicitud/detalle/{codigoSolicitud}", name="cliente_crm_solicitud_detalle")
      */
-    public function detalle(Request $request, PaginatorInterface $paginator, $codigoSolicitud)
+    public function detalle(Request $request, $id)
     {
-
+        $parametros = ['id' => $id];
+        $arUsuario = $this->getUser();
+        $arSolicitud = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/crm/api/gestion/solicitud/detalle");
+        return $this->render('aplicacion/cliente/crm/solicitud/detalle.html.twig', [
+            'arSolicitud' => $arSolicitud,
+        ]);
     }
 }
