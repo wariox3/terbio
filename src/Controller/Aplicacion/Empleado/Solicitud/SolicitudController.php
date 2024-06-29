@@ -69,7 +69,7 @@ class SolicitudController extends AbstractController
                                 'nombreEmpresa' => $arUsuario->getEmpresaRel()->getNombre(),
                                 'id'=> $respuesta->id
                             )
-                        ));
+                        ), $arUsuario->getCodigoEmpresaFk());
                     if ($respuestaCorreo->error === false) {
                         return $this->redirect($this->generateUrl('empleado_solicitud_lista'));
                     } else {

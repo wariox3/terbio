@@ -3,16 +3,17 @@ namespace App\Servicios;
 
 class Correo
 {
-    public function enviarCorreo($correo = null, $asunto = null, $mensaje = null)
+    public function enviarCorreo($correo = null, $asunto = null, $mensaje = null, $operador = null)
     {
         if($correo) {
             $datosJson = json_encode([
                 "correo" => $correo,
                 "asunto" => $asunto,
-                "contenido" => $mensaje
+                "contenido" => $mensaje,
+                "operador" => $operador
             ]);
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'http://zinc.semantica.com.co/index.php/api/correo/html');
+            curl_setopt($ch, CURLOPT_URL, 'http://zinc.semantica.com.co/api/correo/html');
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $datosJson);

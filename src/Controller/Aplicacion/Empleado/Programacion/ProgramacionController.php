@@ -100,7 +100,7 @@ class ProgramacionController extends AbstractController
                                 'nombreEmpresa' => $arUsuario->getEmpresaRel()->getNombre(),
                                 'id' => $programacionReporte->id
                             )
-                        ));
+                        ), $arUsuario->getCodigoEmpresaFk());
                     if ($respuestaCorreo->error === false) {
                         return $this->redirect($this->generateUrl('turno_programacion_lista'));
                     } else {
