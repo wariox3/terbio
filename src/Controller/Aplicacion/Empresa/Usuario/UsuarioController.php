@@ -47,7 +47,7 @@ class UsuarioController extends AbstractController
             ->add('codigoUsuario', TextType::class, array('required' => false, 'data' => isset($raw['filtros']['codigoUsuario']) ? $raw['filtros']['codigoUsuario'] : null))
             ->add('numeroIdentificacion', TextType::class, array('required' => false, 'data' => isset($raw['filtros']['numeroIdentificacion']) ? $raw['filtros']['numeroIdentificacion'] : null))
             ->add('nombre', TextType::class, array('required' => false, 'data' => isset($raw['filtros']['nombre']) ? $raw['filtros']['nombre'] : null))
-            ->add('btnActualizarDatosUsuario', SubmitType::class, array('label' => 'Actualizar datos usuario'))
+            #->add('btnActualizarDatosUsuario', SubmitType::class, array('label' => 'Actualizar datos usuario'))
             ->add('btnExcel', SubmitType::class, ['label' => 'Excel', 'attr' => ['class' => 'btn btn-sm btn-default']])
             ->add('btnFiltro', SubmitType::class, array('label' => 'Filtrar'))
             ->getForm();
@@ -66,20 +66,21 @@ class UsuarioController extends AbstractController
             if ($form->get('btnExcel')->isClicked()) {
                 set_time_limit(0);
                 ini_set("memory_limit", -1);
-                $url = "/api/recursohumano/empleado/lista/datosempleado";
+                $arrRegistros = $em->getRepository(Usuario::class)->lista($raw);
+                $this->excelLista($arrRegistros, $em);
+                /*$url = "/api/recursohumano/empleado/lista/datosempleado";
                 $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), [], $url, true);
                 if ($respuesta['error'] == false) {
                     $arrEmpleados = $respuesta['empleados'];
-                    $arrRegistros = $em->getRepository(Usuario::class)->lista($raw);
-                    $this->excelLista($arrRegistros, $arrEmpleados, $em);
-                }
+
+                }*/
             }
 
-            if ($form->get('btnActualizarDatosUsuario')->isClicked()) {
+            /*if ($form->get('btnActualizarDatosUsuario')->isClicked()) {
                 set_time_limit(0);
                 ini_set("memory_limit", -1);
                 $em->getRepository(Usuario::class)->actualizarDatosUsuario();
-            }
+            }*/
         }
         $arrRegistros = $em->getRepository(Usuario::class)->lista($raw);
         $arUsuarios = $paginator->paginate($arrRegistros, $request->query->getInt('page', 1), 40);
@@ -260,7 +261,7 @@ class UsuarioController extends AbstractController
         return $filtro;
     }
 
-    public function excelLista($arRegistros, $arrEmpleados,  EntityManagerInterface $em)
+    public function excelLista($arRegistros, EntityManagerInterface $em)
     {
         set_time_limit(0);
         ini_set("memory_limit", -1);
@@ -282,6 +283,7 @@ class UsuarioController extends AbstractController
             foreach ($arRegistros as $arRegistro) {
                 $hoja->getStyle($j)->getFont()->setName('Arial')->setSize(8);
                 $hoja->getStyle("G{$j}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_DATE_YYYYMMDD);
+
                 $hoja->setCellValue('A' . $j, $arRegistro['codigoUsuarioPk']);
                 $hoja->setCellValue('B' . $j, $arRegistro['codigoIdentificacionFk']);
                 $hoja->setCellValue('C' . $j, $arRegistro['numeroIdentificacion']);
@@ -296,7 +298,7 @@ class UsuarioController extends AbstractController
                 $hoja->setCellValue('L' . $j, $arRegistro['proveedor'] ? 'SI' : 'NO');
                 $j++;
             }
-            $hoja2 = new Worksheet($libro, "Empleados");
+            /*$hoja2 = new Worksheet($libro, "Empleados");
             $libro->addSheet($hoja2);
             $j = 0;
             $arrColumnas = ['CÓDIGO EMPLEADO', 'EMPLEADO', 'CÉDULA', 'CORREO', 'CELULAR', 'CARGO', 'ACTIVO', 'ZONA', 'SUBZONA'];
@@ -336,7 +338,7 @@ class UsuarioController extends AbstractController
                     $hoja2->setCellValue('I' . $j, $zona);
                     $j++;
                 }
-            }
+            }*/
             $libro->setActiveSheetIndex(0);
             header('Content-Type: application/vnd.ms-excel');
             header("Content-Disposition: attachment;filename=usuarios.xls");

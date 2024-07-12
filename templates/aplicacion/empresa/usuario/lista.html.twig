@@ -1,5 +1,5 @@
 {% extends 'aplicacion/base.html.twig' %}
-{% block title %}EMPRESAS{% endblock %}
+{% block title %}Usuarios{% endblock %}
 {% block content %}
     {{ form_start(form) }}
     <div class="row">
@@ -46,7 +46,6 @@
     <div class="row">
         <div class="col-xl-11 offset-1">
             <div class="btn-group btn-group-sm" style="float: right">
-                {{ form_widget(form.btnActualizarDatosUsuario, { 'attr': {'class': 'btn btn-default btn-sm',} }) }}
                 <a class="btn btn-default btn-sm "
                    href="{{ path('empresa_usuario_nuevo', {'id': 0}) }}">Nuevo</a>
                 {{ form_widget(form.btnExcel, { 'attr': {'class': 'btn btn-default waves-effect waves-themed btn-sm'} }) }}
