@@ -70,9 +70,11 @@ class ReclamoController extends AbstractController
                             )
                         ), $arUsuario->getCodigoEmpresaFk());
                     if ($respuestaCorreo->error === false) {
-                        Mensajes::error("Error al enviar correo de confirmación de registro de la solicitud {$respuestaCorreo->mensajeError}");
+                        return $this->redirect($this->generateUrl('empleado_reclamo_detalle', ['id' => $arReclamo->id]));
+                    } else {
+                        Mensajes::error("Error al enviar correo de confirmación de registro de reporte{$respuestaCorreo->mensajeError}");
                     }
-                    return $this->redirect($this->generateUrl('empleado_reclamo_detalle', ['id' => $arReclamo->id]));
+
                 } else {
                     Mensajes::error($arReclamo->errorMensaje);
                     return $this->redirect($this->generateUrl('empleado_reclamo_lista'));
