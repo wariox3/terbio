@@ -362,10 +362,23 @@ class GuiaController extends AbstractController
                                 if (!$validarFlete || $validarFlete && $form->get('flete')->getData() > 0) {
                                     $estadoRecogido = $arUsuario->isEstadoRecogido();
                                     $estadoIngreso = $arUsuario->isEstadoIngreso();
+                                    $codigoAdquiriente = $arUsuario->getCodigoTerceroErpFk();
+                                    $arrTipoGuias = $arrDatos['arrGuiaTipo'];
+                                    $tipoDestino = false;
+                                    foreach ($arrTipoGuias as $arrTipoGuia) {
+                                        if($arrTipoGuia['codigoGuiaTipoPk'] == $guiaTipo) {
+                                            if($arrTipoGuia['destino'] == true) {
+                                                $tipoDestino = true;
+                                            }
+                                        }
+                                    }
+                                    if($tipoDestino) {
+                                        $codigoAdquiriente = $form->get('codigoAdquiriente')->getData();
+                                    }
                                     $parametros = [
                                         'codigoGuiaTipoFk' => $form->get('guiaTipoRel')->getData(),
                                         'codigoTerceroFk' => $arUsuario->getCodigoTerceroErpFk(),
-                                        'codigoAdquirienteFk' => $form->get('codigoAdquiriente')->getData(),
+                                        'codigoAdquirienteFk' => $codigoAdquiriente,
                                         'codigoOperacionFk' => $arrDatos['arrOperacion']['codigoOperacionPk'],
                                         'codigoCiudadOrigenFk' => $arrDatos['arrOperacion']['codigoCiudadFk'],
                                         'documentoCliente' => $form->get('documentoCliente')->getData(),
