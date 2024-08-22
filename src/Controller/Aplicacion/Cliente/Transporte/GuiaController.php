@@ -362,8 +362,8 @@ class GuiaController extends AbstractController
                                 if (!$validarFlete || $validarFlete && $form->get('flete')->getData() > 0) {
                                     $estadoRecogido = $arUsuario->isEstadoRecogido();
                                     $estadoIngreso = $arUsuario->isEstadoIngreso();
-                                    $codigoAdquiriente = $arUsuario->getCodigoTerceroErpFk();
                                     if($arUsuario->isBloquearAdquirienteCredito()) {
+                                        $codigoAdquiriente = $arUsuario->getCodigoTerceroErpFk();
                                         $arrTipoGuias = $arrDatos['arrGuiaTipo'];
                                         $tipoDestino = false;
                                         foreach ($arrTipoGuias as $arrTipoGuia) {
@@ -376,6 +376,8 @@ class GuiaController extends AbstractController
                                         if($tipoDestino) {
                                             $codigoAdquiriente = $form->get('codigoAdquiriente')->getData();
                                         }
+                                    } else {
+                                        $codigoAdquiriente = $form->get('codigoAdquiriente')->getData();
                                     }
                                     $parametros = [
                                         'codigoGuiaTipoFk' => $form->get('guiaTipoRel')->getData(),
