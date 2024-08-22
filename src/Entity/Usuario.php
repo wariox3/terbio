@@ -130,6 +130,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[ORM\Column(name: "bloquear_recaudo", type: "boolean", options: ["default" => false])]
     private $bloquearRecaudo = false;
 
+    #[ORM\Column(type: "boolean", options: ["default" => false])]
+    private $bloquearAdquirienteCredito = false;
+
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
@@ -789,6 +792,16 @@ use Symfony\Component\Validator\Constraints as Assert;
     public function setBloquearRecaudo(bool $bloquearRecaudo): void
     {
         $this->bloquearRecaudo = $bloquearRecaudo;
+    }
+
+    public function isBloquearAdquirienteCredito(): bool
+    {
+        return $this->bloquearAdquirienteCredito;
+    }
+
+    public function setBloquearAdquirienteCredito(bool $bloquearAdquirienteCredito): void
+    {
+        $this->bloquearAdquirienteCredito = $bloquearAdquirienteCredito;
     }
 
 
