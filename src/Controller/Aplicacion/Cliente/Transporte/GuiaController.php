@@ -308,6 +308,10 @@ class GuiaController extends AbstractController
         $arrGuiaTipo = $this->fuenteChoiceGuiaTipo($arrDatos['arrGuiaTipo'], $arrDatos['arrTercero']);
         $arrLiquidaciones = $this->fuenteChoiceLiquidacion($arrDatos['arrTercero']);
         $arrProductos = $this->fuenteChoiceProductos($arrDatos['arrProductos']);
+        $arrOperaciones = [];
+        if(isset($arrDatos['arrOperaciones'])) {
+            $arrOperaciones = $this->fuenteChoiceOperaciones($arrDatos['arrOperaciones']);
+        }
         $arrFlete = array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]);
         $arrManejo = array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]);
         $arrRecaudo = array('required' => true, 'data' => 0, 'attr' => ['readonly' => false]);
@@ -322,6 +326,7 @@ class GuiaController extends AbstractController
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('guiaTipoRel', ChoiceType::class, array('choices' => $arrGuiaTipo, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('productoRel', ChoiceType::class, array('choices' => $arrProductos, 'attr' => ['class' => 'aplicarSelect2']))
+            ->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('destinoRel', ChoiceType::class, array('choices' => $arrDestinos, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('documentoCliente', TextType::class, array('required' => false))
             ->add('remitente', TextType::class, array('required' => false))
@@ -405,7 +410,7 @@ class GuiaController extends AbstractController
                                         'comentario' => $form->get('comentario')->getData(),
                                         'usuario' => $this->getUser()->getUsername(),
                                         'tipoLiquidacion' => $form->get('liquidacionRel')->getData(),
-                                        'codigoTerceroOperacionFk' => $this->getUser()->getCodigoOperacionClienteFk(),
+                                        'codigoTerceroOperacionFk' => $form->get('operacionRel')->getData(),
                                         'estadoRecogido' => $estadoRecogido,
                                         'estadoIngreso' => $estadoIngreso,
                                         'devolverDocumentoCliente' => $form->get('devolverDocumentoCliente')->getData()
@@ -868,6 +873,15 @@ class GuiaController extends AbstractController
             if ($dato['codigoProductoFk'] != 'VARIOS') {
                 $arrDatos["{$dato['productoNombre']}"] = $dato['codigoProductoFk'];
             }
+        }
+        return $arrDatos;
+    }
+
+    private function fuenteChoiceOperaciones($datos)
+    {
+        $arrDatos = [];
+        foreach ($datos as $dato) {
+            $arrDatos["{$dato['nombre']}"] = $dato['codigoTerceroOperacionPk'];
         }
         return $arrDatos;
     }
