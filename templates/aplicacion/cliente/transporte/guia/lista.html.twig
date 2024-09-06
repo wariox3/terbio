@@ -16,10 +16,11 @@
                     <div class="col-sm-2">
                         {{ form_widget(form.fechaDesde) }}
                     </div>
-                    <label class="col-sm-2 control-label">Documento:</label>
+                    <label class="col-sm-2 control-label">Guia tipo:</label>
                     <div class="col-sm-2">
-                        {{ form_widget(form.documentoCliente) }}
+                        {{ form_widget(form.codigoGuiaTipo) }}
                     </div>
+
                     <label class="col-sm-2 control-label">Ciudad origen:</label>
                     <div class="col-sm-2">
                         <div style="display: flex; align-items: baseline">
@@ -37,9 +38,9 @@
                     <div class="col-sm-2">
                         {{ form_widget(form.fechaHasta) }}
                     </div>
-                    <label class="col-sm-2 control-label">Guia tipo:</label>
+                    <label class="col-sm-2 control-label">Documento:</label>
                     <div class="col-sm-2">
-                        {{ form_widget(form.codigoGuiaTipo) }}
+                        {{ form_widget(form.documentoCliente) }}
                     </div>
                     <label class="col-sm-2 control-label">Ciudad destino:</label>
                     <div class="col-sm-2">
@@ -54,9 +55,9 @@
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
-                    <label class="col-sm-2 control-label">Limite registros:</label>
+                    <label class="col-sm-2 control-label">Operacion tercero:</label>
                     <div class="col-sm-2">
-                        {{ form_widget(form.limiteRegistros) }}
+                        {{ form_widget(form.codigoTerceroOperacion) }}
                     </div>
                     <label class="col-sm-2 control-label">Guia:</label>
                     <div class="col-sm-2">
@@ -68,7 +69,11 @@
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
-                    <div class="col-sm-12">
+                    <label class="col-sm-2 control-label">Limite registros:</label>
+                    <div class="col-sm-2">
+                        {{ form_widget(form.limiteRegistros) }}
+                    </div>
+                    <div class="col-sm-8">
                         {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
                     </div>
                 </div>

@@ -33,19 +33,29 @@ class GuiaController extends AbstractController
     {
         $arUsuario = $this->getUser();
         $url = "/transporte/api/oxigeno/guia/lista";
-        $urlGuiasTipo = "/transporte/api/oxigeno/guiatipo/lista";
         $arrGuias = [];
         $arrGuiaTipo = [];
         $arGuiaFormato = [];
-        $respuestaGuiasTipo = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), [], $urlGuiasTipo);
-        if ($respuestaGuiasTipo != null) {
-            if ($respuestaGuiasTipo->error == false) {
-                $arrGuiaTipo = $this->fuenteChoiceGuiasTipos($respuestaGuiasTipo->arrGuiaTipo);
-                if(isset($respuestaGuiasTipo->arrGuiaFormato)) {
-                    $arGuiaFormato = $respuestaGuiasTipo->arrGuiaFormato;
+        $arrTerceroOperaciones = [];
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), [], "/transporte/api/oxigeno/guiatipo/lista");
+        if ($respuesta) {
+            if ($respuesta->error == false) {
+                $arrGuiaTipo = $this->fuenteChoiceGuiasTipos($respuesta->arrGuiaTipo);
+                if(isset($respuesta->arrGuiaFormato)) {
+                    $arGuiaFormato = $respuesta->arrGuiaFormato;
                 }
             }
         }
+        $datos = [
+            'codigoTercero' => $arUsuario->getCodigoTerceroErpFk()
+        ];
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $datos, "/api/transporte/tercero_operacion/tercero");
+        if ($respuesta) {
+            if ($respuesta->error == false) {
+                $arrTerceroOperaciones = $this->fuenteChoiceTerceroOperaciones($respuesta->terceroOperaciones);
+            }
+        }
+
         $arrBotonFormato1 = array('label' => 'Formato 1', 'disabled' => false);
         $arrBotonFormato2 = array('label' => 'Formato 2', 'disabled' => false);
         $arrBotonFormato3 = array('label' => 'Formato 3', 'disabled' => false);
@@ -77,6 +87,7 @@ class GuiaController extends AbstractController
             ->add('fechaDesde', DateType::class, ['label' => 'Fecha desde: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
             ->add('fechaHasta', DateType::class, ['label' => 'Fecha hasta: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
             ->add('codigoGuiaTipo', ChoiceType::class, ['choices' => $arrGuiaTipo, 'required' => false])
+            ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false])
             ->add('codigoDespacho', IntegerType::class, array('required' => false))
             ->add('limiteRegistros', IntegerType::class, array('required' => false, 'data' => 100))
             ->add('btnFormato1', SubmitType::class, $arrBotonFormato1)
@@ -104,6 +115,7 @@ class GuiaController extends AbstractController
                 $parametros['codigoCiudadOrigen'] = $form->get('ciudadOrigen')->getData();
                 $parametros['codigoCiudadDestino'] = $form->get('ciudadDestino')->getData();
                 $parametros['codigoDespacho'] = $form->get('codigoDespacho')->getData();
+                $parametros['codigoTerceroOperacionFk'] = $form->get('codigoTerceroOperacion')->getData();
                 $parametros['limiteRegistros'] = $form->get('limiteRegistros')->getData();
             }
             if ($form->get('btnRotulo1')->isClicked()) {
@@ -891,6 +903,15 @@ class GuiaController extends AbstractController
         $arrDatos = ['Todos' => ''];
         foreach ($datos as $dato) {
             $arrDatos["{$dato->nombre}"] = $dato->codigoGuiaTipoPk;
+        }
+        return $arrDatos;
+    }
+
+    private function fuenteChoiceTerceroOperaciones($datos)
+    {
+        $arrDatos = ['Todos' => ''];
+        foreach ($datos as $dato) {
+            $arrDatos["{$dato->nombre}"] = $dato->codigoTerceroOperacionPk;
         }
         return $arrDatos;
     }
