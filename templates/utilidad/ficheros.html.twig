@@ -16,19 +16,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for arrMasivo in arrMasivos %}
+                {% for fichero in ficheros %}
                     <tr>
-                        <td>{{ arrMasivo.codigoMasivoPk }}</td>
-                        <td>{{ arrMasivo.archivo }}</td>
-                        <td>{{ arrMasivo.fecha }}</td>
-                        <td>{{ arrMasivo.identificador }}</td>
-                        <td>{{ arrMasivo.tamano }}</td>
+                        <td>{{ fichero.codigoFicheroPk }}</td>
+                        <td>{{ fichero.nombre }}</td>
+                        <td>{{ fichero.fecha }}</td>
+                        <td>{{ fichero.codigo }}</td>
+                        <td>{{ fichero.tamano }}</td>
                         <td class="text-center">
-                            <button class="btn btn-xs btn-default" title="Descargar archivo" name="btnDescargar" value="{{ arrMasivo.codigoMasivoPk }}">
+                            <button class="btn btn-xs btn-default" title="Descargar archivo" name="btnDescargar" value="{{ fichero.codigoFicheroPk }}">
                                 <i class="fa fa-download"></i>
                             </button>
                         </td>
-
                     </tr>
                 {% endfor %}
                 </tbody>

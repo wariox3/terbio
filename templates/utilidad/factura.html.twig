@@ -129,7 +129,6 @@
                         <thead>
                         <tr>
                             <th>GUIA</th>
-                            <th>DESCARGAR</th>
                             <th>ARCHIVOS</th>
                         </tr>
                         </thead>
@@ -137,14 +136,9 @@
                         {% for arGuia in arGuias %}
                             <tr>
                                 <td>{{ arGuia.codigoGuiaFk }}</td>
-                                <td style="text-align: center"><a
-                                            href="{{ path('descargarguia', {'codigoEmpresa':codigoEmpresa, 'codigoGuia': arGuia.codigoGuiaFk }) }}"
-                                            target="_blank"><i
-                                                class="fa fa-download" style="font-size: large;color: black;"></i></a>
-                                </td>
                                 <td class="text-center">
-                                    <a title="Ver archivos masivos"
-                                       href="javascript:abrirVentana3('{{ path('utilidad_factura_archivos_masivos', {'codigoEmpresa':codigoEmpresa, 'codigoGuia': arGuia.codigoGuiaFk }) }}', 'ArchivosMasivos', 800, 1250)">
+                                    <a title="Ver ficheros"
+                                       href="javascript:abrirVentana3('{{ path('utilidad_guia_fichero', {'codigoEmpresa':codigoEmpresa, 'codigoGuia': arGuia.codigoGuiaFk }) }}', 'ficheros', 800, 1250)">
                                         <i class="fa fa-files-o" style="font-size: large;color: black;"></i>
                                     </a>
                                 </td>

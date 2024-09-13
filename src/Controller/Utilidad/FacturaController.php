@@ -5,7 +5,6 @@ namespace App\Controller\Utilidad;
 
 use App\Controller\FuncionesController;
 use App\Entity\Empresa;
-use App\Entity\RespuestaElectronico;
 use App\Utilidades\Mensajes;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,41 +63,41 @@ class FacturaController extends AbstractController
     }
 
     /**
-     * @Route("/utilidad/factura/{codigoEmpresa}/{codigoGuia}/", name="utilidad_factura_archivos_masivos")
+     * @Route("/utilidad/guia/fichero/{codigoEmpresa}/{codigoGuia}/", name="utilidad_guia_fichero")
      */
-    public function descarMasivos(Request $request, $codigoEmpresa, $codigoGuia,  EntityManagerInterface $em)
+    public function guiaFicheros(Request $request, $codigoEmpresa, $codigoGuia,  EntityManagerInterface $em)
     {
         if ($codigoEmpresa && $codigoGuia) {
-            //$arUsuario = $this->getUser();
             $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);
-            $parametros = [
-                'codigoIdentificador' => $codigoGuia,
-                'tipoArchivo' => 'TteGuia'
-            ];
-            $arrMasivos = [];
             $form = $this->createFormBuilder()
                 ->getForm();
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                $codigoMasivo = $request->request->get('btnDescargar');
-                $respuesta = FuncionesController::consumirApi($arEmpresa, [
-                    'codigoArchivoMasivo' => $codigoMasivo
-                ], "/transporte/api/oxigeno/archivomasivos/detalle");
+                $codigoFichero = $request->request->get('btnDescargar');
+                $parametros = [
+                    'codigo' => $codigoFichero
+                ];
+                $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, "/api/documental/fichero/descarga");
                 if ($respuesta->error == false) {
                     $fileContent = base64_decode($respuesta->base64);
                     header('Content-Type: ' . $respuesta->tipo);
-                    header('Content-Disposition: attachment; filename="' . $respuesta->archivo . '"');
+                    header('Content-Disposition: attachment; filename="' . $respuesta->nombre . '"');
                     echo $fileContent;
                 } else {
                     Mensajes::error(utf8_decode($respuesta->errorMensaje));
                 }
             }
-            $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, "/transporte/api/oxigeno/archivosmasivos/lista");
+            $ficheros = [];
+            $parametros = [
+                'codigo' => $codigoGuia,
+                'codigoModelo' => 'TteGuia'
+            ];
+            $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, "/api/documental/fichero/lista");
             if ($respuesta->error == false) {
-                $arrMasivos = $respuesta->arrMasivos;
+                $ficheros = $respuesta->ficheros;
             }
-            return $this->render('utilidad/archivosMasivos.html.twig', [
-                'arrMasivos' => $arrMasivos,
+            return $this->render('utilidad/ficheros.html.twig', [
+                'ficheros' => $ficheros,
                 'form' => $form->createView()
             ]);
         } else {
@@ -107,29 +106,4 @@ class FacturaController extends AbstractController
 
     }
 
-
-    /**
-     * @Route("utilidad/descargarguia/{codigoEmpresa}/{codigoGuia}", name="descargarguia")
-     */
-    public function descargarGuia($codigoEmpresa, $codigoGuia, EntityManagerInterface $em)
-    {
-        $parametrosConsulta = [
-            'codigoGuia' => $codigoGuia
-        ];
-        $url = "/api/transporte/guia/detalle";
-        $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);
-        $respuesta = FuncionesController::consumirApi($arEmpresa, $parametrosConsulta, $url);
-        if ($respuesta) {
-            if (isset($respuesta->archivoMasivo)) {
-                if (count($respuesta->archivoMasivo)) {
-                    $archivo = $respuesta->archivoMasivo[0];
-                    $fileContent = base64_decode($archivo->base64);
-                    header('Content-Type: ' . $archivo->tipo);
-                    header('Content-Disposition: attachment; filename="' . $archivo->nombre . '"');
-                    echo $fileContent;
-                }
-            }
-        }
-        echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
-    }
 }
