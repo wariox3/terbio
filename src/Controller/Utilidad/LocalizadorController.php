@@ -30,10 +30,6 @@ class LocalizadorController  extends AbstractController
         if(!$codigoEmpresa) {
             return $this->redirect($this->generateUrl('principal'));
         }
-        $form = $this->createFormBuilder()
-            ->add('codigoGuia', TextType::class, ['label' => 'Nombre:', "required"=>false,'attr' => ['placeholder'=>"Guia", "class"=>"input-lg mb-md"] ])
-            ->getForm();
-        $form->handleRequest($request);
         $arrGuia = [];
         $arrArchivos = [];
         $arrDespachos = [];
@@ -44,8 +40,12 @@ class LocalizadorController  extends AbstractController
         $logo = "";
         $url="/transporte/api/oxigeno/guia/detalle";
         $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);
+        $form = $this->createFormBuilder()
+            ->add('codigoGuia', TextType::class, ['label' => 'Nombre:', "required"=>false,'attr' => ['placeholder'=>"Guia", "class"=>"input-lg mb-md"] ])
+            ->getForm();
+        $form->handleRequest($request);
         if ($form->isSubmitted()) {
-            if( $form->get('codigoGuia')->getData() != ""){
+            if($form->get('codigoGuia')->getData() != ""){
                 $parametros['codigoGuia'] =  $form->get('codigoGuia')->getData();
                 $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, $url);
                 if(!$respuesta->error) {
@@ -94,6 +94,7 @@ class LocalizadorController  extends AbstractController
             'arrNovedades' => $arrNovedades,
             'logo' => $logo,
             'inicio' => $inicio,
+            'codigoEmpresa' => $codigoEmpresa,
             'form' => $form->createView()
         ]);
     }
@@ -168,5 +169,24 @@ class LocalizadorController  extends AbstractController
             'inicio' => $inicio,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("utilidad/localizador/fichero/descargar/{codigoEmpresa}/{codigo}", name="utilidad_localizador_fichero_descarga")
+     */
+    public function ficheroDescarga(EntityManagerInterface $em, $codigoEmpresa, $codigo)
+    {
+        $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);
+        $parametros = [
+            'codigo' => $codigo
+        ];
+        $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, "/api/documental/fichero/descarga");
+        if ($respuesta->error == false) {
+            $fileContent = base64_decode($respuesta->base64);
+            header('Content-Type: ' . $respuesta->tipo);
+            header('Content-Disposition: attachment; filename="' . $respuesta->nombre . '"');
+            echo $fileContent;
+        }
+        echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
     }
 }

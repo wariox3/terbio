@@ -317,31 +317,36 @@
                                                 {% if arrArchivos is not empty %}
                                                     En hora buena! aqui estan sus cumplidos!
                                                 {% else %}
-                                                    No se encuentras archivos digitalizados
+                                                    No se encuentran archivos digitalizados
                                                 {% endif %}
                                             {% endif %}
                                         </p>
                                         <div class="thumbnail-gallery">
                                             {% if arrArchivos is defined %}
-                                                {% for arrArchivo in arrArchivos %}
-                                                    <a class="img-thumbnail">
-                                                        <img width="215" height="112"
-                                                             src="data:image/jpg;base64,{{ arrArchivo.base64 }}">
-                                                        <div style="display: flex; align-content: center; justify-content: flex-end;">
-                                                        <span class="imgOpciones">
-                                                            <i class="fa fa-photo test-popup-link"
-                                                               href="data:image/jpg;base64,{{ arrArchivo.base64 }}"></i>
-                                                        </span>
-                                                            <span class="imgOpciones btnDescargarImagen"
-                                                                  data-nombre="{{ arrArchivo.nombre }}"
-                                                                  data-img="data:image/jpg;base64,{{ arrArchivo.base64 }}">
-                                                            <i class="fa fa-download"
-                                                               data-nombre="{{ arrArchivo.nombre }}"
-                                                               data-img="data:image/jpg;base64,{{ arrArchivo.base64 }}"></i>
-                                                        </span>
-                                                        </div>
-                                                    </a>
-                                                {% endfor %}
+                                                <table class="table table-bordered table-hover tabla-datos-v2">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ARCHIVO</th>
+                                                        <th>FECHA</th>
+                                                        <th>TAMAÑO</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for fichero in arrArchivos %}
+                                                        <tr>
+                                                            <td>{{ fichero.nombre }}</td>
+                                                            <td>{{ fichero.fecha }}</td>
+                                                            <td>{{ fichero.tamano }}</td>
+                                                            <td class="text-center">
+                                                                <a href="{{ path('utilidad_localizador_fichero_descarga', {'codigoEmpresa': codigoEmpresa,  'codigo':fichero.codigoFicheroPk }) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-download" style="font-size: large;color: black;"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
                                             {% endif %}
                                         </div>
                                     </div>
