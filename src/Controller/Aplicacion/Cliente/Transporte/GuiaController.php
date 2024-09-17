@@ -4,6 +4,7 @@
 namespace App\Controller\Aplicacion\Cliente\Transporte;
 
 use App\Controller\FuncionesController;
+use App\Entity\Empresa;
 use App\Formato\Guias;
 use App\Formato\Guias2;
 use App\Utilidades\Mensajes;
@@ -822,6 +823,25 @@ class GuiaController extends AbstractController
             'arrMasivos' => $arrMasivos,
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route("cliente/transporte/guia/fichero/descargar/{codigo}", name="cliente_transporte_guia_fichero_descargar")
+     */
+    public function ficheroDescarga(EntityManagerInterface $em, $codigo)
+    {
+        $arUsuario = $this->getUser();
+        $parametros = [
+            'codigo' => $codigo
+        ];
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/api/documental/fichero/descarga");
+        if ($respuesta->error == false) {
+            $fileContent = base64_decode($respuesta->base64);
+            header('Content-Type: ' . $respuesta->tipo);
+            header('Content-Disposition: attachment; filename="' . $respuesta->nombre . '"');
+            echo $fileContent;
+        }
+        echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
     }
 
     private function fuenteChoiceIdenticaciones($datos)
