@@ -92,40 +92,48 @@ class VisitaController extends AbstractController
     public function consultarArchivos(Request $request, $tipo, $codigo,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
-        $parametros=[
-            'tipo' => $tipo,
-            "codigo"=> $codigo
-        ];
-        $url="/crm/api/gestion/visita/lista/archivos";
         $form = $this->createFormBuilder()
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($request->request->get('btnDescargar')) {
-                $urlDescarga = "/documental/api/archivo/descargar";
-                $arrArchivo = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $urlDescarga);
-                if ($arrArchivo) {
-                    $arrArchivo = $arrArchivo[0];
-                    if ($arrArchivo->error == 0) {
-                            $ruta = '/var/www/html/temporal/oxigeno_' . $arrArchivo->nombre;
-                            $file = fopen($ruta, "wb");
-                            fwrite($file, base64_decode($arrArchivo->base64));
-                            fclose($file);
-                            $response = new Response();
-                            $response->headers->set('Cache-Control', 'private');
-                            $response->headers->set('Content-type', 'application/pdf');
-                            $response->headers->set('Content-Disposition', 'attachment; filename="' . $arrArchivo->nombre . '";');
-                            //$response->headers->set('Content-length', $arArchivo->getTamano());
-                            $response->sendHeaders();
-                            $response->setContent(readfile($ruta));
-                            return $response;
-                        }
+                $codigoArchivo = $request->request->get('btnDescargar');
+                $parametros=[
+                    "codigo"=> $codigoArchivo
+                ];
+                $urlDescarga = "/api/documental/archivo/descarga";
+                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $urlDescarga);
+                if($respuesta->error == 0) {
+                    $ruta = '/var/www/html/temporal/oxigeno_' . $respuesta->nombre;
+                    $file = fopen($ruta, "wb");
+                    fwrite($file, base64_decode($respuesta->base64));
+                    fclose($file);
+                    $response = new Response();
+                    $response->headers->set('Cache-Control', 'private');
+                    $response->headers->set('Content-type', 'application/pdf');
+                    $response->headers->set('Content-Disposition', 'attachment; filename="' . $respuesta->nombre . '";');
+                    //$response->headers->set('Content-length', $arArchivo->getTamano());
+                    $response->sendHeaders();
+                    $response->setContent(readfile($ruta));
+                    return $response;
+                    unlink($ruta);
                 }
+
             }
         }
-        $arArchivos = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+
+        $arArchivos = [];
+        $parametros=[
+            'tipo' => $tipo,
+            "codigo"=> $codigo
+        ];
+        $url="/crm/api/gestion/visita/lista/archivos";
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+        if($respuesta->error == 0) {
+            $arArchivos = $respuesta->arrArchivos;
+        }
         return $this->render('aplicacion/cliente/crm/visita/archivos.html.twig',[
-            'arArchivos' => $arArchivos->arrArchivos,
+            'arArchivos' => $arArchivos,
             'form' => $form->createView()
         ]);
     }
