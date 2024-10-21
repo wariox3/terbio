@@ -195,12 +195,11 @@ class InicioController extends AbstractController
     private function archivosCapacitacitaciones($objCapacitaciones)
     {
         $arUsuario = $this->getUser();
-        $url = "/documental/api/archivo/lista";
+        $url = "/api/documental/fichero/descarga";
         $arrCapacitacionesConarchivos = [];
         if (!isset($objCapacitaciones->error)) {
             foreach ($objCapacitaciones as $objCapacitacion) {
                 $parametros = [
-                    'tipo' => "RhuCapacitacion",
                     'codigo' => $objCapacitacion->codigoCapacitacionPk
                 ];
                 $arrCapacitaciones = (array)$objCapacitacion;
