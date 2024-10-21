@@ -1,5 +1,6 @@
 {% extends 'aplicacion/base.html.twig' %}
 {% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {% if booEmpleado %}
         {% if app.user.empresaRel.mostrarInformacionEmpleado %}
             <div class="col-md-9">
@@ -383,14 +384,12 @@
                                             <br>
                                             <strong>Archivos:</strong>
                                             <br>
-                                            {% for archivo in arrInformacionCapacitacion.archivos %}
+                                            {% for archivo in arrInformacionCapacitacion.archivos.ficheros %}
                                                 <li style="list-style: none">
-                                                    {{ archivo.nombre }} <input type="hidden" name="LblCodigo[]"
-                                                                                value="{{ archivo.codigoArchivoPk }}">{{ archivo.codigoArchivoPk }}
-                                                    <a href="{{ path('descargar_archivo', { 'tipo': "RhuCapacitacion",'codigoArchivo': arrInformacionCapacitacion.codigoCapacitacionPk }) }}"
-                                                       title="Descargar archivo">
-                                                        <i class="fa fa-download"
-                                                           style="font-size: large;color: black;"></i> </a>
+                                                    <td>
+                                                        <button class="fa fa-download" type="submit" name="OpDescargar" value="{{ archivo.codigoFicheroPk }}"></button>
+                                                    </td>
+                                                    {{ archivo.nombre }}
                                                 </li>
                                             {% endfor %}
                                         </div>
@@ -440,4 +439,5 @@
     {% endif %}
     {% if is_granted('ROLE_ADMIN') %}
     {% endif %}
+    {{ form_end(form) }}
 {% endblock %}

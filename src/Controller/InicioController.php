@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Configuracion;
+use App\Entity\Empresa;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -42,6 +43,14 @@ class InicioController extends AbstractController
         $usuario = $this->getUser();
         $arUsuario = $em->getRepository(Usuario::class)->find($usuario);
         $arEmpresa = $arUsuario->getEmpresaRel();
+        $form = $this->createFormBuilder()
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($request->get('OpDescargar')){
+                $this->ficheroDescarga($em, $arEmpresa->getCodigoEmpresaPk(), $request->get('OpDescargar'));
+            }
+        }
         if($arEmpresa){
             if ($arEmpresa->isValidarContratoActivo()){
                 if($arUsuario->getEmpleado()){
@@ -95,7 +104,6 @@ class InicioController extends AbstractController
                 }
             }
         }
-
         return $this->render('aplicacion/inicio.html.twig', [
             'arrTurnos' => $arrTurnos,
             'arrRecurso' => $arrRecurso,
@@ -105,6 +113,7 @@ class InicioController extends AbstractController
             'booEmpresa' => $booEmpresa,
             'codigoPuesto' => $codigoPuesto,
             'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
+            'form' => $form->createView()
         ]);
     }
 
@@ -195,11 +204,12 @@ class InicioController extends AbstractController
     private function archivosCapacitacitaciones($objCapacitaciones)
     {
         $arUsuario = $this->getUser();
-        $url = "/api/documental/fichero/descarga";
+        $url = "/api/documental/fichero/lista";
         $arrCapacitacionesConarchivos = [];
         if (!isset($objCapacitaciones->error)) {
             foreach ($objCapacitaciones as $objCapacitacion) {
                 $parametros = [
+                    'codigoModelo' => 'RhuCapacitacion',
                     'codigo' => $objCapacitacion->codigoCapacitacionPk
                 ];
                 $arrCapacitaciones = (array)$objCapacitacion;
@@ -208,5 +218,24 @@ class InicioController extends AbstractController
             }
         }
         return $arrCapacitacionesConarchivos;
+    }
+
+    /**
+     * @Route("inicio/fichero/descargar/{codigoEmpresa}/{codigo}", name="utilidad_fichero_descarga")
+     */
+    public function ficheroDescarga(EntityManagerInterface $em, $codigoEmpresa, $codigo)
+    {
+        $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);
+        $parametros = [
+            'codigo' => $codigo
+        ];
+        $respuesta = FuncionesController::consumirApi($arEmpresa, $parametros, "/api/documental/fichero/descarga");
+        if ($respuesta->error == false) {
+            $fileContent = base64_decode($respuesta->base64);
+            header('Content-Type: ' . $respuesta->tipo);
+            header('Content-Disposition: attachment; filename="' . $respuesta->nombre . '"');
+            echo $fileContent;
+        }
+        echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
     }
 }
