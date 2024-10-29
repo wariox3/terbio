@@ -380,7 +380,13 @@
                                             <p class="text-justify">{{ arrInformacionCapacitacion.objetivo }}</p>
                                             <br>
                                             <strong>Contenido:</strong>
-                                            <p class="text-justify">{{ arrInformacionCapacitacion.contenido }}</p>
+                                            <p class="text-justify">
+                                                {{ arrInformacionCapacitacion.contenido | replace({
+                                                    'https://': '<a href="https://',
+                                                    'http://': '<a href="http://',
+                                                    ' ': '">link</a> '
+                                                }) | raw }}
+                                            </p>
                                             <br>
                                             <strong>Archivos:</strong>
                                             <br>
