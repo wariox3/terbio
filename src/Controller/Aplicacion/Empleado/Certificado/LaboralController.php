@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class LaboralController extends AbstractController
 {
 
-    /**
-     * @Route("empleado/certificadolaboral/lista", name="certificadolaboral_lista")
-     */
+    #[Route("empleado/certificadolaboral/lista", name:"certificadolaboral_lista")]
     public function lista(Request $request, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

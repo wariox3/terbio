@@ -14,9 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReciboController extends AbstractController
 {
-    /**
-     * @Route("/cliente/cartera/recibos/lista", name="cliente_cartera_recibos_lista")
-     */
+    #[Route("/cliente/cartera/recibos/lista", name:"cliente_cartera_recibos_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

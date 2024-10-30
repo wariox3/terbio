@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class VisitaController extends AbstractController
 {
-    /**
-     * @Route("/cliente/crm/visita/lista", name="cliente_crm_visita_lista")
-     */
+    #[Route("/cliente/crm/visita/lista", name:"cliente_crm_visita_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();
@@ -60,9 +58,7 @@ class VisitaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/crm/visita/detalle/{codigovisita}", name="cliente_crm_visita_detalle")
-     */
+    #[Route("/cliente/crm/visita/detalle/{codigovisita}", name:"cliente_crm_visita_detalle")]
     public function detalle(Request $request, $codigovisita,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -86,9 +82,7 @@ class VisitaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/crm/visita/archivo/{tipo}/{codigo}", name="cliente_crm_visita_archivo")
-     */
+    #[Route("/cliente/crm/visita/archivo/{tipo}/{codigo}", name:"cliente_crm_visita_archivo")]
     public function consultarArchivos(Request $request, $tipo, $codigo,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

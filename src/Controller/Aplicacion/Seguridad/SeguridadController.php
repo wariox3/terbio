@@ -22,9 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SeguridadController extends AbstractController
 {
-    /**
-     * @Route("seguridad/registro/{codigoEmpresa}", name="registro", requirements={"codigoEmpresa"="\d+"})
-     */
+    #[Route("seguridad/registro/{codigoEmpresa}", name:"registro", requirements:["codigoEmpresa"=>"\d+"])]
     public function registro(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $arRegistro = new Usuario;
@@ -99,9 +97,7 @@ class SeguridadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("seguridad/registrofijo/{codigoEmpresa}", name="registrofijo", requirements={"codigoEmpresa"="\d+"})
-     */
+    #[Route("seguridad/registrofijo/{codigoEmpresa}", name:"registrofijo", requirements:["codigoEmpresa"=>"\d+"])]
     public function registroFijo(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $arRegistro = new Usuario;
@@ -198,9 +194,7 @@ class SeguridadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("seguridad/recuperarclave/{codigoEmpresa}", name="recuperarclave", requirements={"codigoEmpresa"="\d+"})
-     */
+    #[Route("seguridad/recuperarclave/{codigoEmpresa}", name:"recuperarclave", requirements:["codigoEmpresa"=>"\d+"])]
     public function recuperarClave(Request $request, EntityManagerInterface $em, $codigoEmpresa = null)
     {
         $form = $this->createFormBuilder()
@@ -248,9 +242,7 @@ class SeguridadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("seguridad/usuario/cambiarclave", name="usuario_cambiarclave")
-     */
+    #[Route("seguridad/usuario/cambiarclave", name:"usuario_cambiarclave")]
     public function cambiarClave(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
@@ -286,9 +278,7 @@ class SeguridadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("seguridad/usuario/forzarcambioclave", name="usuario_forzarcambioclave")
-     */
+    #[Route("seguridad/usuario/forzarcambioclave", name:"usuario_forzarcambioclave")]
     public function forzarCambioClave(Request $request, EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
@@ -325,9 +315,7 @@ class SeguridadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("seguridad/usuario/miperfil/{id}", name="usuario_miperfil")
-     */
+    #[Route("seguridad/usuario/miperfil/{id}", name:"usuario_miperfil")]
     public function miPerfil(Request $request, $id, EntityManagerInterface $em)
     {
         if ($this->getUser()->getCodigoUsuarioPk() != $id) {

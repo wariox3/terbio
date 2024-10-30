@@ -21,9 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class InicioController extends AbstractController
 {
 
-    /**
-     * @Route("/empleado", name="empleado_inicio")
-     */
+    #[Route("/empleado", name:"empleado_inicio")]
     public function inicioAction(Request $request,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -46,9 +44,7 @@ class InicioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/cambioempresa/{codigoEmpleado}", name="empleado_cambio_empresa")
-     */
+    #[Route("/empleado/cambioempresa/{codigoEmpleado}", name:"empleado_cambio_empresa")]
     public function cambioEmpresa(Request $request, $codigoEmpleado,  EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()

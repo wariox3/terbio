@@ -30,9 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarioController extends AbstractController
 {
-    /**
-     * @Route("/empresa/usuario/lista", name="empresa_usuario_lista")
-     */
+    #[Route("/empresa/usuario/lista", name:"empresa_usuario_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $session = new Session();
@@ -90,9 +88,7 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empresa/usuario/nuevo/{id}", name="empresa_usuario_nuevo")
-     */
+    #[Route("/empresa/usuario/nuevo/{id}", name:"empresa_usuario_nuevo")]
     public function nuevo(Request $request, $id,  EntityManagerInterface $em)
     {
         $arUsuario = new Usuario;
@@ -197,9 +193,7 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empresa/usuario/detalle/{id}", name="empresa_usuario_detalle")
-     */
+    #[Route("/empresa/usuario/detalle/{id}", name:"empresa_usuario_detalle")]
     public function detalle(Request $request, PaginatorInterface $paginator, $id,  EntityManagerInterface $em)
     {
         $arRegistro = $em->getRepository(Usuario::class)->find($id);
@@ -208,9 +202,7 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empresa/usuario/cambioclave/{id}", name="empresa_usuario_cambioclave")
-     */
+    #[Route("/empresa/usuario/cambioclave/{id}", name:"empresa_usuario_cambioclave")]
     public function cambiarClave(Request $request, $id,  EntityManagerInterface $em)
     {
         $respuesta = '';

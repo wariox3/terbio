@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FacturaController extends AbstractController
 {
-    /**
-     * @Route("/cliente/venta/factura/lista", name="cliente_venta_factura_lista")
-     */
+    #[Route("/cliente/venta/factura/lista", name:"cliente_venta_factura_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

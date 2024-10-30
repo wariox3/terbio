@@ -24,9 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UsuarioController extends AbstractController
 {
-    /**
-     * @Route("/administrador/empresa/usuario/lista", name="administrador_empresa_usuario_lista")
-     */
+    #[Route("/administrador/empresa/usuario/lista", name:"administrador_empresa_usuario_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $session = new Session();
@@ -53,9 +51,7 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/administrador/empresa/usuario/nuevo/{id}", name="administrador_empresa_usuario_nuevo")
-     */
+    #[Route("/administrador/empresa/usuario/nuevo/{id}", name:"administrador_empresa_usuario_nuevo")]
     public function nuevo(Request $request, $id, EntityManagerInterface $em)
     {
         $arRegistro = new Usuario;
@@ -95,9 +91,7 @@ class UsuarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/administrador/empresa/usuario/detalle/{id}", name="administrador_empresa_usuario_detalle")
-     */
+    #[Route("/administrador/empresa/usuario/detalle/{id}", name:"administrador_empresa_usuario_detalle")]
     public function detalle(Request $request, PaginatorInterface $paginator, $id,  EntityManagerInterface $em)
     {
         $arRegistro = $em->getRepository(Usuario::class)->find($id);

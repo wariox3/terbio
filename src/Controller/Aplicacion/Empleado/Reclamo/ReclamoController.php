@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ReclamoController extends AbstractController
 {
-    /**
-     * @Route("/empleado/reclamo/lista", name="empleado_reclamo_lista")
-     */
+    #[Route("/empleado/reclamo/lista", name:"empleado_reclamo_lista")]
     public function lista(Request $request)
     {
         $arUsuario = $this->getUser();
@@ -31,9 +29,7 @@ class ReclamoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/reclamo/nuevo/{id}", name="empleado_reclamo_nuevo")
-     */
+    #[Route("/empleado/reclamo/nuevo/{id}", name:"empleado_reclamo_nuevo")]
     public function nuevo(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -90,9 +86,7 @@ class ReclamoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/reclamo/detalle/{id}", name="empleado_reclamo_detalle")
-     */
+    #[Route("/empleado/reclamo/detalle/{id}", name:"empleado_reclamo_detalle")]
     public function detalle(Request $request, $id)
     {
         $parametros = ['id' => $id];

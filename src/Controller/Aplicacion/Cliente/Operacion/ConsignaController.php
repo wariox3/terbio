@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConsignaController extends AbstractController
 {
-    /**
-     * @Route("/cliente/operacion/consigna/lista", name="cliente_operacion_consigna_lista")
-     */
+    #[Route("/cliente/operacion/consigna/lista", name:"cliente_operacion_consigna_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

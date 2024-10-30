@@ -21,9 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Documental  extends AbstractController
 {
-    /**
-     * @Route("/documental/general/lista/{tipo}/{codigo}", name="documental_general_general_lista")
-     */
+    #[Route("/documental/general/lista/{tipo}/{codigo}", name:"documental_general_general_lista")]
     public function listaAction(Request $request, $tipo, $codigo, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $query = $em->getRepository(Archivo::class)->listaArchivo($tipo, $codigo);
@@ -46,9 +44,7 @@ class Documental  extends AbstractController
         ));
     }
 
-    /**
-     * @Route("/documental/general/cargar/{tipo}/{codigo}", name="documental_general_general_cargar")
-     */
+    #[Route("/documental/general/cargar/{tipo}/{codigo}", name:"documental_general_general_cargar")]
     public function cargarAction(Request $request, $tipo, $codigo,  EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
@@ -107,9 +103,7 @@ class Documental  extends AbstractController
         ));
     }
 
-    /**
-     * @Route("/documental/general/descargar/{codigoArchivo}", name="documental_general_general_descargar")
-     */
+    #[Route("/documental/general/descargar/{codigoArchivo}", name:"documental_general_general_descargar")]
     public function descargarAction($codigoArchivo,  EntityManagerInterface $em)
     {
         $arArchivo = $em->getRepository(Archivo::class)->find($codigoArchivo);
@@ -131,9 +125,7 @@ class Documental  extends AbstractController
 
     }
 
-    /**
-     * @Route("/documental/general/cargar/imagen/{modelo}/{codigo}", name="documental_general_general_cargar_imagen")
-     */
+    #[Route("/documental/general/cargar/imagen/{modelo}/{codigo}", name:"documental_general_general_cargar_imagen")]
     public function cargarImagenAction(Request $request, $modelo, $codigo,  EntityManagerInterface $em)
     {
         $arImagen = $em->getRepository(Imagen::class)->findOneBy(array('codigoModeloFk' => $modelo, 'identificador' => $codigo));
@@ -191,13 +183,7 @@ class Documental  extends AbstractController
         ));
     }
 
-    /**
-     * @param $tipo
-     * @param $codigoArchivo
-     * @param $codigoMovimiento
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/documental/general/eliminar/{tipo}/{codigoMovimiento}/{codigoArchivo}", name="documental_general_general_eliminar")
-     */
+    #[Route("/documental/general/eliminar/{tipo}/{codigoMovimiento}/{codigoArchivo}", name:"documental_general_general_eliminar")]
     public function EliminarAction($tipo, $codigoMovimiento, $codigoArchivo,  EntityManagerInterface $em)
     {
         $arArchivo = $em->getRepository(Archivo::class)->find($codigoArchivo);

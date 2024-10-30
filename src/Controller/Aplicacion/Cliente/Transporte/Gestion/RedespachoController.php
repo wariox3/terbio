@@ -23,9 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RedespachoController  extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/gestion/guia/redespacho", name="cliente_transporte_gestion_guia_redespacho")
-     */
+    #[Route("/cliente/transporte/gestion/guia/redespacho", name:"cliente_transporte_gestion_guia_redespacho")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em )
     {
         $arUsuario = $this->getUser();

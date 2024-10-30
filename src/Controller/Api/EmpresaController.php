@@ -11,10 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EmpresaController extends AbstractFOSRestController
 {
 
-    /**
-     * @return array
-     * @Rest\Post("/api/empresa/respuestafe")
-     */
+    #[Rest\Post("/api/empresa/respuestafe")]
     public function respuestaFacturaElectronica(Request $request,  EntityManagerInterface $em)
     {
         try {

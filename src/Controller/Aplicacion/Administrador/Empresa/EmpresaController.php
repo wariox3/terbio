@@ -20,9 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EmpresaController extends AbstractController
 {
-    /**
-     * @Route("/administrador/empresa/lista", name="administrador_empresa_lista")
-     */
+    #[Route("/administrador/empresa/lista", name:"administrador_empresa_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $session = new Session();
@@ -47,9 +45,7 @@ class EmpresaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/administrador/empresa/nuevo/{id}", name="administrador_empresa_nuevo")
-     */
+    #[Route("/administrador/empresa/nuevo/{id}", name:"administrador_empresa_nuevo")]
     public function nuevo(Request $request, $id,  EntityManagerInterface $em)
     {
         $arRegistro = new Empresa;
@@ -115,9 +111,7 @@ class EmpresaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/administrador/empresa/detalle/{id}", name="administrador_empresa_detalle")
-     */
+    #[Route("/administrador/empresa/detalle/{id}", name:"administrador_empresa_detalle")]
     public function detalle(Request $request, $id,  EntityManagerInterface $em)
     {
         $logo= null;

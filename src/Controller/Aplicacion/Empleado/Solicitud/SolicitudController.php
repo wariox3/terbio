@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SolicitudController extends AbstractController
 {
-    /**
-     * @Route("/empleado/solicitud/lista", name="empleado_solicitud_lista")
-     */
+    #[Route("/empleado/solicitud/lista", name:"empleado_solicitud_lista")]
     public function lista(Request $request, PaginatorInterface $paginator)
     {
         $arUsuario = $this->getUser();
@@ -34,9 +32,7 @@ class SolicitudController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/solicitud/nuevo/{codigoSolicitud}", name="empleado_solicitud_nuevo")
-     */
+    #[Route("/empleado/solicitud/nuevo/{codigoSolicitud}", name:"empleado_solicitud_nuevo")]
     public function nuevo(Request $request, PaginatorInterface $paginator, $codigoSolicitud)
     {
         $arUsuario = $this->getUser();
@@ -87,9 +83,7 @@ class SolicitudController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/solicitud/detalle/{codigoSolicitud}", name="empleado_solicitud_detalle")
-     */
+    #[Route("/empleado/solicitud/detalle/{codigoSolicitud}", name:"empleado_solicitud_detalle")]
     public function detalle(Request $request, PaginatorInterface $paginator, $codigoSolicitud)
     {
 

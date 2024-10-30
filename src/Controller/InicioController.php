@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class InicioController extends AbstractController
 {
-    /**
-     * @Route("/", name="principal")
-     */
+    #[Route('/', name:'principal')]
     public function principalAction(EntityManagerInterface $em)
     {
         $arConfiguracion = $em->getRepository(Configuracion::class)->find(1);
@@ -26,18 +24,14 @@ class InicioController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/terminoscondiciones", name="terminoscondiciones")
-     */
+    #[Route("/terminoscondiciones", name:"terminoscondiciones")]
     public function terminosCondicionesAction(Request $request)
     {
         return $this->render('terminoscondiciones.twig', [
         ]);
     }
 
-    /**
-     * @Route("/inicio", name="inicio")
-     */
+    #[Route("/inicio", name:"inicio")]
     public function inicio(Request $request,  EntityManagerInterface $em)
     {
         $usuario = $this->getUser();
@@ -117,9 +111,7 @@ class InicioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/descargar/archivo/{tipo}/{codigoArchivo}", name="descargar_archivo")
-     */
+    #[Route("/descargar/archivo/{tipo}/{codigoArchivo}", name:"descargar_archivo")]
     public function descargarArchivo(Request $request, $tipo, $codigoArchivo)
     {
         $arUsuario = $this->getUser();
@@ -220,9 +212,7 @@ class InicioController extends AbstractController
         return $arrCapacitacionesConarchivos;
     }
 
-    /**
-     * @Route("inicio/fichero/descargar/{codigoEmpresa}/{codigo}", name="utilidad_fichero_descarga")
-     */
+    #[Route("inicio/fichero/descargar/{codigoEmpresa}/{codigo}", name:"utilidad_fichero_descarga")]
     public function ficheroDescarga(EntityManagerInterface $em, $codigoEmpresa, $codigo)
     {
         $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);

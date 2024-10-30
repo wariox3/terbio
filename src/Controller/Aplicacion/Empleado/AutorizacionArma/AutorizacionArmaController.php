@@ -14,9 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AutorizacionArmaController extends AbstractController
 {
-    /**
-     * @Route("/empleado/autorizacionarma/lista", name="empleado_autorizacionarma_lista")
-     */
+    #[Route("/empleado/autorizacionarma/lista", name:"empleado_autorizacionarma_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator)
     {
         $arUsuario = $this->getUser();

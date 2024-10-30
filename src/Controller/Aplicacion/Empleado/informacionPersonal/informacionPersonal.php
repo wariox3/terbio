@@ -16,9 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class informacionPersonal extends AbstractController
 {
-    /**
-     * @Route("empleado/informacionpersonal", name="empleado_informacion_personal")
-     */
+    #[Route("empleado/informacionpersonal", name:"empleado_informacion_personal")]
     public function informacionPersonal(Request $request)
     {
         $arUsuario = $this->getUser();
@@ -81,9 +79,7 @@ class informacionPersonal extends AbstractController
     }
 
 
-    /**
-     * @Route("empleado/referenciaspersonales/nuevo/{id}/{codigoReferencia}", name="empleado_referenciaspersonales_personal")
-     */
+    #[Route("empleado/referenciaspersonales/nuevo/{id}/{codigoReferencia}", name:"empleado_referenciaspersonales_personal")]
     public function detalleNuevo(Request $request, $id, $codigoReferencia)
     {
         $arUsuario = $this->getUser();

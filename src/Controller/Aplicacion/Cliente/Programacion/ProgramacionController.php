@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProgramacionController extends AbstractController
 {
-    /**
-     * @Route("/cliente/programacion/lista", name="cliente_programacion_lista")
-     */
+    #[Route("/cliente/programacion/lista", name:"cliente_programacion_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

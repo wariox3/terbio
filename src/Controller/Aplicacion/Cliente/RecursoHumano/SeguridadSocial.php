@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SeguridadSocial extends AbstractController
 {
-    /**
-     * @Route("/cliente/recursohumano/seguridadsocial/lista", name="cliente_recursohumano_seguridadsocial_lista")
-     */
+    #[Route("/cliente/recursohumano/seguridadsocial/lista", name:"cliente_recursohumano_seguridadsocial_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

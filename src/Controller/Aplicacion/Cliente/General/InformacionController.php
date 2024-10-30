@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class InformacionController extends AbstractController
 {
-    /**
-     * @Route("/cliente/general/informacion", name="cliente_general_informacion")
-     */
+    #[Route("/cliente/general/informacion", name:"cliente_general_informacion")]
     public function inicioAction(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

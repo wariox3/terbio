@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DespachoController  extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/despacho/lista", name="cliente_transporte_despacho_lista")
-     */
+    #[Route("/cliente/transporte/despacho/lista", name:"cliente_transporte_despacho_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -49,9 +47,7 @@ class DespachoController  extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/despacho/nuevo/{id}", name="cliente_transporte_despacho_nuevo")
-     */
+    #[Route("/cliente/transporte/despacho/nuevo/{id}", name:"cliente_transporte_despacho_nuevo")]
     public function nuevo(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -101,9 +97,7 @@ class DespachoController  extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/despacho/detalle/{id}", name="cliente_transporte_despacho_detalle")
-     */
+    #[Route("/cliente/transporte/despacho/detalle/{id}", name:"cliente_transporte_despacho_detalle")]
     public function detalle(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -185,9 +179,7 @@ class DespachoController  extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/despacho/buscarconductor", name="cliente_transporte_despacho_buscarconductor")
-     */
+    #[Route("/cliente/transporte/despacho/buscarconductor", name:"cliente_transporte_despacho_buscarconductor")]
     public function buscarConductor(Request $request, PaginatorInterface $paginator )
     {
         $arUsuario = $this->getUser();

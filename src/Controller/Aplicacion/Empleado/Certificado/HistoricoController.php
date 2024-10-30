@@ -14,9 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HistoricoController extends AbstractController
 {
 
-    /**
-     * @Route("empleado/certificadohistorico/lista", name="certificadohistorico_lista")
-     */
+    #[Route("empleado/certificadohistorico/lista", name:"certificadohistorico_lista")]
     public function lista(Request $request,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

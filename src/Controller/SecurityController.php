@@ -13,9 +13,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login/{codigoEmpresa}", name="login", requirements={"codigoEmpresa"="\d+"})
-     */
+    #[Route("/login/{codigoEmpresa}", name:"login", requirements:["codigoEmpresa"=>"\d+"])]
     public function login(AuthenticationUtils $authenticationUtils,  EntityManagerInterface $em, $codigoEmpresa = null): Response
     {
         $nombreEmpresa = "";
@@ -45,9 +43,7 @@ class SecurityController extends AbstractController
         ));
     }
 
-    /**
-     * @Route("/logout", name="logout")
-     */
+    #[Route("/logout", name:"logout")]
     public function logoutAction()
     {
         throw new \RuntimeException('Esta funcion jamas debe ser llamada directamente');

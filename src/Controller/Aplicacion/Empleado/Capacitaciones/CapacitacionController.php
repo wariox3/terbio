@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CapacitacionController extends AbstractController
 {
-    /**
-     * @Route("/empleado/capacitaciones/pendientes/lista", name="empleado_capacitaciones_pendites_lista")
-     */
+    #[Route("/empleado/capacitaciones/pendientes/lista", name:"empleado_capacitaciones_pendites_lista")]
     public function pendiente(Request $request,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -44,9 +42,7 @@ class CapacitacionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/capacitaciones/pendientes/confirmarAsistencia/{codigoCapacitacionDetelle}", name="empleado_capacitaciones_pendites_confirmarasistencia")
-     */
+    #[Route("/empleado/capacitaciones/pendientes/confirmarAsistencia/{codigoCapacitacionDetelle}", name:"empleado_capacitaciones_pendites_confirmarasistencia")]
     public function confirmarAsistencia(Request $request, $codigoCapacitacionDetelle)
     {
         $arUsuario = $this->getUser();

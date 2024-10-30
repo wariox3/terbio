@@ -23,9 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GuiaSoporteController  extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/gestion/guia/soporte", name="cliente_transporte_gestion_guia_soporte")
-     */
+    #[Route("/cliente/transporte/gestion/guia/soporte", name:"cliente_transporte_gestion_guia_soporte")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em )
     {
         $arUsuario = $this->getUser();

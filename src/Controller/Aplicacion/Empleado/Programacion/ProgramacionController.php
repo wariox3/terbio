@@ -16,9 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProgramacionController extends AbstractController
 {
-    /**
-     * @Route("empleado/programacion/lista", name="turno_programacion_lista")
-     */
+    #[Route("empleado/programacion/lista", name:"turno_programacion_lista")]
     public function lista(Request $request)
     {
         $arrFechas = $this->fechasProgramacion();
@@ -67,9 +65,7 @@ class ProgramacionController extends AbstractController
         return $arrFecha;
     }
 
-    /**
-     * @Route("empleado/programacion/reportar/{codigoProgramacion}", name="turno_programacion_reportar")
-     */
+    #[Route("empleado/programacion/reportar/{codigoProgramacion}", name:"turno_programacion_reportar")]
     public function reportar(Request $request, $codigoProgramacion)
     {
         $arUsuario = $this->getUser();

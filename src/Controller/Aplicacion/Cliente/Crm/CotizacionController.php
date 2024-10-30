@@ -21,9 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CotizacionController extends AbstractController
 {
-    /**
-     * @Route("/cliente/crm/contratacion/lista", name="cliente_crm_contratacion_lista")
-     */
+    #[Route("/cliente/crm/contratacion/lista", name:"cliente_crm_contratacion_lista")]
     public function lista(Request $request, PaginatorInterface $paginator)
     {
         $arUsuario = $this->getUser();
@@ -42,9 +40,7 @@ class CotizacionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/crm/contratacion/nuevo/{codigoCotizacion}", name="cliente_crm_contratacion_nuevo")
-     */
+    #[Route("/cliente/crm/contratacion/nuevo/{codigoCotizacion}", name:"cliente_crm_contratacion_nuevo")]
     public function nuevo(Request $request, PaginatorInterface $paginator, $codigoCotizacion)
     {
         $urlCapacitacionesTipo = "/crm/api/comercial/cotizaciontipo/lista";
@@ -83,9 +79,7 @@ class CotizacionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/crm/contratacion/detalle/{codigoCotizacion}", name="cliente_crm_contratacion_detalle")
-     */
+    #[Route("/cliente/crm/contratacion/detalle/{codigoCotizacion}", name:"cliente_crm_contratacion_detalle")]
     public function detalle(Request $request, $codigoCotizacion)
     {
         $arUsuario = $this->getUser();
@@ -113,9 +107,7 @@ class CotizacionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/crm/contratacion/detalle/nuevo/{id}/{codigoCotizacion}", name="cliente_crm_contratacion_detalle_nuevo")
-     */
+    #[Route("/cliente/crm/contratacion/detalle/nuevo/{id}/{codigoCotizacion}", name:"cliente_crm_contratacion_detalle_nuevo")]
     public function detalleNuevo(Request $request, $id, $codigoCotizacion)
     {
         $arUsuario = $this->getUser();

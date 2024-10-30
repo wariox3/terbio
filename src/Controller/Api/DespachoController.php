@@ -12,10 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DespachoController extends AbstractFOSRestController
 {
 
-    /**
-     * @return array
-     * @Rest\Post("/api/empresa/respuestafe")
-     */
+    #[Rest\Post("/api/empresa/respuestafe")]
     public function respuestaFacturaElectronica(Request $request,  EntityManagerInterface $em)
     {
         try {
@@ -38,13 +35,7 @@ class DespachoController extends AbstractFOSRestController
         }
     }
 
-    /**
-     * @param Request $request
-     * @param int $codigoGuia
-     * @return array
-     * @throws \Doctrine\ORM\ORMException
-     * @Rest\Post("/api/despacho/guia/adicionar", name="api_despacho_guia_adicionar")
-     */
+    #[Rest\Post("/api/despacho/guia/adicionar", name:"api_despacho_guia_adicionar")]
     public function adicionarDespacho(Request $request)
     {
         $arUsuario = $this->getUser();
@@ -53,13 +44,7 @@ class DespachoController extends AbstractFOSRestController
         return FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/despacho/guia/adicionar");
     }
 
-    /**
-     * @param Request $request
-     * @param int $codigoGuia
-     * @return array
-     * @throws \Doctrine\ORM\ORMException
-     * @Rest\Post("/api/despacho/guia/adicionar/guia", name="api_despacho_guia_adicionar_guia")
-     */
+    #[Rest\Post("/api/despacho/guia/adicionar/guia", name:"api_despacho_guia_adicionar_guia")]
     public function agregarGuia(Request $request)
     {
         $arUsuario = $this->getUser();

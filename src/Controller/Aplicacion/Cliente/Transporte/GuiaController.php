@@ -27,9 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GuiaController extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/guia/lista", name="cliente_transporte_guia_lista")
-     */
+    #[Route("/cliente/transporte/guia/lista", name:"cliente_transporte_guia_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -305,9 +303,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/guia/nuevo/{id}", name="cliente_transporte_guia_nuevo")
-     */
+    #[Route("/cliente/transporte/guia/nuevo/{id}", name:"cliente_transporte_guia_nuevo")]
     public function nuevo(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -460,9 +456,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/guia/detalle/{id}", name="cliente_transporte_guia_detalle")
-     */
+    #[Route("/cliente/transporte/guia/detalle/{id}", name:"cliente_transporte_guia_detalle")]
     public function detalle(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -509,9 +503,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/guia/buscardestinatario", name="cliente_transporte_guia_buscardestinatario")
-     */
+    #[Route("/cliente/transporte/guia/buscardestinatario", name:"cliente_transporte_guia_buscardestinatario")]
     public function buscarDestinatario(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -585,9 +577,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/guia/nuevo/respuesta/{codigoGuia}", name="cliente_transporte_guia_nuevo_respuesta")
-     */
+    #[Route("/cliente/transporte/guia/nuevo/respuesta/{codigoGuia}", name:"cliente_transporte_guia_nuevo_respuesta")]
     public function nuevoRespuesta(Request $request, $codigoGuia)
     {
         $arUsuario = $this->getUser();
@@ -636,9 +626,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/buscar/ciudad/{campoCodigo}/{campoNombre}", name="cliente_transporte_guia_buscar_ciudad")
-     */
+    #[Route("/cliente/buscar/ciudad/{campoCodigo}/{campoNombre}", name:"cliente_transporte_guia_buscar_ciudad")]
     public function buscarCiudadOrigen(Request $request, PaginatorInterface $paginator, $campoCodigo, $campoNombre)
     {
         $arUsuario = $this->getUser();
@@ -673,9 +661,7 @@ class GuiaController extends AbstractController
     }
 
 
-    /**
-     * @Route("/cliente/transporte/guia/buscaradquiriente", name="cliente_transporte_guia_buscaradquiriente")
-     */
+    #[Route("/cliente/transporte/guia/buscaradquiriente", name:"cliente_transporte_guia_buscaradquiriente")]
     public function buscarTercero(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -785,9 +771,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/guia/archivosmasivos/{codigoGuia}", name="cliente_transporte_guia_archivosmasivos")
-     */
+    #[Route("/cliente/transporte/guia/archivosmasivos/{codigoGuia}", name:"cliente_transporte_guia_archivosmasivos")]
     public function archivosMasivosGuia(Request $request, PaginatorInterface $paginator, $codigoGuia)
     {
         $arUsuario = $this->getUser();
@@ -825,9 +809,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("cliente/transporte/guia/fichero/descargar/{codigo}", name="cliente_transporte_guia_fichero_descargar")
-     */
+    #[Route("cliente/transporte/guia/fichero/descargar/{codigo}", name:"cliente_transporte_guia_fichero_descargar")]
     public function ficheroDescarga(EntityManagerInterface $em, $codigo)
     {
         $arUsuario = $this->getUser();

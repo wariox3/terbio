@@ -16,9 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class IncapacidadController extends AbstractController
 {
-    /**
-     * @Route("/empleado/incapacidad/lista", name="empleado_incapacidad_lista")
-     */
+    #[Route("/empleado/incapacidad/lista", name:"empleado_incapacidad_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $form = $this->createFormBuilder()
@@ -30,9 +28,7 @@ class IncapacidadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/incapacidad/nuevo/{id}", name="empleado_incapacidad_nuevo")
-     */
+    #[Route("/empleado/incapacidad/nuevo/{id}", name:"empleado_incapacidad_nuevo")]
     public function nuevo(Request $request, PaginatorInterface $paginator, $id,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -61,9 +57,7 @@ class IncapacidadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/incapacidad/detalle/{id}", name="empleado_incapacidad_detalle")
-     */
+    #[Route("/empleado/incapacidad/detalle/{id}", name:"empleado_incapacidad_detalle")]
     public function detalle(Request $request, PaginatorInterface $paginator, $id,  EntityManagerInterface $em)
     {
         $arIncapacidad = $em->getRepository(Incapacidad::class)->find($id);
@@ -73,9 +67,7 @@ class IncapacidadController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/incapacidad/firma/{id}", name="empleado_incapacidad_firma")
-     */
+    #[Route("/empleado/incapacidad/firma/{id}", name:"empleado_incapacidad_firma")]
     public function firma(Request $request,$id,  EntityManagerInterface $em)
     {
         $arIncapacidad = $em->getRepository(Incapacidad::class)->find($id);

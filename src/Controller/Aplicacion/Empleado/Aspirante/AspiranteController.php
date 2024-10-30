@@ -23,9 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AspiranteController extends AbstractController
 {
-    /**
-     * @Route("empleado/aspirante/lista/{id}", name="aspirante_lista")
-     */
+    #[Route("empleado/aspirante/lista/{id}", name:"aspirante_lista")]
     public function lista(Request $request, PaginatorInterface $paginator ,  EntityManagerInterface $em, $id = 0)
     {
         $arUsuario = $this->getUser();
@@ -55,9 +53,7 @@ class AspiranteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("empleado/aspirante/nuevo/{id}", name="aspirante_nuevo")
-     */
+    #[Route("empleado/aspirante/nuevo/{id}", name:"aspirante_nuevo")]
     public function nuevo(Request $request, $id,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -89,9 +85,7 @@ class AspiranteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("empleado/aspirante/estudio/nuevo/{codigoAspirante}/{id}", name="aspirante_estudio_nuevo")
-     */
+    #[Route("empleado/aspirante/estudio/nuevo/{codigoAspirante}/{id}", name:"aspirante_estudio_nuevo")]
     public function nuevoEstudio(Request $request, $codigoAspirante, $id,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -159,9 +153,7 @@ class AspiranteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("empleado/aspirante/idioma/nuevo/{codigoAspirante}/{id}", name="aspirante_idioma_nuevo")
-     */
+    #[Route("empleado/aspirante/idioma/nuevo/{codigoAspirante}/{id}", name:"aspirante_idioma_nuevo")]
     public function nuevoIdioma(Request $request, $codigoAspirante, $id,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

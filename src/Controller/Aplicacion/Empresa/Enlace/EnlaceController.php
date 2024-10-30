@@ -19,9 +19,7 @@ class EnlaceController extends AbstractController
 {
     //empresa_enlace_lista
 
-    /**
-     * @Route("/empresa/enlace/lista", name="empresa_enlace_lista")
-     */
+    #[oute("/empresa/enlace/lista", name:"empresa_enlace_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $session = new Session();
@@ -43,9 +41,7 @@ class EnlaceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empresa/enlace/nuevo/{id}", name="empresa_enlace_nuevo")
-     */
+    #[Route("/empresa/enlace/nuevo/{id}", name:"empresa_enlace_nuevo")]
     public function nuevo(Request $request, $id,  EntityManagerInterface $em)
     {
         $arEnlace = new Enlace;
@@ -70,9 +66,7 @@ class EnlaceController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empresa/enlace/detalle/{id}", name="empresa_enlace_detalle")
-     */
+    #[Route("/empresa/enlace/detalle/{id}", name:"empresa_enlace_detalle")]
     public function detalle(Request $request, PaginatorInterface $paginator, $id,  EntityManagerInterface $em)
     {
         $arRegistro = $em->getRepository(Enlace::class)->find($id);

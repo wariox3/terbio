@@ -15,9 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FacturaController extends AbstractController
 {
-    /**
-     * @Route("/utilidad/factura/{codigoEmpresa}/{modelo}/{codigoFactura}/{respuestaOrigen}", name="utilidad_factura")
-     */
+    #[Route("/utilidad/factura/{codigoEmpresa}/{modelo}/{codigoFactura}/{respuestaOrigen}", name:"utilidad_factura")]
     public function lista(Request $request, EntityManagerInterface $em, $codigoEmpresa, $modelo, $codigoFactura, $respuestaOrigen = null)
     {
         if ($codigoEmpresa && $modelo && $codigoFactura) {
@@ -62,9 +60,7 @@ class FacturaController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/utilidad/guia/fichero/{codigoEmpresa}/{codigoGuia}/", name="utilidad_guia_fichero")
-     */
+    #[Route("/utilidad/guia/fichero/{codigoEmpresa}/{codigoGuia}/", name:"utilidad_guia_fichero")]
     public function guiaFicheros(Request $request, $codigoEmpresa, $codigoGuia,  EntityManagerInterface $em)
     {
         if ($codigoEmpresa && $codigoGuia) {

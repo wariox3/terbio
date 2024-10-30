@@ -23,9 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NovedadController  extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/novedad/lista", name="cliente_transporte_novedad_lista")
-     */
+    #[Route("/cliente/transporte/novedad/lista", name:"cliente_transporte_novedad_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

@@ -13,9 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RetiroController extends AbstractController
 {
-    /**
-     * @Route("empleado/retirolaboral/lista", name="retirolaboral_lista")
-     */
+    #[Route("empleado/retirolaboral/lista", name:"retirolaboral_lista")]
     public function lista(Request $request, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();

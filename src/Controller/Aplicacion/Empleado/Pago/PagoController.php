@@ -12,9 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PagoController extends AbstractController
 {
 
-    /**
-     * @Route("/empleado/pago/lista", name="empleado_pago_lista")
-     */
+    #[Route("/empleado/pago/lista", name:"empleado_pago_lista")]
     public function lista(Request $request)
     {
         $arUsuario = $this->getUser();
@@ -53,9 +51,7 @@ class PagoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/empleado/pago/detalle/{codigoPago}", name="pago_detalle")
-     */
+    #[Route("/empleado/pago/detalle/{codigoPago}", name:"pago_detalle")]
     public function detalle(Request $request, $codigoPago)
     {
         $arUsuario = $this->getUser();

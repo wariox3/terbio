@@ -16,9 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CarteraController  extends AbstractController
 {
-    /**
-     * @Route("/cliente/cartera/lista", name="cliente_cartera_lista")
-     */
+    #[Route("/cliente/cartera/lista", name:"cliente_cartera_lista")]
     public function inicioAction(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em )
     {
         $arUsuario = $this->getUser();

@@ -10,9 +10,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 class ApiGuiaController  extends AbstractFOSRestController
 {
-    /**
-     * @Rest\Post("/cliente/transporte/api/guia/condicion", name="cliente_transporte_guia_condicion")
-     */
+    #[Rest\Post("/cliente/transporte/api/guia/condicion", name:"cliente_transporte_guia_condicion")]
     public function condicionEspecial(Request $request) {
         $arUsuario = $this->getUser();
         $raw = json_decode($request->request->get("arrParametros"));

@@ -22,9 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LocalizadorController  extends AbstractController
 {
-    /**
-     * @Route("/utilidad/localizador/{codigoEmpresa}/{guia}", name="utilidad_localizador")
-     */
+    #[Route("/utilidad/localizador/{codigoEmpresa}/{guia}", name:"utilidad_localizador")]
     public function lista(Request $request, EntityManagerInterface $em, $codigoEmpresa = null, $guia = null)
     {
         if(!$codigoEmpresa) {
@@ -99,9 +97,7 @@ class LocalizadorController  extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/utilidad/localizadorv2/{codigoEmpresa}/{guia}", name="utilidad_localizadorv2")
-     */
+    #[Route("/utilidad/localizadorv2/{codigoEmpresa}/{guia}", name:"utilidad_localizadorv2")]
     public function listav2(Request $request, EntityManagerInterface $em, $codigoEmpresa = null, $guia = null)
     {
         if(!$codigoEmpresa) {
@@ -171,9 +167,7 @@ class LocalizadorController  extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("utilidad/localizador/fichero/descargar/{codigoEmpresa}/{codigo}", name="utilidad_localizador_fichero_descarga")
-     */
+    #[Route("utilidad/localizador/fichero/descargar/{codigoEmpresa}/{codigo}", name:"utilidad_localizador_fichero_descarga")]
     public function ficheroDescarga(EntityManagerInterface $em, $codigoEmpresa, $codigo)
     {
         $arEmpresa = $em->getRepository(Empresa::class)->find($codigoEmpresa);

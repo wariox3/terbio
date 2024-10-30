@@ -25,9 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DestinatarioController extends AbstractController
 {
-    /**
-     * @Route("/cliente/transporte/destinatario/lista", name="cliente_transporte_destinatario_lista")
-     */
+    #[Route("/cliente/transporte/destinatario/lista", name:"cliente_transporte_destinatario_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
@@ -70,9 +68,7 @@ class DestinatarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/destinatario/nuevo/{id}", name="cliente_transporte_destinatario_nuevo")
-     */
+    #[Route("/cliente/transporte/destinatario/nuevo/{id}", name:"cliente_transporte_destinatario_nuevo")]
     public function nuevo(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -116,9 +112,7 @@ class DestinatarioController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/cliente/transporte/destinatario/importarmasivo", name="cliente_transporte_destinatario_importarMasivo")
-     */
+    #[Route("/cliente/transporte/destinatario/importarmasivo", name:"cliente_transporte_destinatario_importarMasivo")]
     public function importarMasivo(Request $request,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
