@@ -392,6 +392,15 @@
                                                     {{ archivo.nombre }}
                                                 </li>
                                             {% endfor %}
+                                            <strong>Enlaces:</strong>
+                                            <br>
+                                            {% if arrInformacionCapacitacion.urls is empty %}
+                                                <p>No hay enlaces disponibles en este momento.</p>
+                                            {% else %}
+                                                {% for url in arrInformacionCapacitacion.urls %}
+                                                    <a href="{{ url }}" target="_blank">{{ url }}</a><br>
+                                                {% endfor %}
+                                            {% endif %}
                                         </div>
                                         <div class="col-sm-2">
                                             <a href="{{ path('empleado_capacitaciones_pendites_confirmarasistencia', {'codigoCapacitacionDetelle':arrInformacionCapacitacion.codigoCapacitacionDetallePk }) }}"
