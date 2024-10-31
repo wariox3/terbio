@@ -19,7 +19,7 @@ class EnlaceController extends AbstractController
 {
     //empresa_enlace_lista
 
-    #[oute("/empresa/enlace/lista", name:"empresa_enlace_lista")]
+    #[Route("/empresa/enlace/lista", name:"empresa_enlace_lista")]
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $session = new Session();
