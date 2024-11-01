@@ -31,7 +31,15 @@ class GuiaController extends AbstractController
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
-        $codigoOperacionTercero = $arUsuario->getCodigoOperacionClienteFk();
+        $codigoOperacionTercero = null;
+        if($arUsuario->getCodigoOperacionClienteFk()) {
+            if(is_numeric($arUsuario->getCodigoOperacionClienteFk())) {
+                $codigoOperacionTercero = $arUsuario->getCodigoOperacionClienteFk();
+            } else {
+                Mensajes::error("Tiene asignado un [codigo operacion cliente] al usuario pero no es numerica, debe ser el codigo de la operacion");
+            }
+        }
+
         $url = "/transporte/api/oxigeno/guia/lista";
         $arrGuias = [];
         $arrGuiaTipo = [];
@@ -53,6 +61,13 @@ class GuiaController extends AbstractController
         if ($respuesta) {
             if ($respuesta->error == false) {
                 $arrTerceroOperaciones = $this->fuenteChoiceTerceroOperaciones($respuesta->terceroOperaciones);
+            }
+        }
+
+        if($codigoOperacionTercero && $arrTerceroOperaciones) {
+            if (in_array($codigoOperacionTercero, $arrTerceroOperaciones) == false) {
+                $codigoOperacionTercero = null;
+                Mensajes::error("Tiene asignado un [codigo operacion cliente] al usuario pero no exite en este cliente");
             }
         }
 
@@ -87,7 +102,7 @@ class GuiaController extends AbstractController
             ->add('fechaDesde', DateType::class, ['label' => 'Fecha desde: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
             ->add('fechaHasta', DateType::class, ['label' => 'Fecha hasta: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
             ->add('codigoGuiaTipo', ChoiceType::class, ['choices' => $arrGuiaTipo, 'required' => false])
-            ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false])
+            ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false, 'data' => $codigoOperacionTercero])
             ->add('codigoDespacho', IntegerType::class, array('required' => false))
             ->add('limiteRegistros', IntegerType::class, array('required' => false, 'data' => 100))
             ->add('btnFormato1', SubmitType::class, $arrBotonFormato1)
@@ -100,11 +115,20 @@ class GuiaController extends AbstractController
             ->add('btnPdf2', SubmitType::class, array('label' => 'Pdf 2'))
             ->add('btnFiltro', SubmitType::class, array('label' => 'Filtrar'))
             ->getForm();
+        if ($codigoOperacionTercero) {
+            $campos = ['codigoTerceroOperacion'];
+            foreach ($campos as $campo) {
+                $form->add($form->get($campo)->getName(),
+                    get_class($form->get($campo)->getConfig()->getType()->getInnerType()),
+                    array_merge($form->get($campo)->getConfig()->getOptions(), ['disabled' => true]));
+            }
+        }
         $form->handleRequest($request);
         $parametros = [
             'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
             'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
             'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+            'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
             'limiteRegistros' => 100
         ];
         if ($form->isSubmitted()) {
