@@ -31,6 +31,7 @@ class GuiaController extends AbstractController
     public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
+        $codigoOperacionTercero = $arUsuario->getCodigoOperacionClienteFk();
         $url = "/transporte/api/oxigeno/guia/lista";
         $arrGuias = [];
         $arrGuiaTipo = [];
