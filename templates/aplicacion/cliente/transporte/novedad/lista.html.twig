@@ -32,6 +32,26 @@
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Desde:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaDesde) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label">Hasta:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.fechaHasta) }}
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
                     <div class="col-sm-12">
                         {{ form_widget(form.btnFiltro, { 'attr': {'class': 'btn btn-sm btn-default waves-effect waves-themed pull-right'} }) }}
                     </div>

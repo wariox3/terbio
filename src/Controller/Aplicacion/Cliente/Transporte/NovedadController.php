@@ -33,13 +33,17 @@ class NovedadController  extends AbstractController
             ->add('documentoCliente', TextType::class, array('required' => false))
             ->add('estadoSolucionado', ChoiceType::class, ['choices' => ['TODOS' => '', 'SI' => '1', 'NO' => '0'], 'required' => false, 'data' => '0'])
             ->add('estadoAtendido', ChoiceType::class, ['choices' => ['TODOS' => '', 'SI' => '1', 'NO' => '0'], 'required' => false])
+            ->add('fechaDesde', DateType::class, ['label' => 'Fecha desde: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
+            ->add('fechaHasta', DateType::class, ['label' => 'Fecha hasta: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
             ->add('btnExcel', SubmitType::class, array('label' => 'Excel'))
             ->add('btnFiltro', SubmitType::class, array('label' => 'Filtrar'))
             ->getForm();
         $form->handleRequest($request);
         $parametros = [
             'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
-            'estadoSolucionado' => 0
+            'estadoSolucionado' => 0,
+            'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
+            'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
         ];
         if ($form->isSubmitted()) {
             if ($form->get('btnFiltro')->isClicked() || $form->get('btnExcel')->isClicked()) {
