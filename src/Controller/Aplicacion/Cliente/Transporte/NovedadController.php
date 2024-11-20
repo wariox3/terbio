@@ -39,7 +39,7 @@ class NovedadController  extends AbstractController
             ->add('btnFiltro', SubmitType::class, array('label' => 'Filtrar'))
             ->getForm();
         $form->handleRequest($request);
-        $parametros = [
+        $filtros = [
             'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
             'estadoSolucionado' => 0,
             'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
@@ -47,13 +47,14 @@ class NovedadController  extends AbstractController
         ];
         if ($form->isSubmitted()) {
             if ($form->get('btnFiltro')->isClicked() || $form->get('btnExcel')->isClicked()) {
-                $parametros['codigoGuia'] = $form->get('codigoGuia')->getData();
-                $parametros['documentoCliente'] = $form->get('documentoCliente')->getData();
-                $parametros['estadoSolucionado'] = $form->get('estadoSolucionado')->getData();
-                $parametros['estadoAtendido'] = $form->get('estadoAtendido')->getData();
+                $filtros['codigoGuia'] = $form->get('codigoGuia')->getData();
+                $filtros['documentoCliente'] = $form->get('documentoCliente')->getData();
+                $filtros['estadoSolucionado'] = $form->get('estadoSolucionado')->getData();
+                $filtros['estadoAtendido'] = $form->get('estadoAtendido')->getData();
             }
 
             if ($form->get('btnExcel')->isClicked()) {
+                $parametros['filtros'] = $filtros;
                 $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/novedad/lista", true);
                 if($respuesta['error'] == false) {
                     $arrNovedades = $respuesta['novedades'];
@@ -61,6 +62,7 @@ class NovedadController  extends AbstractController
                 }
             }
         }
+        $parametros['filtros'] = $filtros;
         $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/novedad/lista");
         if($respuesta->error == false) {
             $arrNovedades = $respuesta->novedades;
