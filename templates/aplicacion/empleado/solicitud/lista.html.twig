@@ -25,8 +25,6 @@
                     <th>DESDE</th>
                     <th>HASTA</th>
                     <th>COMENTARIO</th>
-                    <th title="Estado autorizado">AUT</th>
-                    <th title="Estado aprobado">APR</th>
                     <th title="Estado solicitud">EST</th>
                     <th>COMENTARIO RECHAZO</th>
                 </tr>
@@ -39,9 +37,16 @@
                         <td>{{ arSolicitud.fechaDesde | date('Y-m-d H:i:s') }}</td>
                         <td>{{ arSolicitud.fechaHasta | date('Y-m-d H:i:s') }}</td>
                         <td>{{ arSolicitud.comentario }}</td>
-                        <td>{{ arSolicitud.estadoAutorizado ? "SI":"NO" }}</td>
-                        <td>{{ arSolicitud.estadoAprobado ? "SI":"NO" }}</td>
-                        <td>{{ arSolicitud.estadoSolicitud}}</td>
+                        <td style="font-size: 2rem; font-weight: bold;
+                                {% if arSolicitud.estadoSolicitud == 'A' %}color: #28a745;{% elseif arSolicitud.estadoSolicitud == 'R' %}color: #dc3545;{% endif %}">
+                            {% if arSolicitud.estadoSolicitud == 'A' %}
+                                ACEPTADO
+                            {% elseif arSolicitud.estadoSolicitud == 'R' %}
+                                RECHAZADO
+                            {% else %}
+                                PENDIENTE
+                            {% endif %}
+                        </td>
                         <td>{{ arSolicitud.comentarioRechazo | default('')}}</td>
                     </tr>
                 {% endfor %}
