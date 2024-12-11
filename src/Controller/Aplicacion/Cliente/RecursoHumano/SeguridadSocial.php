@@ -41,27 +41,24 @@ class SeguridadSocial extends AbstractController
             if ($request->request->get('OpDescargar')) {
                 $codigo = $request->request->get('OpDescargar');
                 $parametrosArchivos=[
-                    'tipo' => "RhuAporteContrato",
                     'codigo' => $codigo
                 ];
-                $url="/documental/api/archivo/descargar";
-                $arrArchivo = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosArchivos, $url);
-                if($arrArchivo) {
-                    $arrArchivo = $arrArchivo[0];
-                    if($arrArchivo->error == 0) {
-                        $ruta = '/var/www/html/temporal/oxigeno_' . $arrArchivo->nombre;
-                        $file = fopen($ruta, "wb");
-                        fwrite($file, base64_decode($arrArchivo->base64));
-                        fclose($file);
-                        $response = new Response();
-                        $response->headers->set('Cache-Control', 'private');
-                        $response->headers->set('Content-type', 'application/pdf');
-                        $response->headers->set('Content-Disposition', 'attachment; filename="' . $arrArchivo->nombre . '";');
-                        //$response->headers->set('Content-length', $arArchivo->getTamano());
-                        $response->sendHeaders();
-                        $response->setContent(readfile($ruta));
-                        return $response;
-                    }
+                $url="/api/documental/archivo/descargacodigo";
+                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosArchivos, $url);
+                if($respuesta->error == 0) {
+                    $ruta = '/var/www/html/temporal/oxigeno_' . $respuesta->nombre;
+                    $file = fopen($ruta, "wb");
+                    fwrite($file, base64_decode($respuesta->base64));
+                    fclose($file);
+                    $response = new Response();
+                    $response->headers->set('Cache-Control', 'private');
+                    $response->headers->set('Content-type', 'application/pdf');
+                    $response->headers->set('Content-Disposition', 'attachment; filename="' . $respuesta->nombre . '";');
+                    //$response->headers->set('Content-length', $arArchivo->getTamano());
+                    $response->sendHeaders();
+                    $response->setContent(readfile($ruta));
+                    return $response;
+                    unlink($ruta);
                 } else {
                     Mensajes::error("No se encuentra el archivo de la seguridad social para este este empleado, por favor validar");
                 }
