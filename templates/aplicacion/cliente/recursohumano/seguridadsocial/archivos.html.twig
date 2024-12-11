@@ -1,0 +1,40 @@
+{% extends 'aplicacion/baseSinMenu.html.twig' %}
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
+
+    <div class="row">
+        <div class="col-xl-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    <h2 class="panel-title">Archivos</h2>
+                </header>
+                <div class="panel-body">
+                    <table class="table table-bordered table-hover table-sm table-hover table-striped tabla-datos-v2">
+                        <tr>
+                            <th>FECHA</th>
+                            <th>NOMBRE</th>
+                            <th>ARCHIVO</th>
+                            <th title="Tamaño">MB</th>
+                            <th></th>
+                        </tr>
+                        {% for arArchivos in arArchivos %}
+                            <tr>
+                                <td>{{ arArchivos.fecha | date ('Y-m-d H:i:s') }}</td>
+                                <td>{{ arArchivos.descripcion }}</td>
+                                <td>{{ arArchivos.nombre }}</td>
+                                <td>{{ arArchivos.tamano | number_format(2) }}</td>
+                                <td class="text-center">
+
+                                    <button class="btn btn-link btn-xs" type="submit" name="btnDescargar" value="{{ arArchivos.codigoArchivoPk }}">
+                                        <i class="fa fa-download" style="font-size: large;color: black;"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

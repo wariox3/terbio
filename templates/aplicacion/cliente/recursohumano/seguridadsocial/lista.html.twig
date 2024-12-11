@@ -45,7 +45,14 @@
                         <td>{{ arContrato.codigoEmpleadoFk }}</td>
                         <td>{{ arContrato.numeroIdentificacion }}</td>
                         <td>{{ arContrato.empleado }}</td>
-                        <td style="text-align: center"><button class="btn btn-default btn-xs" type="submit" name="OpDescargar" value="{{ arContrato.codigoAporteContratoPk }}">Descargar</button></td>
+                        <td class="text-center align-middle">
+                            <div class="btn-group">
+                                <a class="btn btn-default btn-sm"
+                                   href="javascript:abrirVentana3('{{ path('cliente_recursohumano_seguridadsocial_archivo', { 'codigo': arContrato.codigoAporteContratoPk }) }}', 'Archivos', 500, 800)">
+                                    archivos
+                                </a>
+                            </div>
+                        </td>
                     </tr>
                 {% endfor %}
 
