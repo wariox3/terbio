@@ -127,6 +127,13 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[Assert\Length(max: 20, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $codigoOperacionClienteFk;
 
+    #[ORM\Column(type: "string", length: 10, nullable: true)]
+    #[Assert\Length(max: 10, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
+    private $codigoCiudadOrigenFk;
+
+    #[ORM\Column(type: "boolean", options: ["default" => false])]
+    private $invertirOrigenDestino = false;
+
     #[ORM\Column(name: "bloquear_recaudo", type: "boolean", options: ["default" => false])]
     private $bloquearRecaudo = false;
 
@@ -802,6 +809,48 @@ use Symfony\Component\Validator\Constraints as Assert;
     public function setBloquearAdquirienteCredito(bool $bloquearAdquirienteCredito): void
     {
         $this->bloquearAdquirienteCredito = $bloquearAdquirienteCredito;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCodigoCiudadOrigenFk()
+    {
+        return $this->codigoCiudadOrigenFk;
+    }
+
+    /**
+     * @param mixed $codigoCiudadOrigenFk
+     */
+    public function setCodigoCiudadOrigenFk($codigoCiudadOrigenFk): void
+    {
+        $this->codigoCiudadOrigenFk = $codigoCiudadOrigenFk;
+    }
+
+    public function isInvertirOrigenDestino(): bool
+    {
+        return $this->invertirOrigenDestino;
+    }
+
+    public function setInvertirOrigenDestino(bool $invertirOrigenDestino): void
+    {
+        $this->invertirOrigenDestino = $invertirOrigenDestino;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsuarioAspiranteRel()
+    {
+        return $this->usuarioAspiranteRel;
+    }
+
+    /**
+     * @param mixed $usuarioAspiranteRel
+     */
+    public function setUsuarioAspiranteRel($usuarioAspiranteRel): void
+    {
+        $this->usuarioAspiranteRel = $usuarioAspiranteRel;
     }
 
 

@@ -356,6 +356,11 @@ class GuiaController extends AbstractController
         if ($arUsuario->isBloquearRecaudo()) {
             $arrRecaudo['attr']['readonly'] = true;
         }
+        $codigoCiudadOrigen = $arrDatos['arrOperacion']['codigoCiudadFk'];
+        if($arUsuario->getCodigoCiudadOrigenFk()) {
+            $codigoCiudadOrigen = $arUsuario->getCodigoCiudadOrigenFk();
+        }
+        $invertirOrigenDestino = $arUsuario->isInvertirOrigenDestino();
         $form = $this->createFormBuilder()
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('guiaTipoRel', ChoiceType::class, array('choices' => $arrGuiaTipo, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
@@ -423,7 +428,7 @@ class GuiaController extends AbstractController
                                         'codigoTerceroFk' => $arUsuario->getCodigoTerceroErpFk(),
                                         'codigoAdquirienteFk' => $codigoAdquiriente,
                                         'codigoOperacionFk' => $arrDatos['arrOperacion']['codigoOperacionPk'],
-                                        'codigoCiudadOrigenFk' => $arrDatos['arrOperacion']['codigoCiudadFk'],
+                                        'codigoCiudadOrigenFk' => $codigoCiudadOrigen,
                                         'documentoCliente' => $form->get('documentoCliente')->getData(),
                                         'remitente' => $form->get('remitente')->getData(),
                                         'identificacionTipoDestinatario' => $form->get('identificacionTipo')->getData(),
@@ -476,7 +481,8 @@ class GuiaController extends AbstractController
         return $this->render('aplicacion/cliente/transporte/guia/nuevo.html.twig', [
             'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
             'codigoPrecio' => $arrDatos['arrTercero']['codigoPrecioFk'],
-            'codigoOrigen' => $arrDatos['arrOperacion']['codigoCiudadFk'],
+            'codigoOrigen' => $codigoCiudadOrigen,
+            'invertirOrigenDestino' => $invertirOrigenDestino,
             'form' => $form->createView()
         ]);
     }

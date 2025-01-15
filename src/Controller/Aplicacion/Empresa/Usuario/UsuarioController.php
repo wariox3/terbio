@@ -132,9 +132,11 @@ class UsuarioController extends AbstractController
             ->add('estadoIngreso', CheckboxType::class, array('data' => $arUsuario->isEstadoIngreso(), 'required' => false))
             ->add('bloquearRecaudo', CheckboxType::class, array('data' => $arUsuario->isBloquearRecaudo(), 'label'=> 'Bloquear recaudo', 'required' => false))
             ->add('bloquearAdquirienteCredito', CheckboxType::class, array('data' => $arUsuario->isBloquearAdquirienteCredito(), 'label'=> 'Bloquear adquiriente credito', 'required' => false))
+            ->add('invertirOrigenDestino', CheckboxType::class, array('data' => $arUsuario->isInvertirOrigenDestino(), 'label'=> 'Invertir origen/destino', 'required' => false))
             ->add('codigoOperacionClienteFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionClienteFk(), 'required' => false, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoTerceroErpFk', TextType::class, ['data' => $arUsuario->getCodigoTerceroErpFk(), 'required' => true, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoOperacionFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionFk(), 'required' => true, 'label' => 'Operacion', 'attr' => ['class' => 'form-control']])
+            ->add('codigoCiudadOrigenFk', TextType::class, ['data' => $arUsuario->getCodigoCiudadOrigenFk(), 'required' => false, 'label' => 'Codigo ciudad origen', 'attr' => ['class' => 'form-control']])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])
             ->add('claveNueva', PasswordType::class, $propiedades)
             ->getForm();
@@ -155,9 +157,11 @@ class UsuarioController extends AbstractController
                 $arUsuario->setBloquearRecaudo($form->get('bloquearRecaudo')->getData());
                 $arUsuario->setBloquearAdquirienteCredito($form->get('bloquearAdquirienteCredito')->getData());
                 $arUsuario->setCambiarValoresGuia($form->get('cambiarValoresGuia')->getData());
+                $arUsuario->setInvertirOrigenDestino($form->get('invertirOrigenDestino')->getData());
                 $arUsuario->setCodigoTerceroErpFk($form->get('codigoTerceroErpFk')->getData());
                 $arUsuario->setCodigoOperacionFk($form->get('codigoOperacionFk')->getData());
                 $arUsuario->setCodigoOperacionClienteFk($form->get('codigoOperacionClienteFk')->getData());
+                $arUsuario->setCodigoCiudadOrigenFk($form->get('codigoCiudadOrigenFk')->getData());
                 $arUsuario->setPermiteCambiarAdquiriente($form->get('permiteCambiarAdquiriente')->getData());
                 $arUsuario->setEstadoRecogido($form->get('estadoRecogido')->getData());
                 $arUsuario->setEstadoIngreso($form->get('estadoIngreso')->getData());

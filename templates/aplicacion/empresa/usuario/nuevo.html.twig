@@ -102,6 +102,17 @@
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                    <label class="col-sm-2 control-label">Codigo ciudad origen fijo:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.codigoCiudadOrigenFk) }}
+                        {{ form_errors(form.codigoCiudadOrigenFk) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-4">
                         {{ form_widget(form.gestionTranporte) }}
@@ -112,6 +123,7 @@
                         {{ form_widget(form.estadoRecogido) }}
                         {{ form_widget(form.estadoIngreso) }}
                         {{ form_widget(form.bloquearAdquirienteCredito) }}
+                        {{ form_widget(form.invertirOrigenDestino) }}
                     </div>
                 </div>
             </div>

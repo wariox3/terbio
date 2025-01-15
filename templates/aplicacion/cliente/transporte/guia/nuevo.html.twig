@@ -5,6 +5,7 @@
     <input type="hidden" id="codigoTercero" value="{{ codigoTercero }}">
     <input type="hidden" id="codigoPrecio" value="{{ codigoPrecio }}">
     <input type="hidden" id="codigoOrigen" value="{{ codigoOrigen }}">
+    <input type="hidden" id="invertirOrigenDestino" value="{{ invertirOrigenDestino }}">
     <div class="row mt-2">
     <section class="panel">
     <div class="panel-heading">
@@ -296,6 +297,7 @@
             });
 
             $("#form_destinoRel").blur(function(){
+
                 var destino = $(this).val();
                 var guiaTipo = $("#form_guiaTipoRel").val();
                 var producto = $("#form_productoRel").val();
@@ -303,8 +305,13 @@
                 var codigoPrecio = $("#codigoPrecio").val();
                 var origen = $("#codigoOrigen").val();
                 var manejo = parseFloat($('#form_manejo').val());
+                var invertirOrigenDestino = $("#invertirOrigenDestino").val();
                 $('#form_flete').val(0);
                 $('#form_total').val(manejo);
+                if(invertirOrigenDestino === "1") {
+                    origen = $(this).val();
+                    destino = $("#codigoOrigen").val();
+                }
                 $.ajax({
                     url: "{{ path('cliente_transporte_guia_condicion') }}",
                     type: "POST",
