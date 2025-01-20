@@ -137,6 +137,8 @@ class UsuarioController extends AbstractController
             ->add('codigoTerceroErpFk', TextType::class, ['data' => $arUsuario->getCodigoTerceroErpFk(), 'required' => true, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoOperacionFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionFk(), 'required' => true, 'label' => 'Operacion', 'attr' => ['class' => 'form-control']])
             ->add('codigoCiudadOrigenFk', TextType::class, ['data' => $arUsuario->getCodigoCiudadOrigenFk(), 'required' => false, 'label' => 'Codigo ciudad origen', 'attr' => ['class' => 'form-control']])
+            ->add('direccionRemitente', TextType::class, ['data' => $arUsuario->getDireccionRemitente(), 'required' => false, 'label' => 'Direccion remitente:', 'attr' => ['class' => 'form-control']])
+            ->add('telefonoRemitente', TextType::class, ['data' => $arUsuario->getTelefonoRemitente(), 'required' => false, 'label' => 'Telefono remitente:', 'attr' => ['class' => 'form-control']])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])
             ->add('claveNueva', PasswordType::class, $propiedades)
             ->getForm();
@@ -165,6 +167,8 @@ class UsuarioController extends AbstractController
                 $arUsuario->setPermiteCambiarAdquiriente($form->get('permiteCambiarAdquiriente')->getData());
                 $arUsuario->setEstadoRecogido($form->get('estadoRecogido')->getData());
                 $arUsuario->setEstadoIngreso($form->get('estadoIngreso')->getData());
+                $arUsuario->setDireccionRemitente($form->get('direccionRemitente')->getData());
+                $arUsuario->setTelefonoRemitente($form->get('telefonoRemitente')->getData());
                 if ($id == "0") {
                     $arUsuario->setFechaRegistro(new \DateTime('now'));
                     $arUsuario->setEmpresaRel($arEmpresa);

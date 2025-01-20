@@ -454,6 +454,12 @@ class GuiaController extends AbstractController
                                         'estadoIngreso' => $estadoIngreso,
                                         'devolverDocumentoCliente' => $form->get('devolverDocumentoCliente')->getData()
                                     ];
+                                    if($arUsuario->getDireccionRemitente()) {
+                                        $parametros['direccionRemitente'] = $arUsuario->getDireccionRemitente();
+                                    }
+                                    if($arUsuario->getTelefonoRemitente()) {
+                                        $parametros['telefonoRemitente'] = $arUsuario->getTelefonoRemitente();
+                                    }
                                     $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/guia/nuevo");
                                     if ($respuesta->error == false) {
                                         return $this->redirect($this->generateUrl('cliente_transporte_guia_nuevo_respuesta', ['codigoGuia' => $respuesta->codigoGuiaPk]));

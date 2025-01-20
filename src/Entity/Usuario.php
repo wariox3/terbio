@@ -140,6 +140,14 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[ORM\Column(type: "boolean", options: ["default" => false])]
     private $bloquearAdquirienteCredito = false;
 
+    #[ORM\Column(type: "string", length: 150, nullable: true)]
+    #[Assert\Length(max: 150, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
+    private $direccionRemitente;
+
+    #[ORM\Column(type: "string", length: 80, nullable: true)]
+    #[Assert\Length(max: 80, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
+    private $telefonoRemitente;
+
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
@@ -851,6 +859,38 @@ use Symfony\Component\Validator\Constraints as Assert;
     public function setUsuarioAspiranteRel($usuarioAspiranteRel): void
     {
         $this->usuarioAspiranteRel = $usuarioAspiranteRel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDireccionRemitente()
+    {
+        return $this->direccionRemitente;
+    }
+
+    /**
+     * @param mixed $direccionRemitente
+     */
+    public function setDireccionRemitente($direccionRemitente): void
+    {
+        $this->direccionRemitente = $direccionRemitente;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTelefonoRemitente()
+    {
+        return $this->telefonoRemitente;
+    }
+
+    /**
+     * @param mixed $telefonoRemitente
+     */
+    public function setTelefonoRemitente($telefonoRemitente): void
+    {
+        $this->telefonoRemitente = $telefonoRemitente;
     }
 
 

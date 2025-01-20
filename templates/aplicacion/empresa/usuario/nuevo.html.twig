@@ -102,14 +102,26 @@
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
-                    <label class="col-sm-2 control-label"></label>
-                    <div class="col-sm-4">
-
-                    </div>
                     <label class="col-sm-2 control-label">Codigo ciudad origen fijo:</label>
                     <div class="col-sm-4">
                         {{ form_widget(form.codigoCiudadOrigenFk) }}
                         {{ form_errors(form.codigoCiudadOrigenFk) }}
+                    </div>
+                    <label class="col-sm-2 control-label">Direccion remitente:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.direccionRemitente) }}
+                        {{ form_errors(form.direccionRemitente) }}
+                    </div>
+                </div>
+                <div class="row form-group form-group-sm">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-4">
+
+                    </div>
+                    <label class="col-sm-2 control-label">Telefono remitente:</label>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.telefonoRemitente) }}
+                        {{ form_errors(form.telefonoRemitente) }}
                     </div>
                 </div>
                 <div class="row form-group form-group-sm">
