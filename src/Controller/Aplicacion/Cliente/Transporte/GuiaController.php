@@ -991,7 +991,7 @@ class GuiaController extends AbstractController
             $hoja->setTitle('Items');
             $j = 0;
             $arrColumnas = ['GUIA', 'TIPO', 'FECHA', 'DOCUMENTO', 'ORIGEN', 'DESTINO', 'DESTINATARIO', 'DIRECCION', 'TELEFONO', 'COMENTARIO', 'UND', 'PESO', 'VOL', 'RECAUDO', 'FLETE', 'DECLARADO', 'MANEJO', 'TOTAL',
-                'REC', 'FH_REC', 'SCL', 'DES', 'FH_DES', 'ENT', 'FH_ENT', 'CUM', 'FAC', 'NOV', 'DIG', 'OPC'];
+                'REC', 'FH_REC', 'SCL', 'DES', 'FH_DES', 'ENT', 'FH_ENT', 'CUM', 'FAC', 'NOV', 'DIG', 'ANU' ,'OPC'];
             for ($i = 'A'; $j <= sizeof($arrColumnas) - 1; $i++) {
                 $hoja->getColumnDimension($i)->setAutoSize(true);
                 $hoja->getStyle(1)->getFont()->setName('Arial')->setSize(8);
@@ -1031,7 +1031,8 @@ class GuiaController extends AbstractController
                 $hoja->setCellValue('AA' . $j, $arRegistro['estadoFacturado'] ? 'SI' : 'NO');
                 $hoja->setCellValue('AB' . $j, $arRegistro['estadoNovedad'] ? 'SI' : 'NO');
                 $hoja->setCellValue('AC' . $j, $arRegistro['estadoDigitalizado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AD' . $j, $arRegistro['terceroOperacionCodigo']);
+                $hoja->setCellValue('AD' . $j, $arRegistro['estadoAnulado'] ? 'SI' : 'NO');
+                $hoja->setCellValue('AE' . $j, $arRegistro['terceroOperacionCodigo']);
                 $j++;
             }
             $libro->setActiveSheetIndex(0);
