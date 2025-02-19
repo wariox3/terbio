@@ -34,26 +34,99 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="table-responsive mt-2">
-            <table class="table table-bordered table-hover tabla-datos-v2">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>FECHA</th>
-                    <th>RESPUESTA</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for arRespuesta in arSolicitud.respuestas %}
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="analisis-tab" data-bs-toggle="tab" href="#analisis" role="tab">Análisis</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#seguimiento" role="tab">Seguimiento</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab3-tab" data-toggle="tab" href="#respuesta" role="tab">Respuesta</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        <!-- Pestaña Análisis -->
+        <div class="tab-pane fade show active" id="analisis" role="tabpanel">
+            <div class="table-responsive mt-0">
+                <table class="table table-bordered table-hover tabla-datos-v2">
+                    <thead>
                     <tr>
-                        <td>{{ arRespuesta.codigoSolicitudRespuestaPk }}</td>
-                        <td>{{ arRespuesta.fecha | date('Y-m-d H:i:s') }}</td>
-                        <td>{{ arRespuesta.respuesta }}</td>
+                        <th>ID</th>
+                        <th>FECHA</th>
+                        <th>RAZÓN</th>
+                        <th>CAUSA RAÍZ</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% if arSolicitud.analisis is defined and arSolicitud.analisis is not empty %}
+                        {% for arRespuesta in arSolicitud.analisis %}
+                            <tr>
+                                <td>{{ arRespuesta.codigoSolicitudAnalisisPk }}</td>
+                                <td>{{ arRespuesta.fecha | date('Y-m-d H:i:s') }}</td>
+                                <td>{{ arRespuesta.razon }}</td>
+                                <td>{{ arRespuesta.causaRaiz }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pestaña Seguimiento -->
+        <div class="tab-pane fade" id="seguimiento" role="tabpanel">
+            <div class="table-responsive mt-0">
+                <table class="table table-bordered table-hover tabla-datos-v2">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FECHA</th>
+                        <th>PLAN ACCIÓN</th>
+                        <th>DESCRIPCIÓN</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% if arSolicitud.seguimientos is defined and arSolicitud.seguimientos is not empty %}
+                        {% for arRespuesta in arSolicitud.seguimientos %}
+                            <tr>
+                                <td>{{ arRespuesta.codigoSolicitudSeguimientoPk }}</td>
+                                <td>{{ arRespuesta.fecha | date('Y-m-d H:i:s') }}</td>
+                                <td>{{ arRespuesta.planAccion }}</td>
+                                <td>{{ arRespuesta.descripcion }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pestaña Respuesta -->
+        <div class="tab-pane fade" id="respuesta" role="tabpanel">
+            <div class="table-responsive mt-0">
+                <table class="table table-bordered table-hover tabla-datos-v2">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>FECHA</th>
+                        <th>RESPUESTA</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for arRespuesta in arSolicitud.respuestas %}
+                        <tr>
+                            <td>{{ arRespuesta.codigoSolicitudRespuestaPk }}</td>
+                            <td>{{ arRespuesta.fecha | date('Y-m-d H:i:s') }}</td>
+                            <td>{{ arRespuesta.respuesta }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
+
