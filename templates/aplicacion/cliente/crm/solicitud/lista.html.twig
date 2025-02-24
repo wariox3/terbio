@@ -25,6 +25,9 @@
                 <th title="Fecha respuesta">F_RES</th>
                 <th title="Fecha cierre">F_CIE</th>
                 <th>DESCRIPCIÓN</th>
+                <th title="Estado autorizado">AUT</th>
+                <th title="Estado aprobado">APR</th>
+                <th title="Estado anulado">ANU</th>
                 <th title="Estado cerrado">CER</th>
                 <th></th>
             </tr>
@@ -39,6 +42,9 @@
                     <td>{% if arSolicitud.fechaRespuesta == null %}{{ '--:--:--' }}{% else %}{{ arSolicitud.fechaRespuesta | date ('Y-m-d') }}{% endif %}</td>
                     <td>{% if arSolicitud.fechaCierre == null %}{{ '--:--:--' }}{% else %}{{ arSolicitud.fechaCierre | date ('Y-m-d') }}{% endif %}</td>
                     <td>{{ arSolicitud.descripcion }}</td>
+                    <td class="text-center">{{ arSolicitud.estadoAutorizado ? 'SI':'NO' }}</td>
+                    <td class="text-center">{{ arSolicitud.estadoAprobado ? 'SI':'NO' }}</td>
+                    <td class="text-center">{{ arSolicitud.estadoAnulado ? 'SI':'NO' }}</td>
                     <td class="text-center">{{ arSolicitud.estadoCerrado ? 'SI':'NO' }}</td>
                     <td class="text-center">
                         <a href="{{ path('cliente_crm_solicitud_detalle', {'id':arSolicitud.codigoSolicitudPk}) }}"
