@@ -132,6 +132,7 @@ class UsuarioController extends AbstractController
             ->add('estadoIngreso', CheckboxType::class, array('data' => $arUsuario->isEstadoIngreso(), 'required' => false))
             ->add('bloquearRecaudo', CheckboxType::class, array('data' => $arUsuario->isBloquearRecaudo(), 'label'=> 'Bloquear recaudo', 'required' => false))
             ->add('bloquearAdquirienteCredito', CheckboxType::class, array('data' => $arUsuario->isBloquearAdquirienteCredito(), 'label'=> 'Bloquear adquiriente credito', 'required' => false))
+            ->add('bloquearOperacionCliente', CheckboxType::class, array('data' => $arUsuario->isBloquearOperacionCliente(), 'label'=> 'Bloquear operacion cliente', 'required' => false))
             ->add('invertirOrigenDestino', CheckboxType::class, array('data' => $arUsuario->isInvertirOrigenDestino(), 'label'=> 'Invertir origen/destino', 'required' => false))
             ->add('codigoOperacionClienteFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionClienteFk(), 'required' => false, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoTerceroErpFk', TextType::class, ['data' => $arUsuario->getCodigoTerceroErpFk(), 'required' => true, 'label' => '', 'attr' => ['class' => 'form-control']])
@@ -157,6 +158,7 @@ class UsuarioController extends AbstractController
                 $arUsuario->setGestionTranporte($form->get('gestionTranporte')->getData());
                 $arUsuario->setGuiaNuevo($form->get('guiaNuevo')->getData());
                 $arUsuario->setBloquearRecaudo($form->get('bloquearRecaudo')->getData());
+                $arUsuario->setBloquearOperacionCliente($form->get('bloquearOperacionCliente')->getData());
                 $arUsuario->setBloquearAdquirienteCredito($form->get('bloquearAdquirienteCredito')->getData());
                 $arUsuario->setCambiarValoresGuia($form->get('cambiarValoresGuia')->getData());
                 $arUsuario->setInvertirOrigenDestino($form->get('invertirOrigenDestino')->getData());

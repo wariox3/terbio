@@ -361,13 +361,11 @@ class GuiaController extends AbstractController
             $codigoCiudadOrigen = $arUsuario->getCodigoCiudadOrigenFk();
         }
         $invertirOrigenDestino = $arUsuario->isInvertirOrigenDestino();
-        $codigoOperacionCliente = $arUsuario->getCodigoOperacionClienteFk();
-        #$codigoOperacionCliente = 16;
+
         $form = $this->createFormBuilder()
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('guiaTipoRel', ChoiceType::class, array('choices' => $arrGuiaTipo, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('productoRel', ChoiceType::class, array('choices' => $arrProductos, 'attr' => ['class' => 'aplicarSelect2']))
-            ->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('destinoRel', ChoiceType::class, array('choices' => $arrDestinos, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('documentoCliente', TextType::class, array('required' => false))
             ->add('remitente', TextType::class, array('required' => false))
@@ -395,6 +393,13 @@ class GuiaController extends AbstractController
             ->add('comentario', TextareaType::class, ['required' => false, 'attr' => ['rows' => '20', 'style' => 'height:100px']])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])
             ->getForm();
+        $codigoOperacionCliente = $arUsuario->getCodigoOperacionClienteFk();
+        if ($arUsuario->isBloquearOperacionCliente()) {
+            $form->add('operacionRel', TextType::class, array('data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['readonly' => true]));
+        } else {
+            $form->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']));
+        }
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('btnGuardar')->isClicked()) {
