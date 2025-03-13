@@ -148,6 +148,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[Assert\Length(max: 80, maxMessage: "El campo no puede contener más de {{ limit }} caracteres")]
     private $telefonoRemitente;
 
+    #[ORM\Column(type: "boolean", options: ["default" => false])]
+    private $bloquearOperacionCliente = false;
+
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
@@ -891,6 +894,16 @@ use Symfony\Component\Validator\Constraints as Assert;
     public function setTelefonoRemitente($telefonoRemitente): void
     {
         $this->telefonoRemitente = $telefonoRemitente;
+    }
+
+    public function isBloquearOperacionCliente(): bool
+    {
+        return $this->bloquearOperacionCliente;
+    }
+
+    public function setBloquearOperacionCliente(bool $bloquearOperacionCliente): void
+    {
+        $this->bloquearOperacionCliente = $bloquearOperacionCliente;
     }
 
 

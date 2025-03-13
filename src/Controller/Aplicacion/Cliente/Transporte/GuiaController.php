@@ -361,11 +361,13 @@ class GuiaController extends AbstractController
             $codigoCiudadOrigen = $arUsuario->getCodigoCiudadOrigenFk();
         }
         $invertirOrigenDestino = $arUsuario->isInvertirOrigenDestino();
+        $codigoOperacionCliente = $arUsuario->getCodigoOperacionClienteFk();
+        #$codigoOperacionCliente = 16;
         $form = $this->createFormBuilder()
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('guiaTipoRel', ChoiceType::class, array('choices' => $arrGuiaTipo, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('productoRel', ChoiceType::class, array('choices' => $arrProductos, 'attr' => ['class' => 'aplicarSelect2']))
-            ->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']))
+            ->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('destinoRel', ChoiceType::class, array('choices' => $arrDestinos, 'attr' => ['class' => 'aplicarSelect2']))
             ->add('documentoCliente', TextType::class, array('required' => false))
             ->add('remitente', TextType::class, array('required' => false))
