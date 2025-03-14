@@ -4,7 +4,6 @@
 namespace App\Controller\Aplicacion\Cliente\Transporte;
 
 use App\Controller\FuncionesController;
-use App\Entity\Empresa;
 use App\Formato\Guias;
 use App\Formato\Guias2;
 use App\Utilidades\Mensajes;

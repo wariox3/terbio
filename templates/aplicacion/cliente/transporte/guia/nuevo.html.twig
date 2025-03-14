@@ -297,7 +297,6 @@
             });
 
             $("#form_destinoRel").blur(function(){
-
                 var destino = $(this).val();
                 var guiaTipo = $("#form_guiaTipoRel").val();
                 var producto = $("#form_productoRel").val();
@@ -343,6 +342,11 @@
                             sessionStorage.setItem('descuentoUnidad', data.descuentoUnidad != null ? data.descuentoUnidad : 0  );
                             sessionStorage.setItem('fleteMinimo', data.fleteMinimo != null ? data.fleteMinimo : 0  );
                             sessionStorage.setItem('fleteMinimoGuia', data.fleteMinimoGuia != null ? data.fleteMinimoGuia : 0  );
+                        } else {
+                            sessionStorage.setItem('descuentoPeso', 0);
+                            sessionStorage.setItem('descuentoUnidad', 0);
+                            sessionStorage.setItem('fleteMinimo', 0);
+                            sessionStorage.setItem('fleteMinimoGuia', 0);
                         }
                         if(data.condicionEspecialManejo) {
                             porcentajeManejo =  data.porcentajeManejo != null ? data.porcentajeManejo : 0;
