@@ -4,6 +4,14 @@
     <div class="row">
         <h2 class="panel-title">CLIENTE DETALLE</h2>
     </div>
+    <div class="row mt-2">
+        <div class="btn-group">
+            <a class="btn btn-default btn-sm"
+               href="javascript:abrirVentana3('{{ path('cliente_crm_solicitud_archivo', { 'tipo': 'GenTercero', 'codigo': arrTercero.codigoTerceroPk }) }}', 'Archivos', 500, 800)">
+                Archivos
+            </a>
+        </div>
+    </div>
     <div class="row">
         <table class="table table-condensed table-bordered tabla-informacion w-100">
             <tr>
