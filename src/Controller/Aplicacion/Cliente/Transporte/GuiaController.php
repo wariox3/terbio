@@ -153,7 +153,8 @@ class GuiaController extends AbstractController
                         'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
-                        'codigoDespacho' => $form->get('codigoDespacho')->getData()
+                        'codigoDespacho' => $form->get('codigoDespacho')->getData(),
+                        'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
                     ]
                 ];
                 $respuestaRotulo = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosRotulo, $urlRotulo);
@@ -184,7 +185,8 @@ class GuiaController extends AbstractController
                         'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
-                        'codigoDespacho' => $form->get('codigoDespacho')->getData()
+                        'codigoDespacho' => $form->get('codigoDespacho')->getData(),
+                        'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
                     ]
                 ];
                 $respuestaFormato1 = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosFormato1, $urlFormato1);
@@ -215,7 +217,8 @@ class GuiaController extends AbstractController
                         'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
-                        'codigoDespacho' => $form->get('codigoDespacho')->getData()
+                        'codigoDespacho' => $form->get('codigoDespacho')->getData(),
+                        'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
                     ]
                 ];
                 $respuestaFormato2 = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosFormato2, $urlFormato2);
@@ -246,7 +249,8 @@ class GuiaController extends AbstractController
                         'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
-                        'codigoDespacho' => $form->get('codigoDespacho')->getData()
+                        'codigoDespacho' => $form->get('codigoDespacho')->getData(),
+                        'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
                     ]
                 ];
                 $respuestaFormato3 = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosFormato3, $urlFormato3);
@@ -279,7 +283,8 @@ class GuiaController extends AbstractController
                         'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
-                        'codigoDespacho' => $form->get('codigoDespacho')->getData()
+                        'codigoDespacho' => $form->get('codigoDespacho')->getData(),
+                        'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
                     ]
                 ];
                 $respuestaFormato4 = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosFormato4, $urlFormato4);

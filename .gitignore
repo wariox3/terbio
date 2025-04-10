@@ -21,3 +21,8 @@ symfony.lock
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+/.env.dev
+/config/packages/jms_serializer.yaml
+/config/routes/security.yaml
+/config/packages/web_profiler.yaml
+/config/routes/web_profiler.yaml
