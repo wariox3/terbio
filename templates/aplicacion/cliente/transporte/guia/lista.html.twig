@@ -119,12 +119,14 @@
                     <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> Utilidad <span
                                 class="caret"></span></button>
                     <ul class="dropdown-menu">
+                        {% if app.user.guiaDescargaMasivo %}
                         <li>
                             <a class="btn btn-link"
                                href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_descargarmasivo')}}', 'descargarMasivo', 600, 1200)">
                                 Descargar masivo
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

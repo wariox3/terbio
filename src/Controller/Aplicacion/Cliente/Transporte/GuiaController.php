@@ -9,12 +9,14 @@ use App\Formato\Guias2;
 use App\Utilidades\Mensajes;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -26,13 +28,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GuiaController extends AbstractController
 {
-    #[Route("/cliente/transporte/guia/lista", name:"cliente_transporte_guia_lista")]
+    #[Route("/cliente/transporte/guia/lista", name: "cliente_transporte_guia_lista")]
     public function lista(Request $request, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
         $codigoOperacionTercero = null;
-        if($arUsuario->getCodigoOperacionClienteFk()) {
-            if(is_numeric($arUsuario->getCodigoOperacionClienteFk())) {
+        if ($arUsuario->getCodigoOperacionClienteFk()) {
+            if (is_numeric($arUsuario->getCodigoOperacionClienteFk())) {
                 $codigoOperacionTercero = $arUsuario->getCodigoOperacionClienteFk();
             } else {
                 Mensajes::error("Tiene asignado un [codigo operacion cliente] al usuario pero no es numerica, debe ser el codigo de la operacion");
@@ -48,7 +50,7 @@ class GuiaController extends AbstractController
         if ($respuesta) {
             if ($respuesta->error == false) {
                 $arrGuiaTipo = $this->fuenteChoiceGuiasTipos($respuesta->arrGuiaTipo);
-                if(isset($respuesta->arrGuiaFormato)) {
+                if (isset($respuesta->arrGuiaFormato)) {
                     $arGuiaFormato = $respuesta->arrGuiaFormato;
                 }
             }
@@ -63,7 +65,7 @@ class GuiaController extends AbstractController
             }
         }
 
-        if($codigoOperacionTercero && $arrTerceroOperaciones) {
+        if ($codigoOperacionTercero && $arrTerceroOperaciones) {
             if (in_array($codigoOperacionTercero, $arrTerceroOperaciones) == false) {
                 $codigoOperacionTercero = null;
                 Mensajes::error("Tiene asignado un [codigo operacion cliente] al usuario pero no exite en este cliente");
@@ -76,20 +78,20 @@ class GuiaController extends AbstractController
         $arrBotonFormato4 = array('label' => 'Formato 4', 'disabled' => false);
         $arrBotonRotulo1 = array('label' => 'Rotulo 1', 'disabled' => false);
 
-        if($arGuiaFormato) {
-            if($arGuiaFormato->formato1 == 0) {
+        if ($arGuiaFormato) {
+            if ($arGuiaFormato->formato1 == 0) {
                 $arrBotonFormato1['disabled'] = true;
             }
-            if($arGuiaFormato->formato2 == 0) {
+            if ($arGuiaFormato->formato2 == 0) {
                 $arrBotonFormato2['disabled'] = true;
             }
-            if($arGuiaFormato->formato3 == 0) {
+            if ($arGuiaFormato->formato3 == 0) {
                 $arrBotonFormato3['disabled'] = true;
             }
-            if($arGuiaFormato->formato4 == 0) {
+            if ($arGuiaFormato->formato4 == 0) {
                 $arrBotonFormato4['disabled'] = true;
             }
-            if($arGuiaFormato->rotulo1 == 0) {
+            if ($arGuiaFormato->rotulo1 == 0) {
                 $arrBotonRotulo1['disabled'] = true;
             }
         }
@@ -332,7 +334,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/nuevo/{id}", name:"cliente_transporte_guia_nuevo")]
+    #[Route("/cliente/transporte/guia/nuevo/{id}", name: "cliente_transporte_guia_nuevo")]
     public function nuevo(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -347,7 +349,7 @@ class GuiaController extends AbstractController
         $arrLiquidaciones = $this->fuenteChoiceLiquidacion($arrDatos['arrTercero']);
         $arrProductos = $this->fuenteChoiceProductos($arrDatos['arrProductos']);
         $arrOperaciones = [];
-        if(isset($arrDatos['arrOperaciones'])) {
+        if (isset($arrDatos['arrOperaciones'])) {
             $arrOperaciones = $this->fuenteChoiceOperaciones($arrDatos['arrOperaciones']);
         }
         $arrFlete = array('required' => true, 'data' => 0, 'attr' => ['readonly' => true]);
@@ -361,7 +363,7 @@ class GuiaController extends AbstractController
             $arrRecaudo['attr']['readonly'] = true;
         }
         $codigoCiudadOrigen = $arrDatos['arrOperacion']['codigoCiudadFk'];
-        if($arUsuario->getCodigoCiudadOrigenFk()) {
+        if ($arUsuario->getCodigoCiudadOrigenFk()) {
             $codigoCiudadOrigen = $arUsuario->getCodigoCiudadOrigenFk();
         }
         $invertirOrigenDestino = $arUsuario->isInvertirOrigenDestino();
@@ -375,10 +377,10 @@ class GuiaController extends AbstractController
             ->add('remitente', TextType::class, array('required' => false))
             ->add('identificacionTipo', ChoiceType::class, array('choices' => array('CC' => 'CC', 'NI' => 'NI')))
             ->add('identificacion', TextType::class, array('required' => true, 'attr' => ['placeholder' => 'Identificación']))
-            ->add('codigoAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['codigoTerceroPk'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly'=>'readonly' ]))
-            ->add('tipoIdentificacionAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['codigoIdentificacionFk'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly'=>'readonly' ]))
-            ->add('identificacionAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['numeroIdentificacion'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly'=>'readonly']))
-            ->add('nombreAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['nombreCorto'], 'attr' => ['placeholder' => 'Nombre adquiriente', 'readonly'=>'readonly']))
+            ->add('codigoAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['codigoTerceroPk'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly' => 'readonly']))
+            ->add('tipoIdentificacionAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['codigoIdentificacionFk'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly' => 'readonly']))
+            ->add('identificacionAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['numeroIdentificacion'], 'attr' => ['placeholder' => 'Identificación adquiriente', 'readonly' => 'readonly']))
+            ->add('nombreAdquiriente', TextType::class, array('required' => true, 'data' => $arrDatos['arrTercero']['nombreCorto'], 'attr' => ['placeholder' => 'Nombre adquiriente', 'readonly' => 'readonly']))
             ->add('destinatario', TextType::class, array('required' => true, 'attr' => ['placeholder' => 'Destinatario']))
             ->add('direccion', TextType::class, array('required' => true))
             ->add('telefono', TextType::class, array('required' => true))
@@ -399,9 +401,9 @@ class GuiaController extends AbstractController
             ->getForm();
         $codigoOperacionCliente = $arUsuario->getCodigoOperacionClienteFk();
         if ($arUsuario->isBloquearOperacionCliente()) {
-            $form->add('operacionRel', TextType::class, array('data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['readonly' => true]));
+            $form->add('operacionRel', TextType::class, array('data' => $codigoOperacionCliente, 'required' => false, 'attr' => ['readonly' => true]));
         } else {
-            $form->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'data'=> $codigoOperacionCliente, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']));
+            $form->add('operacionRel', ChoiceType::class, array('choices' => $arrOperaciones, 'data' => $codigoOperacionCliente, 'required' => false, 'attr' => ['class' => 'aplicarSelect2']));
         }
 
         $form->handleRequest($request);
@@ -417,18 +419,18 @@ class GuiaController extends AbstractController
                                 if (!$validarFlete || $validarFlete && $form->get('flete')->getData() > 0) {
                                     $estadoRecogido = $arUsuario->isEstadoRecogido();
                                     $estadoIngreso = $arUsuario->isEstadoIngreso();
-                                    if($arUsuario->isBloquearAdquirienteCredito()) {
+                                    if ($arUsuario->isBloquearAdquirienteCredito()) {
                                         $codigoAdquiriente = $arUsuario->getCodigoTerceroErpFk();
                                         $arrTipoGuias = $arrDatos['arrGuiaTipo'];
                                         $tipoDestino = false;
                                         foreach ($arrTipoGuias as $arrTipoGuia) {
-                                            if($arrTipoGuia['codigoGuiaTipoPk'] == $guiaTipo) {
-                                                if($arrTipoGuia['destino'] == true) {
+                                            if ($arrTipoGuia['codigoGuiaTipoPk'] == $guiaTipo) {
+                                                if ($arrTipoGuia['destino'] == true) {
                                                     $tipoDestino = true;
                                                 }
                                             }
                                         }
-                                        if($tipoDestino) {
+                                        if ($tipoDestino) {
                                             $codigoAdquiriente = $form->get('codigoAdquiriente')->getData();
                                         }
                                     } else {
@@ -465,10 +467,10 @@ class GuiaController extends AbstractController
                                         'estadoIngreso' => $estadoIngreso,
                                         'devolverDocumentoCliente' => $form->get('devolverDocumentoCliente')->getData()
                                     ];
-                                    if($arUsuario->getDireccionRemitente()) {
+                                    if ($arUsuario->getDireccionRemitente()) {
                                         $parametros['direccionRemitente'] = $arUsuario->getDireccionRemitente();
                                     }
-                                    if($arUsuario->getTelefonoRemitente()) {
+                                    if ($arUsuario->getTelefonoRemitente()) {
                                         $parametros['telefonoRemitente'] = $arUsuario->getTelefonoRemitente();
                                     }
                                     $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/guia/nuevo");
@@ -504,7 +506,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/detalle/{id}", name:"cliente_transporte_guia_detalle")]
+    #[Route("/cliente/transporte/guia/detalle/{id}", name: "cliente_transporte_guia_detalle")]
     public function detalle(Request $request, $id)
     {
         $arUsuario = $this->getUser();
@@ -551,8 +553,8 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/buscardestinatario", name:"cliente_transporte_guia_buscardestinatario")]
-    public function buscarDestinatario(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
+    #[Route("/cliente/transporte/guia/buscardestinatario", name: "cliente_transporte_guia_buscardestinatario")]
+    public function buscarDestinatario(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
         $url = "/transporte/api/oxigeno/destinatario/lista";
@@ -625,7 +627,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/nuevo/respuesta/{codigoGuia}", name:"cliente_transporte_guia_nuevo_respuesta")]
+    #[Route("/cliente/transporte/guia/nuevo/respuesta/{codigoGuia}", name: "cliente_transporte_guia_nuevo_respuesta")]
     public function nuevoRespuesta(Request $request, $codigoGuia)
     {
         $arUsuario = $this->getUser();
@@ -674,7 +676,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/buscar/ciudad/{campoCodigo}/{campoNombre}", name:"cliente_transporte_guia_buscar_ciudad")]
+    #[Route("/cliente/buscar/ciudad/{campoCodigo}/{campoNombre}", name: "cliente_transporte_guia_buscar_ciudad")]
     public function buscarCiudadOrigen(Request $request, PaginatorInterface $paginator, $campoCodigo, $campoNombre)
     {
         $arUsuario = $this->getUser();
@@ -708,8 +710,8 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/buscaradquiriente", name:"cliente_transporte_guia_buscaradquiriente")]
-    public function buscarTercero(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
+    #[Route("/cliente/transporte/guia/buscaradquiriente", name: "cliente_transporte_guia_buscaradquiriente")]
+    public function buscarTercero(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
         $arrDatos = FuncionesController::consumirApi($arUsuario->getEmpresaRel(),
@@ -754,15 +756,15 @@ class GuiaController extends AbstractController
             if ($formNuevo->get('btnGuardar')->isClicked()) {
                 $error = false;
                 $identificacion = $formNuevo->get('codigoIdentificacionFk')->getData();
-                if($identificacion == 'NI') {
+                if ($identificacion == 'NI') {
                     $numeroIdentificacion = $formNuevo->get('numeroIdentificacion')->getData();
                     $caracteresNumeroIdentificacion = strlen($numeroIdentificacion);
-                    if($caracteresNumeroIdentificacion != 9) {
+                    if ($caracteresNumeroIdentificacion != 9) {
                         $error = true;
                         Mensajes::error("El numero de identificacion de NIT debe ser de 9 digitos");
                     }
                 }
-                if($error == false) {
+                if ($error == false) {
                     $parametrosTercero = [
                         'codigoTerceroFk' => $arUsuario->getCodigoTerceroErpFk(),
                         'numeroIdentificacion' => $formNuevo->get('numeroIdentificacion')->getData(),
@@ -818,7 +820,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("/cliente/transporte/guia/archivosmasivos/{codigoGuia}", name:"cliente_transporte_guia_archivosmasivos")]
+    #[Route("/cliente/transporte/guia/archivosmasivos/{codigoGuia}", name: "cliente_transporte_guia_archivosmasivos")]
     public function archivosMasivosGuia(Request $request, PaginatorInterface $paginator, $codigoGuia)
     {
         $arUsuario = $this->getUser();
@@ -856,7 +858,7 @@ class GuiaController extends AbstractController
         ]);
     }
 
-    #[Route("cliente/transporte/guia/fichero/descargar/{codigo}", name:"cliente_transporte_guia_fichero_descargar")]
+    #[Route("cliente/transporte/guia/fichero/descargar/{codigo}", name: "cliente_transporte_guia_fichero_descargar")]
     public function ficheroDescarga(EntityManagerInterface $em, $codigo)
     {
         $arUsuario = $this->getUser();
@@ -873,16 +875,42 @@ class GuiaController extends AbstractController
         echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
     }
 
-    #[Route("/cliente/transporte/guia/descargamasivo", name:"cliente_transporte_guia_descargarmasivo")]
-    public function descargarMasivo(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
+    #[Route("/cliente/transporte/guia/descargamasivo", name: "cliente_transporte_guia_descargarmasivo")]
+    public function descargarMasivo(Request $request, PaginatorInterface $paginator, EntityManagerInterface $em)
     {
+        $arUsuario = $this->getUser();
         $form = $this->createFormBuilder()
+            ->add('attachment', FileType::class)
             ->add('btnCargar', SubmitType::class, array('label' => 'Cargar'))
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('btnCargar')->isClicked()) {
-
+                set_time_limit(0);
+                $objArchivo = $form['attachment']->getData();
+                $directorioDestino = "/var/www/html/temporal/";
+                if ($objArchivo->getSize()) {
+                    $form['attachment']->getData()->move($directorioDestino, "archivoGuiaDescargaMasiva.xls");
+                    $ruta = $directorioDestino . "archivoGuiaDescargaMasiva.xls";
+                    $objPHPExcel = IOFactory::load($ruta);
+                    $guias = ['guias' => []];
+                    $maxRegistros = 1000;
+                    $i = 0;
+                    if ($objPHPExcel->getSheetCount() == 1) {
+                        foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+                            $highestRow = $worksheet->getHighestRow();
+                            if (($highestRow - 1) > $maxRegistros) {
+                                Mensajes::error("El archivo excede el límite de 1000 registros.");
+                                return $this->redirectToRoute('cliente_transporte_guia_descargarmasivo');
+                            }
+                            for ($row = 2; $row <= $highestRow; ++$row) {
+                                $guia = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+                                $guias['guias'][] = $guia;
+                            }
+                            $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $guias, "/api/transporte/guia/descargamasiva");
+                        }
+                    }
+                }
             }
         }
 
@@ -1019,7 +1047,7 @@ class GuiaController extends AbstractController
             $hoja->setTitle('Items');
             $j = 0;
             $arrColumnas = ['GUIA', 'TIPO', 'FECHA', 'DOCUMENTO', 'ORIGEN', 'DESTINO', 'DESTINATARIO', 'DIRECCION', 'TELEFONO', 'COMENTARIO', 'UND', 'PESO', 'VOL', 'RECAUDO', 'FLETE', 'DECLARADO', 'MANEJO', 'TOTAL',
-                'REC', 'FH_REC', 'SCL', 'DES', 'FH_DES', 'ENT', 'FH_ENT', 'CUM', 'FAC', 'NOV', 'DIG', 'ANU' ,'OPC'];
+                'REC', 'FH_REC', 'SCL', 'DES', 'FH_DES', 'ENT', 'FH_ENT', 'CUM', 'FAC', 'NOV', 'DIG', 'ANU', 'OPC'];
             for ($i = 'A'; $j <= sizeof($arrColumnas) - 1; $i++) {
                 $hoja->getColumnDimension($i)->setAutoSize(true);
                 $hoja->getStyle(1)->getFont()->setName('Arial')->setSize(8);
