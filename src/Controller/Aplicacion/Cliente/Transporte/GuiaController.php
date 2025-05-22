@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GuiaController extends AbstractController
 {
     #[Route("/cliente/transporte/guia/lista", name:"cliente_transporte_guia_lista")]
-    public function lista(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
+    public function lista(Request $request, EntityManagerInterface $em)
     {
         $arUsuario = $this->getUser();
         $codigoOperacionTercero = null;
@@ -708,7 +708,6 @@ class GuiaController extends AbstractController
         ]);
     }
 
-
     #[Route("/cliente/transporte/guia/buscaradquiriente", name:"cliente_transporte_guia_buscaradquiriente")]
     public function buscarTercero(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
     {
@@ -872,6 +871,24 @@ class GuiaController extends AbstractController
             echo $fileContent;
         }
         echo "<script languaje='javascript' type='text/javascript'>window.close();</script>";;
+    }
+
+    #[Route("/cliente/transporte/guia/descargamasivo", name:"cliente_transporte_guia_descargarmasivo")]
+    public function descargarMasivo(Request $request, PaginatorInterface $paginator,  EntityManagerInterface $em)
+    {
+        $form = $this->createFormBuilder()
+            ->add('btnCargar', SubmitType::class, array('label' => 'Cargar'))
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('btnCargar')->isClicked()) {
+
+            }
+        }
+
+        return $this->render('aplicacion/cliente/transporte/guia/descargarMasivo.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     private function fuenteChoiceIdenticaciones($datos)

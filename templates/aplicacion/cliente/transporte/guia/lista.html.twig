@@ -115,9 +115,19 @@
                         Nuevo
                     </a>
                 {% endif %}
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"> Utilidad <span
+                                class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a class="btn btn-link"
+                               href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_descargarmasivo')}}', 'descargarMasivo', 600, 1200)">
+                                Descargar masivo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
-
         </div>
     </div>
     <div class="row">
