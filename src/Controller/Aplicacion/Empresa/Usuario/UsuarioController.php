@@ -134,6 +134,7 @@ class UsuarioController extends AbstractController
             ->add('bloquearAdquirienteCredito', CheckboxType::class, array('data' => $arUsuario->isBloquearAdquirienteCredito(), 'label'=> 'Bloquear adquiriente credito', 'required' => false))
             ->add('bloquearOperacionCliente', CheckboxType::class, array('data' => $arUsuario->isBloquearOperacionCliente(), 'label'=> 'Bloquear operacion cliente', 'required' => false))
             ->add('invertirOrigenDestino', CheckboxType::class, array('data' => $arUsuario->isInvertirOrigenDestino(), 'label'=> 'Invertir origen/destino', 'required' => false))
+            ->add('guiaDescargaMasivo', CheckboxType::class, array('data' => $arUsuario->isGuiaDescargaMasivo(), 'label'=> 'Guia descarga masivo', 'required' => false))
             ->add('codigoOperacionClienteFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionClienteFk(), 'required' => false, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoTerceroErpFk', TextType::class, ['data' => $arUsuario->getCodigoTerceroErpFk(), 'required' => true, 'label' => '', 'attr' => ['class' => 'form-control']])
             ->add('codigoOperacionFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionFk(), 'required' => true, 'label' => 'Operacion', 'attr' => ['class' => 'form-control']])
@@ -160,6 +161,7 @@ class UsuarioController extends AbstractController
                 $arUsuario->setBloquearRecaudo($form->get('bloquearRecaudo')->getData());
                 $arUsuario->setBloquearOperacionCliente($form->get('bloquearOperacionCliente')->getData());
                 $arUsuario->setBloquearAdquirienteCredito($form->get('bloquearAdquirienteCredito')->getData());
+                $arUsuario->setGuiaDescargaMasivo($form->get('guiaDescargaMasivo')->getData());
                 $arUsuario->setCambiarValoresGuia($form->get('cambiarValoresGuia')->getData());
                 $arUsuario->setInvertirOrigenDestino($form->get('invertirOrigenDestino')->getData());
                 $arUsuario->setCodigoTerceroErpFk($form->get('codigoTerceroErpFk')->getData());

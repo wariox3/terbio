@@ -151,6 +151,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     #[ORM\Column(type: "boolean", options: ["default" => false])]
     private $bloquearOperacionCliente = false;
 
+    #[ORM\Column(name: "guia_descarga_masivo", type: "boolean", options: ["default" => false])]
+    private $guiaDescargaMasivo = false;
+
     #[ORM\ManyToOne(targetEntity: Empresa::class, inversedBy: "usuariosEmpresaRel")]
     #[ORM\JoinColumn(name: "codigo_empresa_fk", referencedColumnName: "codigo_empresa_pk")]
     protected $empresaRel;
@@ -906,5 +909,14 @@ use Symfony\Component\Validator\Constraints as Assert;
         $this->bloquearOperacionCliente = $bloquearOperacionCliente;
     }
 
+    public function isGuiaDescargaMasivo(): bool
+    {
+        return $this->guiaDescargaMasivo;
+    }
+
+    public function setGuiaDescargaMasivo(bool $guiaDescargaMasivo): void
+    {
+        $this->guiaDescargaMasivo = $guiaDescargaMasivo;
+    }
 
 }
