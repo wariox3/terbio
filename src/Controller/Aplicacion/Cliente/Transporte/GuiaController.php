@@ -6,6 +6,7 @@ namespace App\Controller\Aplicacion\Cliente\Transporte;
 use App\Controller\FuncionesController;
 use App\Formato\Guias;
 use App\Formato\Guias2;
+use App\Utilidades\BackBlaze;
 use App\Utilidades\Mensajes;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,6 +26,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Box\Spout\Writer\Common\Creator\Style\StyleBuilder;
+use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use PhpZip\ZipFile;
 
 class GuiaController extends AbstractController
 {
@@ -887,29 +893,135 @@ class GuiaController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('btnCargar')->isClicked()) {
                 set_time_limit(0);
+                $arrGuias = [];
                 $objArchivo = $form['attachment']->getData();
-                $directorioDestino = "/var/www/html/temporal/";
-                if ($objArchivo->getSize()) {
-                    $form['attachment']->getData()->move($directorioDestino, "archivoGuiaDescargaMasiva.xls");
-                    $ruta = $directorioDestino . "archivoGuiaDescargaMasiva.xls";
-                    $objPHPExcel = IOFactory::load($ruta);
-                    $guias = ['guias' => []];
-                    $maxRegistros = 1000;
-                    $i = 0;
-                    if ($objPHPExcel->getSheetCount() == 1) {
-                        foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
-                            $highestRow = $worksheet->getHighestRow();
-                            if (($highestRow - 1) > $maxRegistros) {
-                                Mensajes::error("El archivo excede el límite de 1000 registros.");
-                                return $this->redirectToRoute('cliente_transporte_guia_descargarmasivo');
+                if ($objArchivo != null) {
+                    if ($objArchivo->getSize()) {
+                        $form['attachment']->getData()->move("/var/www/html/temporal/", "archivoGuiaDescargaMasiva.xls");
+                        $archivoCagaTemporal = "/var/www/html/temporal/archivoGuiaDescargaMasiva.xls";
+                        $objPHPExcel = IOFactory::load($archivoCagaTemporal);
+                        if ($objPHPExcel->getSheetCount() == 1) {
+                            $hoja = $objPHPExcel->getActiveSheet();
+                            $numeroFilas = $hoja->getHighestRow();
+                            $tope = 1000;
+                            if($numeroFilas < $tope) {
+                                for ($fila = 2; $fila <= $hoja->getHighestRow(); ++$fila) {
+                                    $arrGuias[] = $hoja->getCell("A$fila")->getValue();
+                                }
+                                $parametros = [
+                                    'guias' => $arrGuias
+                                ];
+                                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/api/transporte/guia/descargamasiva");
+                                if($respuesta !== null){
+                                    if ($respuesta->error === false) {
+                                        $arrGuias = $respuesta->guias;
+                                        if($arrGuias) {
+                                            //$arrConfiguracion = $em->getRepository(GenConfiguracion::class)->archivoServicioDocumental();
+                                            $backBlaze = new BackBlaze();
+                                            $rutaPadre = "energy";
+                                            $fechaHora = new \DateTime('now');
+                                            $nombreDirectorio = $fechaHora->format('YmdHis');
+                                            $directorioTemporal = "/var/www/html/temporal/{$nombreDirectorio}";
+                                            if (!file_exists($directorioTemporal)) {
+                                                mkdir($directorioTemporal, 0777, true);
+                                            }
+                                            $ruta = "{$directorioTemporal}/guiasEstado.xlsx";
+                                            $writer = WriterEntityFactory::createXLSXWriter();
+                                            $writer->openToFile($ruta);
+                                            $estiloEncabezado = (new StyleBuilder())
+                                                ->setFontName('Arial')
+                                                ->setFontBold()
+                                                ->setFontSize(8)
+                                                ->setShouldWrapText(false)
+                                                ->build();
+                                            $estiloDetalle = (new StyleBuilder())
+                                                ->setFontName('Arial')
+                                                ->setFontSize(8)
+                                                ->setShouldWrapText(false)
+                                                ->build();
+                                            $arrColumnas = ['GUIA', 'DOCUMENTO', 'RECOGIDO', 'INGRESO', 'ANULADO', 'EMBARCADO', 'DESPACHO', 'ENTREGADO', 'SOPORTE',
+                                                'CUMPLIDO', 'FACTURADO', 'NOVEDAD', 'DIGITALIZADO', 'INTERFACE', 'SALIDA_CLI', 'DEVOLUCION'];
+                                            $rowFromValues = WriterEntityFactory::createRowFromArray($arrColumnas, $estiloEncabezado);
+                                            $writer->addRow($rowFromValues);
+                                            $writer->getCurrentSheet()->setName('guias');
+                                            $pesoTotal = 0;
+                                            foreach ($arrGuias as $guia) {
+                                                $cells = [
+                                                    WriterEntityFactory::createCell($guia->codigoGuiaPk),
+                                                    WriterEntityFactory::createCell($guia->documentoCliente),
+                                                    WriterEntityFactory::createCell($guia->estadoRecogido?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoIngreso?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoAnulado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoEmbarcado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoDespachado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoEntregado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoSoporte?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoCumplido?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoFacturado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoNovedad?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoDigitalizado?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoInterface?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoSalidaCliente?'SI':'NO'),
+                                                    WriterEntityFactory::createCell($guia->estadoDevolucion?'SI':'NO'),
+                                                ];
+                                                $singleRow = WriterEntityFactory::createRow($cells, $estiloDetalle);
+                                                $writer->addRow($singleRow);
+                                                if($pesoTotal <= 500) {
+                                                    if(is_array($guia->archivos)) {
+                                                        $indice = 0;
+                                                        foreach ($guia->archivos as $archivo) {
+                                                            $ruta = "{$rutaPadre}/fichero/{$archivo->codigoFicheroPk}.{$archivo->extension}";
+                                                            $respuesta = $backBlaze->descargar($ruta);
+                                                            if ($respuesta['error'] == false) {
+                                                                $pesoTotal += $archivo->tamano;
+                                                                $contenidoBinario = base64_decode($respuesta['b64']);
+                                                                $rutaCompleta = "{$directorioTemporal}/{$guia->codigoGuiaPk}_{$indice}.{$archivo->extension}";
+                                                                file_put_contents($rutaCompleta, $contenidoBinario);
+                                                                $indice++;
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            $writer->close();
+                                            if (file_exists($directorioTemporal)) {
+                                                $nombreZip = '/var/www/html/temporal/archivos_' . $fechaHora->format('YmdHis') . '.zip';
+                                                $zipFile = new ZipFile();
+                                                $zipFile->addDir($directorioTemporal);
+                                                $zipFile->saveAsFile($nombreZip);
+                                                $zipFile->close();
+                                                array_map('unlink', glob("$directorioTemporal/*"));
+                                                rmdir($directorioTemporal);
+                                                unlink($archivoCagaTemporal);
+                                                while (ob_get_level()) {
+                                                    ob_end_clean();
+                                                }
+                                                $response = new BinaryFileResponse($nombreZip);
+                                                $response->headers->set('Content-Type', 'application/zip');
+                                                $response->headers->set('Content-Length', filesize($nombreZip));
+                                                $response->setContentDisposition(
+                                                    ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                                                    'archivos_' . $fechaHora->format('YmdHis') . '.zip'
+                                                );
+                                                $response->deleteFileAfterSend(true);
+                                                return $response;
+                                            }
+                                        } else {
+
+                                        }
+                                    }
+                                }
+                            } else {
+                                Mensajes::error("Solo puede importar {$tope} filas");
                             }
-                            for ($row = 2; $row <= $highestRow; ++$row) {
-                                $guia = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
-                                $guias['guias'][] = $guia;
-                            }
-                            $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $guias, "/api/transporte/guia/descargamasiva");
+                        } else {
+                            Mensajes::error("El libro solo puede tener 1 hoja");
                         }
+                    } else {
+                        Mensajes::error("El libro excede el tamaño");
                     }
+                } else {
+                    Mensajes::error("No ha seleccionado un archivo");
                 }
             }
         }
