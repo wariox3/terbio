@@ -111,7 +111,7 @@ class GuiaController extends AbstractController
             ->add('codigoGuiaTipo', ChoiceType::class, ['choices' => $arrGuiaTipo, 'required' => false])
             ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false, 'data' => $codigoOperacionTercero])
             ->add('codigoDespacho', IntegerType::class, array('required' => false))
-            ->add('limiteRegistros', IntegerType::class, array('required' => false, 'data' => 100))
+            ->add('limiteRegistros', IntegerType::class, array('required' => false, 'data' => 30))
             ->add('btnFormato1', SubmitType::class, $arrBotonFormato1)
             ->add('btnFormato2', SubmitType::class, $arrBotonFormato2)
             ->add('btnFormato3', SubmitType::class, $arrBotonFormato3)
@@ -136,7 +136,7 @@ class GuiaController extends AbstractController
             'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
             'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
             'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
-            'limiteRegistros' => 100
+            'limiteRegistros' => 30
         ];
         if ($form->isSubmitted()) {
             if ($form->get('btnFiltro')->isClicked() || $form->get('btnExcel')->isClicked() || $form->get('btnPdf')->isClicked() || $form->get('btnPdf2')->isClicked()) {
@@ -148,6 +148,12 @@ class GuiaController extends AbstractController
                 $parametros['codigoDespacho'] = $form->get('codigoDespacho')->getData();
                 $parametros['codigoTerceroOperacionFk'] = $form->get('codigoTerceroOperacion')->getData();
                 $parametros['limiteRegistros'] = $form->get('limiteRegistros')->getData();
+                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+                if ($respuesta != null) {
+                    if ($respuesta->error == false) {
+                        $arrGuias = $respuesta->guias;
+                    }
+                }
             }
             if ($form->get('btnRotulo1')->isClicked()) {
                 $urlRotulo = "/transporte/api/oxigeno/guia/rotulo";
@@ -314,26 +320,17 @@ class GuiaController extends AbstractController
             }
             if ($form->get('btnPdf')->isClicked()) {
                 $formato = new Guias();
-                $formato->Generar($em, $arUsuario, $parametros);
+                $formato->Generar($em, $arUsuario, $arrGuias);
             }
             if ($form->get('btnPdf2')->isClicked()) {
                 $formato = new Guias2();
-                $formato->Generar($em, $arUsuario, $parametros);
+                $formato->Generar($em, $arUsuario, $arrGuias);
             }
             if ($form->get('btnExcel')->isClicked()) {
-                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url, true);
-                if ($respuesta['error'] == false) {
-                    $arrGuias = $respuesta['guias'];
-                    $this->excelLista($arrGuias);
-                }
+                $this->excelLista($arrGuias);
             }
         }
-        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
-        if ($respuesta != null) {
-            if ($respuesta->error == false) {
-                $arrGuias = $respuesta->guias;
-            }
-        }
+        Mensajes::info("Para ver el listado de guias presionar el botón filtrar");
         return $this->render('aplicacion/cliente/transporte/guia/lista.html.twig', [
             'arGuias' => $arrGuias,
             'form' => $form->createView()
@@ -1170,37 +1167,37 @@ class GuiaController extends AbstractController
             $j = 2;
             foreach ($arRegistros as $arRegistro) {
                 $hoja->getStyle($j)->getFont()->setName('Arial')->setSize(8);
-                $hoja->setCellValue('A' . $j, $arRegistro['codigoGuiaPk']);
-                $hoja->setCellValue('B' . $j, $arRegistro['codigoGuiaTipoFk']);
-                $hoja->setCellValue('C' . $j, $arRegistro['fechaIngreso']);
-                $hoja->setCellValue('D' . $j, $arRegistro['documentoCliente']);
-                $hoja->setCellValue('E' . $j, $arRegistro['ciudadOrigen']);
-                $hoja->setCellValue('F' . $j, $arRegistro['ciudadDestino']);
-                $hoja->setCellValue('G' . $j, $arRegistro['nombreDestinatario']);
-                $hoja->setCellValue('H' . $j, $arRegistro['direccionDestinatario']);
-                $hoja->setCellValue('I' . $j, $arRegistro['telefonoDestinatario']);
-                $hoja->setCellValue('J' . $j, $arRegistro['comentario']);
-                $hoja->setCellValue('K' . $j, $arRegistro['unidades']);
-                $hoja->setCellValue('L' . $j, $arRegistro['pesoReal']);
-                $hoja->setCellValue('M' . $j, $arRegistro['pesoVolumen']);
-                $hoja->setCellValue('N' . $j, $arRegistro['vrRecaudo']);
-                $hoja->setCellValue('O' . $j, $arRegistro['vrFlete']);
-                $hoja->setCellValue('P' . $j, $arRegistro['vrDeclara']);
-                $hoja->setCellValue('Q' . $j, $arRegistro['vrManejo']);
-                $hoja->setCellValue('R' . $j, $arRegistro['vrFlete'] + $arRegistro['vrManejo']);
-                $hoja->setCellValue('S' . $j, $arRegistro['estadoRecogido'] ? 'SI' : 'NO');
-                $hoja->setCellValue('T' . $j, $arRegistro['fechaRecogido'] ? date_create($arRegistro['fechaRecogido'])->format('Y-m-d') : '');
-                $hoja->setCellValue('U' . $j, $arRegistro['estadoSalidaCliente'] ? 'SI' : 'NO');
-                $hoja->setCellValue('V' . $j, $arRegistro['estadoDespachado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('W' . $j, $arRegistro['fechaDespacho'] ? date_create($arRegistro['fechaDespacho'])->format('Y-m-d') : '');
-                $hoja->setCellValue('X' . $j, $arRegistro['estadoEntregado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('Y' . $j, $arRegistro['fechaEntrega'] ? date_create($arRegistro['fechaEntrega'])->format('Y-m-d') : '');
-                $hoja->setCellValue('Z' . $j, $arRegistro['estadoCumplido'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AA' . $j, $arRegistro['estadoFacturado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AB' . $j, $arRegistro['estadoNovedad'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AC' . $j, $arRegistro['estadoDigitalizado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AD' . $j, $arRegistro['estadoAnulado'] ? 'SI' : 'NO');
-                $hoja->setCellValue('AE' . $j, $arRegistro['terceroOperacionCodigo']);
+                $hoja->setCellValue('A' . $j, $arRegistro->codigoGuiaPk);
+                $hoja->setCellValue('B' . $j, $arRegistro->codigoGuiaTipoFk);
+                $hoja->setCellValue('C' . $j, $arRegistro->fechaIngreso);
+                $hoja->setCellValue('D' . $j, $arRegistro->documentoCliente);
+                $hoja->setCellValue('E' . $j, $arRegistro->ciudadOrigen);
+                $hoja->setCellValue('F' . $j, $arRegistro->ciudadDestino);
+                $hoja->setCellValue('G' . $j, $arRegistro->nombreDestinatario);
+                $hoja->setCellValue('H' . $j, $arRegistro->direccionDestinatario);
+                $hoja->setCellValue('I' . $j, $arRegistro->telefonoDestinatario);
+                $hoja->setCellValue('J' . $j, $arRegistro->comentario);
+                $hoja->setCellValue('K' . $j, $arRegistro->unidades);
+                $hoja->setCellValue('L' . $j, $arRegistro->pesoReal);
+                $hoja->setCellValue('M' . $j, $arRegistro->pesoVolumen);
+                $hoja->setCellValue('N' . $j, $arRegistro->vrRecaudo);
+                $hoja->setCellValue('O' . $j, $arRegistro->vrFlete);
+                $hoja->setCellValue('P' . $j, $arRegistro->vrDeclara);
+                $hoja->setCellValue('Q' . $j, $arRegistro->vrManejo);
+                $hoja->setCellValue('R' . $j, $arRegistro->vrFlete + $arRegistro->vrManejo);
+                $hoja->setCellValue('S' . $j, $arRegistro->estadoRecogido ? 'SI' : 'NO');
+                $hoja->setCellValue('T' . $j, $arRegistro->fechaRecogido ? date_create($arRegistro->fechaRecogido)->format('Y-m-d') : '');
+                $hoja->setCellValue('U' . $j, $arRegistro->estadoSalidaCliente ? 'SI' : 'NO');
+                $hoja->setCellValue('V' . $j, $arRegistro->estadoDespachado ? 'SI' : 'NO');
+                $hoja->setCellValue('W' . $j, $arRegistro->fechaDespacho ? date_create($arRegistro->fechaDespacho)->format('Y-m-d') : '');
+                $hoja->setCellValue('X' . $j, $arRegistro->estadoEntregado ? 'SI' : 'NO');
+                $hoja->setCellValue('Y' . $j, $arRegistro->fechaEntrega ? date_create($arRegistro->fechaEntrega)->format('Y-m-d') : '');
+                $hoja->setCellValue('Z' . $j, $arRegistro->estadoCumplido?'SI':'NO');
+                $hoja->setCellValue('AA' . $j, $arRegistro->estadoFacturado?'SI':'NO');
+                $hoja->setCellValue('AB' . $j, $arRegistro->estadoNovedad ? 'SI' : 'NO');
+                $hoja->setCellValue('AC' . $j, $arRegistro->estadoDigitalizado ? 'SI' : 'NO');
+                $hoja->setCellValue('AD' . $j, $arRegistro->estadoAnulado ? 'SI' : 'NO');
+                $hoja->setCellValue('AE' . $j, $arRegistro->terceroOperacionCodigo);
                 $j++;
             }
             $libro->setActiveSheetIndex(0);

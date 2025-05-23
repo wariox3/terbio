@@ -11,12 +11,11 @@ use Doctrine\ORM\EntityRepository;
 class Guias2 extends \FPDF
 {
     public static $em;
-    public static $codigoPago;
     public static $codigoEmpresa;
     public static $arUsuario;
     public static $codigoRol;
 
-    public function Generar($em, $usuario, $parametros)
+    public function Generar($em, $usuario, $arrGuias)
     {
         self::$em = $em;
         self::$arUsuario = $usuario;
@@ -27,7 +26,7 @@ class Guias2 extends \FPDF
         $pdf->AddPage();
         $pdf->SetFont('Times', '', 12);
         $pdf->Header();
-        $this->Body($pdf, $parametros);
+        $this->Body($pdf, $arrGuias);
         $pdf->Output("guias.pdf", 'D');
     }
 
@@ -94,17 +93,14 @@ class Guias2 extends \FPDF
         $this->Ln(4);
     }
 
-    public function Body($pdf, $parametros)
+    public function Body($pdf, $arrGuias)
     {
-
-        $arrGuias = FuncionesController::consumirApi(self::$arUsuario->getEmpresaRel(), $parametros, "/transporte/api/oxigeno/guia/lista");
-        $arGuias = $arrGuias->guias;
         $guias = 0;
         $unidades = 0;
         $peso = 0;
         $volumen = 0;
         $total = 0;
-        foreach ($arGuias as $arGuia) {
+        foreach ($arrGuias as $arGuia) {
             $fechaIngreso = date_create($arGuia->fechaIngreso);
             $pdf->Cell(15, 4, $arGuia->codigoGuiaPk, 1, 0, 'L');
             $pdf->Cell(18, 4, substr($arGuia->guiaTipoNombre, 0, 8), 1, 0, 'L');
