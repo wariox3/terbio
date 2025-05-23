@@ -24,6 +24,10 @@
                         <div>
                             {{ form_widget(form.btnCargar, { 'attr': {'class': 'btn btn-sm btn-primary'} }) }}
                         </div>
+                        <button id="btnCargando" class="btn btn-danger btn-xs btn-cargando" type="button" disabled="" style="display: none">
+                            <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                            cargar
+                        </button>
                     </div>
                 </footer>
             </section>
@@ -33,4 +37,20 @@
     {{ form_rest(form) }}
     {{ form_end(form) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $("#form_btnCargar").click(() => {
+                if ($('form').submit()) {
+                    if ($("form")[0].checkValidity()) {
+                        $("#form_btnCargar").css('display', 'none');
+                        $("#btnCargando").css('display', 'block');
+                    }
+                }
+            })
+        })
+    </script>
 {% endblock %}

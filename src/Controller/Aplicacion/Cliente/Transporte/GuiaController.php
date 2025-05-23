@@ -330,7 +330,7 @@ class GuiaController extends AbstractController
                 $this->excelLista($arrGuias);
             }
         }
-        Mensajes::info("Para ver el listado de guias presionar el botón filtrar");
+        Mensajes::error("Para ver el listado de guias presionar el botón filtrar");
         return $this->render('aplicacion/cliente/transporte/guia/lista.html.twig', [
             'arGuias' => $arrGuias,
             'form' => $form->createView()
@@ -884,7 +884,10 @@ class GuiaController extends AbstractController
         $arUsuario = $this->getUser();
         $form = $this->createFormBuilder()
             ->add('attachment', FileType::class)
-            ->add('btnCargar', SubmitType::class, array('label' => 'Cargar'))
+            ->add('btnCargar', SubmitType::class, [
+                'label' => 'Cargar',
+                'attr' => ['class' => 'btn btn-sm btn-primary', 'id' => 'btnCargar']
+            ])
             ->getForm();
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
