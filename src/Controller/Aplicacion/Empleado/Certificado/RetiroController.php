@@ -48,6 +48,28 @@ class RetiroController extends AbstractController
                     return $response;
                 }
             }
+            if ($request->request->get('opPazysalvo')) {
+                $codigoContrato = $request->request->get('opPazysalvo');
+                $parametrosImprimir = [
+                    'codigoContrato' => $codigoContrato
+                ];
+                $url = "/recursohumano/api/oxigeno/certificadopazysalvo/imprimir";
+                $respuestaFormato = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosImprimir, $url);
+                if ($respuestaFormato->error == false) {
+                    $archivo = "/var/www/html/temporal/certificadopazysalvo{$codigoContrato}.pdf";
+                    $nombreArchivo = "certificadoPazYSalvo{$codigoContrato}.pdf";
+                    $file = fopen($archivo, "wb");
+                    fwrite($file, base64_decode($respuestaFormato->base64));
+                    fclose($file);
+                    $response = new Response();
+                    $response->headers->set('Cache-Control', 'private');
+                    $response->headers->set('Content-type', 'application/pdf');
+                    $response->headers->set('Content-Disposition', "attachment; filename=$nombreArchivo;");
+                    $response->sendHeaders();
+                    $response->setContent(readfile($archivo));
+                    return $response;
+                }
+            }
         }
 
         $arContratos = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, '/recursohumano/api/contrato/terminado');

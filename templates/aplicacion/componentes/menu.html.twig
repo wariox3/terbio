@@ -127,40 +127,47 @@
                                 </li>
                             {% endif %}
                             {% if app.user.empresaRel.menuCertificadoOtro %}
-                                <li>
-                                    <a href="{{ path('retirolaboral_lista') }}">
-                                        <span>Retiro</span>
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Otros certificados</span>
                                     </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('certificadohistorico_lista') }}">
-                                        <span>Histórico</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('empleado_autorizacionarma_lista') }}">
-                                        <span>Autorización arma</span>
-                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="{{ path('retirolaboral_lista') }}">
+                                                <span>Retiro</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('certificadohistorico_lista') }}">
+                                                <span>Histórico</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('empleado_autorizacionarma_lista') }}">
+                                                <span>Autorización arma</span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             {% endif %}
                             {% if app.user.empresaRel.menuEmpleadoProgramacion %}
-                            <li class="nav-parent">
-                                <a>
-                                    <span>Programación</span>
-                                </a>
-                                <ul class="nav nav-children">
-                                    <li>
-                                        <a href="{{ path('turno_programacion_lista') }}"></i>
-                                            <span>Turnos</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('turno_programacionreporte_lista') }}"></i>
-                                            <span>Reporte</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Programación</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="{{ path('turno_programacion_lista') }}"></i>
+                                                <span>Turnos</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('turno_programacionreporte_lista') }}"></i>
+                                                <span>Reporte</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             {% endif %}
                             {% if app.user.empresaRel.menuInformacionPersonal %}
                                 <li class="nav-parent">
