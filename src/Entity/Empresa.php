@@ -527,6 +527,22 @@ class Empresa
     /**
      * @return bool
      */
+    public function isMenuSeguridadSocial(): bool
+    {
+        return $this->menuSeguridadSocial;
+    }
+
+    /**
+     * @param bool $menuSeguridadSocial
+     */
+    public function setMenuSeguridadSocial(bool $menuSeguridadSocial): void
+    {
+        $this->menuSeguridadSocial = $menuSeguridadSocial;
+    }
+
+    /**
+     * @return bool
+     */
     public function isMenuVenta(): bool
     {
         return $this->menuVenta;

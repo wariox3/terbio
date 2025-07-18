@@ -170,6 +170,27 @@
                                     </ul>
                                 </li>
                             {% endif %}
+
+                            {% if app.user.empresaRel.menuEmpleadoSeguridadSocial %}
+                                <li class="nav-parent">
+                                    <a>
+                                        <span>Programación</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a href="{{ path('turno_programacion_lista') }}"></i>
+                                                <span>Turnos</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('turno_programacionreporte_lista') }}"></i>
+                                                <span>Reporte</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+
                             {% if app.user.empresaRel.menuInformacionPersonal %}
                                 <li class="nav-parent">
                                     <a><span>Información personal</span></a>
