@@ -142,7 +142,7 @@ class Empresa
     private $menuEmpleadoProgramacion = true;
 
     #[ORM\Column(name: "menu_empleado_seguridad_social", type: "boolean", options: ['default' => true])]
-    private $menuEmpleadoSeguridadSocial = true;
+    private $menuEmpleadoSeguridadSocial= true;
 
     #[ORM\Column(name: "forzar_cambio_clave_registro", type: "boolean", options: ['default' => false])]
     private $forzarCambioClaveRegistro = false;
@@ -319,422 +319,6 @@ class Empresa
     /**
      * @return mixed
      */
-    public function getUsuariosEmpresaRel()
-    {
-        return $this->usuariosEmpresaRel;
-    }
-
-    /**
-     * @param mixed $usuariosEmpresaRel
-     */
-    public function setUsuariosEmpresaRel($usuariosEmpresaRel): void
-    {
-        $this->usuariosEmpresaRel = $usuariosEmpresaRel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPago()
-    {
-        return $this->pago;
-    }
-
-    /**
-     * @param mixed $pago
-     */
-    public function setPago($pago): void
-    {
-        $this->pago = $pago;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCertificadoLaboral()
-    {
-        return $this->certificadoLaboral;
-    }
-
-    /**
-     * @param mixed $certificadoLaboral
-     */
-    public function setCertificadoLaboral($certificadoLaboral): void
-    {
-        $this->certificadoLaboral = $certificadoLaboral;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCertificadoRetiro()
-    {
-        return $this->certificadoRetiro;
-    }
-
-    /**
-     * @param mixed $certificadoRetiro
-     */
-    public function setCertificadoRetiro($certificadoRetiro): void
-    {
-        $this->certificadoRetiro = $certificadoRetiro;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnlacesEmpresaRel()
-    {
-        return $this->enlacesEmpresaRel;
-    }
-
-    /**
-     * @param mixed $enlacesEmpresaRel
-     */
-    public function setEnlacesEmpresaRel($enlacesEmpresaRel): void
-    {
-        $this->enlacesEmpresaRel = $enlacesEmpresaRel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCiudad()
-    {
-        return $this->ciudad;
-    }
-
-    /**
-     * @param mixed $ciudad
-     */
-    public function setCiudad($ciudad): void
-    {
-        $this->ciudad = $ciudad;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTextosEmpresaRel()
-    {
-        return $this->textosEmpresaRel;
-    }
-
-    /**
-     * @param mixed $textosEmpresaRel
-     */
-    public function setTextosEmpresaRel($textosEmpresaRel): void
-    {
-        $this->textosEmpresaRel = $textosEmpresaRel;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCodigoItem()
-    {
-        return $this->codigoItem;
-    }
-
-    /**
-     * @param mixed $codigoItem
-     */
-    public function setCodigoItem($codigoItem): void
-    {
-        $this->codigoItem = $codigoItem;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getProgramacion(): bool
-    {
-        return $this->programacion;
-    }
-
-    /**
-     * @param bool $programacion
-     */
-    public function setProgramacion(bool $programacion): void
-    {
-        $this->programacion = $programacion;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuGeneral(): bool
-    {
-        return $this->menuGeneral;
-    }
-
-    /**
-     * @param bool $menuGeneral
-     */
-    public function setMenuGeneral(bool $menuGeneral): void
-    {
-        $this->menuGeneral = $menuGeneral;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCrm(): bool
-    {
-        return $this->menuCrm;
-    }
-
-    /**
-     * @param bool $menuCrm
-     */
-    public function setMenuCrm(bool $menuCrm): void
-    {
-        $this->menuCrm = $menuCrm;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuOperacion(): bool
-    {
-        return $this->menuOperacion;
-    }
-
-    /**
-     * @param bool $menuOperacion
-     */
-    public function setMenuOperacion(bool $menuOperacion): void
-    {
-        $this->menuOperacion = $menuOperacion;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuProgramacion(): bool
-    {
-        return $this->menuProgramacion;
-    }
-
-    /**
-     * @param bool $menuProgramacion
-     */
-    public function setMenuProgramacion(bool $menuProgramacion): void
-    {
-        $this->menuProgramacion = $menuProgramacion;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuSeguridadSocial(): bool
-    {
-        return $this->menuSeguridadSocial;
-    }
-
-    /**
-     * @param bool $menuSeguridadSocial
-     */
-    public function setMenuSeguridadSocial(bool $menuSeguridadSocial): void
-    {
-        $this->menuSeguridadSocial = $menuSeguridadSocial;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuVenta(): bool
-    {
-        return $this->menuVenta;
-    }
-
-    /**
-     * @param bool $menuVenta
-     */
-    public function setMenuVenta(bool $menuVenta): void
-    {
-        $this->menuVenta = $menuVenta;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCartera(): bool
-    {
-        return $this->menuCartera;
-    }
-
-    /**
-     * @param bool $menuCartera
-     */
-    public function setMenuCartera(bool $menuCartera): void
-    {
-        $this->menuCartera = $menuCartera;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuRecursoHumano(): bool
-    {
-        return $this->menuRecursoHumano;
-    }
-
-    /**
-     * @param bool $menuRecursoHumano
-     */
-    public function setMenuRecursoHumano(bool $menuRecursoHumano): void
-    {
-        $this->menuRecursoHumano = $menuRecursoHumano;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuTransporte(): bool
-    {
-        return $this->menuTransporte;
-    }
-
-    /**
-     * @param bool $menuTransporte
-     */
-    public function setMenuTransporte(bool $menuTransporte): void
-    {
-        $this->menuTransporte = $menuTransporte;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRegistroFijo(): bool
-    {
-        return $this->registroFijo;
-    }
-
-    /**
-     * @param bool $registroFijo
-     */
-    public function setRegistroFijo(bool $registroFijo): void
-    {
-        $this->registroFijo = $registroFijo;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuInformacion(): bool
-    {
-        return $this->menuInformacion;
-    }
-
-    /**
-     * @param bool $menuInformacion
-     */
-    public function setMenuInformacion(bool $menuInformacion): void
-    {
-        $this->menuInformacion = $menuInformacion;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLogoMenu(): bool
-    {
-        return $this->logoMenu;
-    }
-
-    /**
-     * @param bool $logoMenu
-     */
-    public function setLogoMenu(bool $logoMenu): void
-    {
-        $this->logoMenu = $logoMenu;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuSolicitud(): bool
-    {
-        return $this->menuSolicitud;
-    }
-
-    /**
-     * @param bool $menuSolicitud
-     */
-    public function setMenuSolicitud(bool $menuSolicitud): void
-    {
-        $this->menuSolicitud = $menuSolicitud;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCertificado(): bool
-    {
-        return $this->menuCertificado;
-    }
-
-    /**
-     * @param bool $menuCertificado
-     */
-    public function setMenuCertificado(bool $menuCertificado): void
-    {
-        $this->menuCertificado = $menuCertificado;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCapacitacion(): bool
-    {
-        return $this->menuCapacitacion;
-    }
-
-    /**
-     * @param bool $menuCapacitacion
-     */
-    public function setMenuCapacitacion(bool $menuCapacitacion): void
-    {
-        $this->menuCapacitacion = $menuCapacitacion;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCambioEmpresa(): bool
-    {
-        return $this->menuCambioEmpresa;
-    }
-
-    /**
-     * @param bool $menuCambioEmpresa
-     */
-    public function setMenuCambioEmpresa(bool $menuCambioEmpresa): void
-    {
-        $this->menuCambioEmpresa = $menuCambioEmpresa;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuCertificadoOtro(): bool
-    {
-        return $this->menuCertificadoOtro;
-    }
-
-    /**
-     * @param bool $menuCertificadoOtro
-     */
-    public function setMenuCertificadoOtro(bool $menuCertificadoOtro): void
-    {
-        $this->menuCertificadoOtro = $menuCertificadoOtro;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getToken()
     {
         return $this->token;
@@ -746,54 +330,6 @@ class Empresa
     public function setToken($token): void
     {
         $this->token = $token;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuIncapacidad(): bool
-    {
-        return $this->menuIncapacidad;
-    }
-
-    /**
-     * @param bool $menuIncapacidad
-     */
-    public function setMenuIncapacidad(bool $menuIncapacidad): void
-    {
-        $this->menuIncapacidad = $menuIncapacidad;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isMenuInformacionPersonal(): bool
-    {
-        return $this->menuInformacionPersonal;
-    }
-
-    /**
-     * @param bool $menuInformacionPersonal
-     */
-    public function setMenuInformacionPersonal(bool $menuInformacionPersonal): void
-    {
-        $this->menuInformacionPersonal = $menuInformacionPersonal;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFirma(): bool
-    {
-        return $this->firma;
-    }
-
-    /**
-     * @param bool $firma
-     */
-    public function setFirma(bool $firma): void
-    {
-        $this->firma = $firma;
     }
 
     /**
@@ -828,84 +364,326 @@ class Empresa
         $this->claveServicio = $claveServicio;
     }
 
+    public function isPago(): bool
+    {
+        return $this->pago;
+    }
+
+    public function setPago(bool $pago): void
+    {
+        $this->pago = $pago;
+    }
+
+    public function isCertificadoLaboral(): bool
+    {
+        return $this->certificadoLaboral;
+    }
+
+    public function setCertificadoLaboral(bool $certificadoLaboral): void
+    {
+        $this->certificadoLaboral = $certificadoLaboral;
+    }
+
+    public function isCertificadoRetiro(): bool
+    {
+        return $this->certificadoRetiro;
+    }
+
+    public function setCertificadoRetiro(bool $certificadoRetiro): void
+    {
+        $this->certificadoRetiro = $certificadoRetiro;
+    }
+
+    public function isProgramacion(): bool
+    {
+        return $this->programacion;
+    }
+
+    public function setProgramacion(bool $programacion): void
+    {
+        $this->programacion = $programacion;
+    }
+
+    public function isMenuGeneral(): bool
+    {
+        return $this->menuGeneral;
+    }
+
+    public function setMenuGeneral(bool $menuGeneral): void
+    {
+        $this->menuGeneral = $menuGeneral;
+    }
+
+    public function isMenuCrm(): bool
+    {
+        return $this->menuCrm;
+    }
+
+    public function setMenuCrm(bool $menuCrm): void
+    {
+        $this->menuCrm = $menuCrm;
+    }
+
+    public function isMenuOperacion(): bool
+    {
+        return $this->menuOperacion;
+    }
+
+    public function setMenuOperacion(bool $menuOperacion): void
+    {
+        $this->menuOperacion = $menuOperacion;
+    }
+
+    public function isMenuProgramacion(): bool
+    {
+        return $this->menuProgramacion;
+    }
+
+    public function setMenuProgramacion(bool $menuProgramacion): void
+    {
+        $this->menuProgramacion = $menuProgramacion;
+    }
+
+    public function isMenuVenta(): bool
+    {
+        return $this->menuVenta;
+    }
+
+    public function setMenuVenta(bool $menuVenta): void
+    {
+        $this->menuVenta = $menuVenta;
+    }
+
+    public function isMenuCartera(): bool
+    {
+        return $this->menuCartera;
+    }
+
+    public function setMenuCartera(bool $menuCartera): void
+    {
+        $this->menuCartera = $menuCartera;
+    }
+
+    public function isMenuRecursoHumano(): bool
+    {
+        return $this->menuRecursoHumano;
+    }
+
+    public function setMenuRecursoHumano(bool $menuRecursoHumano): void
+    {
+        $this->menuRecursoHumano = $menuRecursoHumano;
+    }
+
+    public function isMenuTransporte(): bool
+    {
+        return $this->menuTransporte;
+    }
+
+    public function setMenuTransporte(bool $menuTransporte): void
+    {
+        $this->menuTransporte = $menuTransporte;
+    }
+
+    public function isMenuInformacion(): bool
+    {
+        return $this->menuInformacion;
+    }
+
+    public function setMenuInformacion(bool $menuInformacion): void
+    {
+        $this->menuInformacion = $menuInformacion;
+    }
+
     /**
-     * @return bool
+     * @return mixed
      */
+    public function getCiudad()
+    {
+        return $this->ciudad;
+    }
+
+    /**
+     * @param mixed $ciudad
+     */
+    public function setCiudad($ciudad): void
+    {
+        $this->ciudad = $ciudad;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCodigoItem()
+    {
+        return $this->codigoItem;
+    }
+
+    /**
+     * @param mixed $codigoItem
+     */
+    public function setCodigoItem($codigoItem): void
+    {
+        $this->codigoItem = $codigoItem;
+    }
+
+    public function isRegistroFijo(): bool
+    {
+        return $this->registroFijo;
+    }
+
+    public function setRegistroFijo(bool $registroFijo): void
+    {
+        $this->registroFijo = $registroFijo;
+    }
+
+    public function isLogoMenu(): bool
+    {
+        return $this->logoMenu;
+    }
+
+    public function setLogoMenu(bool $logoMenu): void
+    {
+        $this->logoMenu = $logoMenu;
+    }
+
+    public function isMenuSolicitud(): bool
+    {
+        return $this->menuSolicitud;
+    }
+
+    public function setMenuSolicitud(bool $menuSolicitud): void
+    {
+        $this->menuSolicitud = $menuSolicitud;
+    }
+
+    public function isMenuCertificado(): bool
+    {
+        return $this->menuCertificado;
+    }
+
+    public function setMenuCertificado(bool $menuCertificado): void
+    {
+        $this->menuCertificado = $menuCertificado;
+    }
+
+    public function isMenuCertificadoOtro(): bool
+    {
+        return $this->menuCertificadoOtro;
+    }
+
+    public function setMenuCertificadoOtro(bool $menuCertificadoOtro): void
+    {
+        $this->menuCertificadoOtro = $menuCertificadoOtro;
+    }
+
+    public function isMenuCapacitacion(): bool
+    {
+        return $this->menuCapacitacion;
+    }
+
+    public function setMenuCapacitacion(bool $menuCapacitacion): void
+    {
+        $this->menuCapacitacion = $menuCapacitacion;
+    }
+
+    public function isMenuCambioEmpresa(): bool
+    {
+        return $this->menuCambioEmpresa;
+    }
+
+    public function setMenuCambioEmpresa(bool $menuCambioEmpresa): void
+    {
+        $this->menuCambioEmpresa = $menuCambioEmpresa;
+    }
+
+    public function isMenuIncapacidad(): bool
+    {
+        return $this->menuIncapacidad;
+    }
+
+    public function setMenuIncapacidad(bool $menuIncapacidad): void
+    {
+        $this->menuIncapacidad = $menuIncapacidad;
+    }
+
+    public function isMenuInformacionPersonal(): bool
+    {
+        return $this->menuInformacionPersonal;
+    }
+
+    public function setMenuInformacionPersonal(bool $menuInformacionPersonal): void
+    {
+        $this->menuInformacionPersonal = $menuInformacionPersonal;
+    }
+
+    public function isFirma(): bool
+    {
+        return $this->firma;
+    }
+
+    public function setFirma(bool $firma): void
+    {
+        $this->firma = $firma;
+    }
+
     public function isAcceso(): bool
     {
         return $this->acceso;
     }
 
-    /**
-     * @param bool $acceso
-     */
     public function setAcceso(bool $acceso): void
     {
         $this->acceso = $acceso;
     }
 
-    /**
-     * @return bool
-     */
     public function isMostrarSubmenu(): bool
     {
         return $this->mostrarSubmenu;
     }
 
-    /**
-     * @param bool $mostrarSubmenu
-     */
     public function setMostrarSubmenu(bool $mostrarSubmenu): void
     {
         $this->mostrarSubmenu = $mostrarSubmenu;
     }
 
-    /**
-     * @return bool
-     */
     public function isMostrarInformacionEmpleado(): bool
     {
         return $this->mostrarInformacionEmpleado;
     }
 
-    /**
-     * @param bool $mostrarInformacionEmpleado
-     */
     public function setMostrarInformacionEmpleado(bool $mostrarInformacionEmpleado): void
     {
         $this->mostrarInformacionEmpleado = $mostrarInformacionEmpleado;
     }
 
-    /**
-     * @return bool
-     */
     public function isValidarContratoActivo(): bool
     {
         return $this->validarContratoActivo;
     }
 
-    /**
-     * @param bool $validarContratoActivo
-     */
     public function setValidarContratoActivo(bool $validarContratoActivo): void
     {
         $this->validarContratoActivo = $validarContratoActivo;
     }
 
-    /**
-     * @return bool
-     */
     public function isMenuEmpleadoProgramacion(): bool
     {
         return $this->menuEmpleadoProgramacion;
     }
 
-    /**
-     * @param bool $menuEmpleadoProgramacion
-     */
     public function setMenuEmpleadoProgramacion(bool $menuEmpleadoProgramacion): void
     {
         $this->menuEmpleadoProgramacion = $menuEmpleadoProgramacion;
+    }
+
+    public function isMenuEmpleadoSeguridadSocial(): bool
+    {
+        return $this->menuEmpleadoSeguridadSocial;
+    }
+
+    public function setMenuEmpleadoSeguridadSocial(bool $menuEmpleadoSeguridadSocial): void
+    {
+        $this->menuEmpleadoSeguridadSocial = $menuEmpleadoSeguridadSocial;
     }
 
     public function isForzarCambioClaveRegistro(): bool
@@ -917,6 +695,55 @@ class Empresa
     {
         $this->forzarCambioClaveRegistro = $forzarCambioClaveRegistro;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUsuariosEmpresaRel()
+    {
+        return $this->usuariosEmpresaRel;
+    }
+
+    /**
+     * @param mixed $usuariosEmpresaRel
+     */
+    public function setUsuariosEmpresaRel($usuariosEmpresaRel): void
+    {
+        $this->usuariosEmpresaRel = $usuariosEmpresaRel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnlacesEmpresaRel()
+    {
+        return $this->enlacesEmpresaRel;
+    }
+
+    /**
+     * @param mixed $enlacesEmpresaRel
+     */
+    public function setEnlacesEmpresaRel($enlacesEmpresaRel): void
+    {
+        $this->enlacesEmpresaRel = $enlacesEmpresaRel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTextosEmpresaRel()
+    {
+        return $this->textosEmpresaRel;
+    }
+
+    /**
+     * @param mixed $textosEmpresaRel
+     */
+    public function setTextosEmpresaRel($textosEmpresaRel): void
+    {
+        $this->textosEmpresaRel = $textosEmpresaRel;
+    }
+
 
 
 }
