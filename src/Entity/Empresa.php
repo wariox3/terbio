@@ -141,9 +141,6 @@ class Empresa
     #[ORM\Column(name: "menu_empleado_programacion", type: "boolean", options: ['default' => true])]
     private $menuEmpleadoProgramacion = true;
 
-    #[ORM\Column(name: "menu_empleado_seguridad_social", type: "boolean", options: ['default' => true])]
-    private $menuEmpleadoSeguridadSocial = true;
-
     #[ORM\Column(name: "forzar_cambio_clave_registro", type: "boolean", options: ['default' => false])]
     private $forzarCambioClaveRegistro = false;
 
@@ -901,17 +898,6 @@ class Empresa
     {
         $this->forzarCambioClaveRegistro = $forzarCambioClaveRegistro;
     }
-
-    public function isMenuEmpleadoSeguridadSocial(): bool
-    {
-        return $this->menuEmpleadoSeguridadSocial;
-    }
-
-    public function setMenuEmpleadoSeguridadSocial(bool $menuEmpleadoSeguridadSocial): void
-    {
-        $this->menuEmpleadoSeguridadSocial = $menuEmpleadoSeguridadSocial;
-    }
-
 
 
 }
