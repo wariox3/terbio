@@ -15,6 +15,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -106,8 +107,8 @@ class GuiaController extends AbstractController
             ->add('ciudadOrigen', IntegerType::class, array('required' => false))
             ->add('ciudadDestino', IntegerType::class, array('required' => false))
             ->add('documentoCliente', TextType::class, array('required' => false))
-            ->add('fechaDesde', DateType::class, ['label' => 'Fecha desde: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
-            ->add('fechaHasta', DateType::class, ['label' => 'Fecha hasta: ', 'widget' => 'single_text', 'format' => 'yyyy-MM-dd', 'required' => false, 'data' => new \DateTime('now')])
+            ->add('fechaDesde', DateTimeType::class, ['widget' => 'single_text', 'required' => false, 'data' => (new \DateTime('now'))->setTime(0, 0, 0)])
+            ->add('fechaHasta', DateTimeType::class, ['widget' => 'single_text', 'required' => false, 'data' => (new \DateTime('now'))->setTime(23, 59, 0)])
             ->add('codigoGuiaTipo', ChoiceType::class, ['choices' => $arrGuiaTipo, 'required' => false])
             ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false, 'data' => $codigoOperacionTercero])
             ->add('codigoDespacho', IntegerType::class, array('required' => false))
@@ -133,8 +134,8 @@ class GuiaController extends AbstractController
         $form->handleRequest($request);
         $parametros = [
             'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
-            'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-            'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+            'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+            'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
             'codigoTerceroOperacionFk' => $form->get('codigoTerceroOperacion')->getData(),
             'limiteRegistros' => 30
         ];
@@ -163,8 +164,8 @@ class GuiaController extends AbstractController
                         'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
                         'codigoGuiaDesde' => $form->get('codigo')->getData(),
                         'codigoGuiaHasta' => $form->get('codigo')->getData(),
-                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
                         'codigoDespacho' => $form->get('codigoDespacho')->getData(),
@@ -195,8 +196,8 @@ class GuiaController extends AbstractController
                         'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
                         'codigoGuiaDesde' => $form->get('codigo')->getData(),
                         'codigoGuiaHasta' => $form->get('codigo')->getData(),
-                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
                         'codigoDespacho' => $form->get('codigoDespacho')->getData(),
@@ -227,8 +228,8 @@ class GuiaController extends AbstractController
                         'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
                         'codigoGuiaDesde' => $form->get('codigo')->getData(),
                         'codigoGuiaHasta' => $form->get('codigo')->getData(),
-                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
                         'codigoDespacho' => $form->get('codigoDespacho')->getData(),
@@ -259,8 +260,8 @@ class GuiaController extends AbstractController
                         'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
                         'codigoGuiaDesde' => $form->get('codigo')->getData(),
                         'codigoGuiaHasta' => $form->get('codigo')->getData(),
-                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
                         'codigoDespacho' => $form->get('codigoDespacho')->getData(),
@@ -293,8 +294,8 @@ class GuiaController extends AbstractController
                         'codigoTercero' => $arUsuario->getCodigoTerceroErpFk(),
                         'codigoGuiaDesde' => $form->get('codigo')->getData(),
                         'codigoGuiaHasta' => $form->get('codigo')->getData(),
-                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d'),
-                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d'),
+                        'fechaDesde' => $form->get('fechaDesde')->getData()->format('Y-m-d H:i:s'),
+                        'fechaHasta' => $form->get('fechaHasta')->getData()->format('Y-m-d H:i:s'),
                         'codigoCiudadOrigen' => $form->get('ciudadOrigen')->getData(),
                         'codigoCiudadDestino' => $form->get('ciudadDestino')->getData(),
                         'codigoDespacho' => $form->get('codigoDespacho')->getData(),
