@@ -1008,7 +1008,7 @@ class GuiaController extends AbstractController
                                                 return $response;
                                             }
                                         } else {
-
+                                            Mensajes::error("No se encontraron coincidencias con los numeros de guia suministrados");
                                         }
                                     }
                                 }
