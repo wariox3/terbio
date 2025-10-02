@@ -52,6 +52,7 @@ class GuiaController extends AbstractController
         $arrGuias = [];
         $arrGuiaTipo = [];
         $arGuiaFormato = [];
+        $arrGuiaServicio = [];
         $arrTerceroOperaciones = [];
         $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), [], "/transporte/api/oxigeno/guiatipo/lista");
         if ($respuesta) {
@@ -60,6 +61,12 @@ class GuiaController extends AbstractController
                 if (isset($respuesta->arrGuiaFormato)) {
                     $arGuiaFormato = $respuesta->arrGuiaFormato;
                 }
+            }
+        }
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), [], "/transporte/api/oxigeno/guiaservicio/lista");
+        if ($respuesta) {
+            if ($respuesta->error == false) {
+                $arrGuiaServicio = $this->fuenteChoiceGuiasServicios($respuesta->arrGuiaServicio);
             }
         }
         $datos = [
@@ -110,6 +117,7 @@ class GuiaController extends AbstractController
             ->add('fechaDesde', DateTimeType::class, ['widget' => 'single_text', 'required' => false, 'data' => (new \DateTime('now'))->setTime(0, 0, 0)])
             ->add('fechaHasta', DateTimeType::class, ['widget' => 'single_text', 'required' => false, 'data' => (new \DateTime('now'))->setTime(23, 59, 0)])
             ->add('codigoGuiaTipo', ChoiceType::class, ['choices' => $arrGuiaTipo, 'required' => false])
+            ->add('codigoGuiaServicio', ChoiceType::class, ['choices' => $arrGuiaServicio, 'required' => false])
             ->add('codigoTerceroOperacion', ChoiceType::class, ['choices' => $arrTerceroOperaciones, 'required' => false, 'data' => $codigoOperacionTercero])
             ->add('codigoDespacho', IntegerType::class, array('required' => false))
             ->add('limiteRegistros', IntegerType::class, array('required' => false, 'data' => 30))
@@ -144,6 +152,7 @@ class GuiaController extends AbstractController
                 $parametros['codigoGuia'] = $form->get('codigo')->getData();
                 $parametros['documentoCliente'] = $form->get('documentoCliente')->getData();
                 $parametros['codigoGuiaTipo'] = $form->get('codigoGuiaTipo')->getData();
+                $parametros['codigoGuiaServicio'] = $form->get('codigoGuiaServicio')->getData();
                 $parametros['codigoCiudadOrigen'] = $form->get('ciudadOrigen')->getData();
                 $parametros['codigoCiudadDestino'] = $form->get('ciudadDestino')->getData();
                 $parametros['codigoDespacho'] = $form->get('codigoDespacho')->getData();
@@ -1129,6 +1138,15 @@ class GuiaController extends AbstractController
         $arrDatos = ['Todos' => ''];
         foreach ($datos as $dato) {
             $arrDatos["{$dato->nombre} - $dato->departamentoNombre [$dato->codigoCiudadPk]"] = $dato->codigoCiudadPk;
+        }
+        return $arrDatos;
+    }
+
+    private function fuenteChoiceGuiasServicios($datos)
+    {
+        $arrDatos = ['Todos' => ''];
+        foreach ($datos as $dato) {
+            $arrDatos[$dato->nombre] = $dato->codigoServicioPk;
         }
         return $arrDatos;
     }
