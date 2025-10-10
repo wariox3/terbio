@@ -372,10 +372,15 @@
             $("#form_unidades").blur(function(){
                 var unidades = $(this).val();
                 var minimos = sessionStorage.getItem('pesoMinimo');
+                var minimosGuia = sessionStorage.getItem('pesoMinimoGuia');
                 var manejo = parseFloat($('#form_manejo').val());
+                var pesoReal = unidades * minimos
+                if(pesoReal < minimosGuia) {
+                    pesoReal = minimosGuia
+                }
                 $('#form_flete').val(0);
                 $('#form_total').val(manejo);
-                $('#form_pesoReal').val(unidades * minimos);
+                $('#form_pesoReal').val(pesoReal);
             });
 
             $("#form_pesoReal").blur(function(){
