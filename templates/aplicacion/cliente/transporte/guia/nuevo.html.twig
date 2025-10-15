@@ -387,6 +387,7 @@
                 var pesoReal = parseFloat($(this).val());
                 var pesoVolumen = parseFloat($('#form_pesoVolumen').val());
                 var manejo = parseFloat($('#form_manejo').val());
+                var minimosGuia = sessionStorage.getItem('pesoMinimoGuia');
                 $('#form_flete').val(0);
                 $('#form_total').val(manejo);
                 if(pesoVolumen <= 0) {
@@ -396,16 +397,23 @@
                 if(pesoVolumen > pesoReal) {
                     $('#form_pesoFacturado').val(pesoVolumen);
                 }
+                if(minimosGuia > pesoReal && minimosGuia > pesoVolumen) {
+                    $('#form_pesoFacturado').val(minimosGuia);
+                }
             });
 
             $("#form_pesoVolumen").blur(function(){
                 var pesoVolumen = parseFloat($(this).val());
                 var pesoReal = parseFloat($('#form_pesoReal').val());
                 var manejo = parseFloat($('#form_manejo').val());
+                var minimosGuia = sessionStorage.getItem('pesoMinimoGuia');
                 $('#form_flete').val(0);
                 $('#form_total').val(manejo);
                 if(pesoVolumen > pesoReal) {
                     $('#form_pesoFacturado').val(pesoVolumen);
+                }
+                if(minimosGuia > pesoReal && minimosGuia > pesoVolumen) {
+                    $('#form_pesoFacturado').val(minimosGuia);
                 }
             });
 
@@ -418,6 +426,7 @@
                 var fleteMinimoGuia = sessionStorage.getItem('fleteMinimoGuia');
                 var unidades = $('#form_unidades').val();
                 var minimos = sessionStorage.getItem('pesoMinimo');
+                var minimosGuia = sessionStorage.getItem('pesoMinimoGuia');
                 var pesoVolumen = parseFloat($('#form_pesoVolumen').val());
                 var pesoMinimoTotal = unidades * minimos;
                 var liquidacion = $("#form_liquidacionRel").val();
@@ -432,6 +441,11 @@
                     pesoFacturado = pesoVolumen;
                     $('#form_pesoFacturado').val(pesoFacturado);
                 }
+                if(pesoFacturado < minimosGuia && minimosGuia > pesoMinimoTotal) {
+                    pesoFacturado = minimosGuia;
+                    $('#form_pesoFacturado').val(pesoFacturado);
+                }
+
                 if(liquidacion == 'K') {
                     vrFlete = pesoFacturado * vrPeso;
                     if(descuentoPeso > 0) {
