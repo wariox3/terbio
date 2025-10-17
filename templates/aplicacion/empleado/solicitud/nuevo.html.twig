@@ -1,21 +1,25 @@
 {% extends 'aplicacion/base.html.twig' %}
-{% block title %}EMPRESAS{% endblock %}
+{% block title %}{{ esEdicion ? 'EDITAR SOLICITUD' : 'NUEVA SOLICITUD' }}{% endblock %}
 {% block content %}
     {{ form_start(form) }}
     <div class="row mt-2">
     <section class="panel">
     <div class="panel-heading">
         <div class="panel-title">
-            <h2 class="panel-title">SOLICITUD NUEVO</h2>
+            <h2 class="panel-title">{{ esEdicion ? 'EDITAR SOLICITUD' : 'SOLICITUD NUEVA' }}</h2>
         </div>
     </div>
     <div class="panel-body">
         <div class="row form-group form-group-sm">
             <label class="col-sm-2 control-label">Tipo:</label>
             <div class="col-sm-4">
-                <select name="solicitudTipo" class="form-control">
+                <select name="solicitudTipo" class="form-control" required>
+                    <option value="">Seleccione...</option>
                     {% for arrSolicitudTipo in arrSolicitudEmpleadoTipos %}
-                        <option value="{{ arrSolicitudTipo.codigoSolicitudEmpleadoTipoPk }}">{{ arrSolicitudTipo.nombre }}</option>
+                        <option value="{{ arrSolicitudTipo.codigoSolicitudEmpleadoTipoPk }}"
+                                {% if esEdicion and solicitudTipoActual == arrSolicitudTipo.codigoSolicitudEmpleadoTipoPk %}selected{% endif %}>
+                            {{ arrSolicitudTipo.nombre }}
+                        </option>
                     {% endfor %}
                 </select>
             </div>
@@ -42,7 +46,7 @@
         <div class="col-xl-12 col-sm-12 text-right mt-2">
             <a href="{{ path('empleado_solicitud_lista') }}" class=" btn btn-sm btn-default"
                title="regresar a la lista"> Cancelar</a>
-            {{ form_widget(form.btnGuardar) }}
+            {{ form_widget(form.btnGuardar, { 'label': esEdicion ? 'Actualizar' : 'Guardar' }) }}
         </div>
     </div>
     {{ form_end(form) }}

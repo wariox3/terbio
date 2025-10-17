@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-2 col-sm-offset-10">
             <div style="float: right; margin-right: 5px !important;" class="btn-group" role="group" aria-label="...">
-                <a href="{{ path('empleado_solicitud_nuevo', {'codigoSolicitud':0 }) }}"
+                <a href="{{ path('empleado_solicitud_nuevo') }}"
                    class="btn btn-sm btn-default ">
                     Nuevo
                 </a>
@@ -27,6 +27,7 @@
                     <th>COMENTARIO</th>
                     <th title="Estado solicitud">EST</th>
                     <th>COMENTARIO RECHAZO</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,14 @@
                             {% endif %}
                         </td>
                         <td>{{ arSolicitud.comentarioRechazo | default('')}}</td>
+                        <td class="text-center">
+                            {% if arSolicitud.estadoSolicitud == 'P' %}
+                                <a href="{{ path('empleado_solicitud_nuevo',{'codigoSolicitud': arSolicitud.codigoSolicitudEmpleadoPk }) }}"
+                                   class="btn btn-sm btn-default" title="editar">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
