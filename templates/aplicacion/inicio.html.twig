@@ -351,7 +351,55 @@
                 </div>
             {% endif %}
         {% endif %}
+        <div class="col-md-9">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="fa fa-caret-down"></a>
+                        <a href="#" class="fa fa-times"></a>
+                    </div>
+                    <h2 class="panel-title">Enlaces</h2>
+                    <p class="panel-subtitle">En este espacio encontrará enlaces útiles relacionados con la plataforma</p>
+                </header>
 
+                <div class="panel-body">
+                    {% if arrEnlaces is empty %}
+                        <p class="text-center text-muted">No hay enlaces disponibles en este momento.</p>
+                    {% else %}
+                        {% for arEnlace in arrEnlaces %}
+                            <section class="panel panel-horizontal mb-md">
+                                <header class="panel-heading bg-primary text-center" style="width: 181px;">
+                                    <div class="panel-heading-icon">
+                                        <i class="fa fa-link"></i>
+                                    </div>
+                                </header>
+
+                                <div class="panel-body p-lg">
+                                    <div class="row">
+                                        <div class="col-sm-10">
+                                            <h3 class="text-semibold mt-sm">{{ arEnlace.nombre }}</h3>
+
+                                            {% if arEnlace.descripcion is defined and arEnlace.descripcion %}
+                                                <p class="text-justify mb-sm">{{ arEnlace.descripcion }}</p>
+                                            {% endif %}
+
+                                        </div>
+
+                                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
+                                            <a href="{{ arEnlace.url }}" target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="btn btn-success">
+                                                <i class="fa fa-external-link"></i> Abrir enlace
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </section>
+        </div>
         {% if app.user.empresaRel.menuCapacitacion %}
             <div class="col-md-9">
                 <section class="panel">
@@ -438,7 +486,49 @@
                 </section>
             {% endfor %}
         </div>
-        </div>
+{#        Card con tabla para todos los enlaces no borrar Sebastian orozco#}
+{#        <div class="col-md-9">#}
+{#            <section class="panel">#}
+{#                <header class="panel-heading d-flex justify-content-between align-items-center">#}
+{#                    <h2 class="panel-title mb-0">Enlaces</h2>#}
+{#                    <div class="panel-actions">#}
+{#                        <a href="#" class="fa fa-caret-down"></a>#}
+{#                        <a href="#" class="fa fa-times"></a>#}
+{#                    </div>#}
+{#                </header>#}
+
+{#                <div class="panel-body">#}
+{#                    <div class="table-responsive mt-2">#}
+{#                        <table class="table table-bordered table-hover tabla-datos-v2 mb-0">#}
+{#                            <thead>#}
+{#                            <tr>#}
+{#                                <th title="Código del registro">ID</th>#}
+{#                                <th>NOMBRE</th>#}
+{#                                <th>URL</th>#}
+{#                            </tr>#}
+{#                            </thead>#}
+{#                            <tbody>#}
+{#                            {% for arEnlace in arrEnlaces %}#}
+{#                                <tr>#}
+{#                                    <td>{{ arEnlace.codigoEnlacePk }}</td>#}
+{#                                    <td>{{ arEnlace.nombre }}</td>#}
+{#                                    <td>#}
+{#                                        <a href="{{ arEnlace.url }}" target="_blank" rel="noopener noreferrer">#}
+{#                                            {{ arEnlace.url }}#}
+{#                                        </a>#}
+{#                                    </td>#}
+{#                                </tr>#}
+{#                            {% else %}#}
+{#                                <tr>#}
+{#                                    <td colspan="3" class="text-center text-muted">No hay enlaces disponibles</td>#}
+{#                                </tr>#}
+{#                            {% endfor %}#}
+{#                            </tbody>#}
+{#                        </table>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
     {% endif %}
     {% if booCliente %}
     {% endif %}

@@ -76,6 +76,7 @@ class InicioController extends AbstractController
         $arrCapacitaciones = null;
         $codigoPuesto = null;
         $arrInformacionCapacitaciones = null;
+        $arrEnlaces = null;
         if ($usuario->getEmpresaRel() != null) {
             $booCliente = $usuario->getCliente();
             $booEmpleado = $usuario->getEmpleado();
@@ -96,6 +97,7 @@ class InicioController extends AbstractController
                         $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
                     }
                 }
+                $arrEnlaces = $this->enlaces();
             }
         }
         return $this->render('aplicacion/inicio.html.twig', [
@@ -107,6 +109,7 @@ class InicioController extends AbstractController
             'booEmpresa' => $booEmpresa,
             'codigoPuesto' => $codigoPuesto,
             'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
+            'arrEnlaces' => $arrEnlaces,
             'form' => $form->createView()
         ]);
     }
@@ -155,16 +158,26 @@ class InicioController extends AbstractController
         ];
         $arrTurnos = [];
         $arrRecurso = [];
+
         $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/turno/api/programacion/turno");
-        if($respuesta) {
-            if($respuesta->error == false) {
+
+        if ($respuesta !== null &&
+            is_object($respuesta) &&
+            property_exists($respuesta, 'error') &&
+            $respuesta->error == false) {
+
+            if (property_exists($respuesta, 'turnos')) {
                 $arrTurnos = $respuesta->turnos;
+            }
+            if (property_exists($respuesta, 'recurso')) {
                 $arrRecurso = $respuesta->recurso;
             }
         }
+
         return [
             'turnos' => $arrTurnos,
-            'recurso' => $arrRecurso];
+            'recurso' => $arrRecurso
+        ];
     }
 
     private function capacitacionesPendientes()
@@ -178,6 +191,25 @@ class InicioController extends AbstractController
             $arrCapacitaciones = $respuesta->capacitaciones;
         }
         return $arrCapacitaciones;
+    }
+
+    private function enlaces()
+    {
+        $arUsuario = $this->getUser();
+        $arrEnlaces = [];
+        $parametros = [];
+        $url = "/api/general/enlace/lista";
+
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+        if ($respuesta !== null &&
+            is_object($respuesta) &&
+            property_exists($respuesta, 'error') &&
+            $respuesta->error == false &&
+            property_exists($respuesta, 'enlaces')) {
+            $arrEnlaces = $respuesta->enlaces;
+        }
+
+        return $arrEnlaces;
     }
 
     private function archivosPuesto($codigoPuesto)
