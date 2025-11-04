@@ -18,7 +18,9 @@ class AutorizacionArmaController extends AbstractController
     public function inicioAction(Request $request, PaginatorInterface $paginator)
     {
         $arUsuario = $this->getUser();
-        $parametros = [];
+        $parametros = [
+            'codigoTercero' => $arUsuario->getCodigoTerceroErpFk()
+        ];
         $form = $this->createFormBuilder()
             ->add('btnImprimirTodos', SubmitType::class, ['label' => 'Imprimir todos', 'attr' => ['class' => 'btn btn-sm btn-default']])
             ->getForm();
