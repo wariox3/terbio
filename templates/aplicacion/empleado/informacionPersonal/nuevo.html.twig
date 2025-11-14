@@ -96,6 +96,43 @@
             </div>
         </section>
     </div>
-
+    <div class="row mt-2">
+        <section class="panel">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <h2 class="panel-title">Tallas</h2>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive-sm mt-2">
+                    <table class="table table-bordered table-hover tabla-datos-v2">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ELEMENTO DOTACION</th>
+                            <th>TALLA</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for arrEmpleadoTalla in arrEmpleadosTallas %}
+                            <tr>
+                                <td>{{ arrEmpleadoTalla.codigoEmpleadoTallaPk }}</td>
+                                <td>{{ arrEmpleadoTalla.dotacionElementoNombre }}</td>
+                                <td>
+                                    <input type="text"
+                                           name="arrTalla[{{ arrEmpleadoTalla.codigoEmpleadoTallaPk }}]"
+                                           id="arrTalla[{{ arrEmpleadoTalla.codigoEmpleadoTallaPk }}]"
+                                           value="{{ arrEmpleadoTalla.talla }}" size="3">
+                                </td>
+                                <td><button class="btn btn-primary btn-xs" type="submit" name="OpActualizar" value="{{ arrEmpleadoTalla.codigoEmpleadoTallaPk }}">Actualizar</button></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
     {{ form_end(form) }}
 {% endblock %}

@@ -67,14 +67,32 @@ class informacionPersonal extends AbstractController
                     Mensajes::error("Error: {$actualizarInformacionPersonal->errorMensaje}");
                 }
             }
+            if ($request->get('OpActualizar')) {
+                $codigo = $request->get('OpActualizar');
+                $arrControles = $request->request->all();
+                $arrTalla = $arrControles['arrTalla'];
+                $talla = $arrTalla[$codigo];
+                $parametros = [
+                    'codigoEmpleadoTalla' => $codigo,
+                    'talla' =>$talla
+                ];
+                $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, '/api/recursohumano/empleadotalla/actualizar');
+            }
         }
 
+        $arrEmpleadosTallas = [];
+        $arEmpleadoTallas = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), ['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion()], '/api/recursohumano/empleadotalla/lista');
+        if ($arEmpleadoTallas->error == false) {
+            $arrEmpleadosTallas = $arEmpleadoTallas->tallas;
+        } else {
+            Mensajes::error("Error: {$arEmpleadoTallas->errorMensaje}");
+        }
         return $this->render('aplicacion/empleado/informacionPersonal/nuevo.html.twig', [
             'arInformacionPersonal' => $arInformacionPersonal,
             'arrEmpleado' => $arrEmpleado,
             'arrReferenciasPersonales' => $arrReferenciasPersonales,
+            'arrEmpleadosTallas' => $arrEmpleadosTallas,
             'form' => $form->createView()
-
         ]);
     }
 
