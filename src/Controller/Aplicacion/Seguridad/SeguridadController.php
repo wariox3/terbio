@@ -223,7 +223,7 @@ class SeguridadController extends AbstractController
                                 $correoFinal = $this->ocultarCorreo($correoElectronico);
                                 Mensajes::info("Correo enviado a {$correoFinal}");
                             } else {
-                                Mensajes::error("Error al enviar el correo {$respuestaCorreo->mensajeError}");
+                                Mensajes::error("Error al enviar el correo {$respuestaCorreo->errorMensaje}");
                             }
                         } else {
                             Mensajes::error("El correo es invalido");

@@ -95,6 +95,9 @@ class UsuarioController extends AbstractController
         $arEmpresa = $this->getUser()->getEmpresaRel();
         $ingresarContrasena = true;
         $propiedades = ['required' => true, 'label' => 'Clave'];
+
+        $esEmpleado = false;
+
         if ($id != "" && $id != "0") {
             $arUsuario = $em->getRepository(Usuario::class)->find($id);
             if (!$arUsuario) {
@@ -102,8 +105,10 @@ class UsuarioController extends AbstractController
             } else {
                 $propiedades = ['attr' => ['readonly' => 'readonly']];
                 $ingresarContrasena = false;
+                $esEmpleado = $arUsuario->getEmpleado() ? true : false; // Asegurar que sea booleano
             }
         }
+
         $form = $this->createFormBuilder()
             ->add('identificacionRel', EntityType::class, [
                 'required' => true,
@@ -115,85 +120,226 @@ class UsuarioController extends AbstractController
                 'choice_label' => 'nombre',
                 'label' => 'Tipo documento:',
                 'attr' => ['class' => 'form-control'],
-                'data' => ($arUsuario->getCodigoIdentificacionFk()) ? $em->getReference(Identificacion::class, $arUsuario->getCodigoIdentificacionFk()) : null
+                'data' => ($arUsuario->getCodigoIdentificacionFk()) ? $em->getReference(Identificacion::class, $arUsuario->getCodigoIdentificacionFk()) : null,
+                'disabled' => $esEmpleado // Solo si es empleado
             ])
-            ->add('codigoUsuarioPk', TextType::class, ['data' => $arUsuario->getCodigoUsuarioPk(), 'disabled' => $arUsuario->getCodigoUsuarioPk() ? true : false, 'required' => true, 'label' => 'Usuario', 'attr' => ['class' => 'form-control']])
-            ->add('numeroIdentificacion', IntegerType::class, ['data' => $arUsuario->getNumeroIdentificacion(), 'required' => true, 'label' => 'Número idenficación', 'attr' => ['class' => 'form-control']])
-            ->add('nombres', TextType::class, ['data' => $arUsuario->getNombres(), 'required' => true, 'label' => 'Nombres', 'attr' => ['class' => 'form-control']])
-            ->add('apellidos', TextType::class, ['data' => $arUsuario->getApellidos(), 'required' => false, 'label' => 'Apellidos', 'attr' => ['class' => 'form-control']])
-            ->add('correo', EmailType::class, ['data' => $arUsuario->getCorreo(), 'required' => true, 'label' => 'Correo electrónico', 'attr' => ['class' => 'form-control']])
-            ->add('cliente', CheckboxType::class, array('data' => $arUsuario->getCliente(), 'required' => false))
-            ->add('proveedor', CheckboxType::class, array('data' => $arUsuario->getProveedor(), 'required' => false))
-            ->add('gestionTranporte', CheckboxType::class, array( 'data' => $arUsuario->isGestionTranporte(), 'label'=> 'Gestión Transporte', 'required' => false))
-            ->add('guiaNuevo', CheckboxType::class, array('data' => $arUsuario->isGuiaNuevo(), 'label'=> 'Guía nuevo', 'required' => false))
-            ->add('cambiarValoresGuia', CheckboxType::class, array('data' => $arUsuario->isCambiarValoresGuia(), 'required' => false))
-            ->add('permiteCambiarAdquiriente', CheckboxType::class, array('data' => $arUsuario->isPermiteCambiarAdquiriente(), 'required' => false))
-            ->add('estadoRecogido', CheckboxType::class, array('data' => $arUsuario->isEstadoRecogido(), 'required' => false))
-            ->add('estadoIngreso', CheckboxType::class, array('data' => $arUsuario->isEstadoIngreso(), 'required' => false))
-            ->add('bloquearRecaudo', CheckboxType::class, array('data' => $arUsuario->isBloquearRecaudo(), 'label'=> 'Bloquear recaudo', 'required' => false))
-            ->add('bloquearAdquirienteCredito', CheckboxType::class, array('data' => $arUsuario->isBloquearAdquirienteCredito(), 'label'=> 'Bloquear adquiriente credito', 'required' => false))
-            ->add('bloquearOperacionCliente', CheckboxType::class, array('data' => $arUsuario->isBloquearOperacionCliente(), 'label'=> 'Bloquear operacion cliente', 'required' => false))
-            ->add('invertirOrigenDestino', CheckboxType::class, array('data' => $arUsuario->isInvertirOrigenDestino(), 'label'=> 'Invertir origen/destino', 'required' => false))
-            ->add('guiaDescargaMasivo', CheckboxType::class, array('data' => $arUsuario->isGuiaDescargaMasivo(), 'label'=> 'Guia descarga masivo', 'required' => false))
-            ->add('codigoOperacionClienteFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionClienteFk(), 'required' => false, 'label' => '', 'attr' => ['class' => 'form-control']])
-            ->add('codigoTerceroErpFk', TextType::class, ['data' => $arUsuario->getCodigoTerceroErpFk(), 'required' => true, 'label' => '', 'attr' => ['class' => 'form-control']])
-            ->add('codigoOperacionFk', TextType::class, ['data' => $arUsuario->getCodigoOperacionFk(), 'required' => true, 'label' => 'Operacion', 'attr' => ['class' => 'form-control']])
-            ->add('codigoCiudadOrigenFk', TextType::class, ['data' => $arUsuario->getCodigoCiudadOrigenFk(), 'required' => false, 'label' => 'Codigo ciudad origen', 'attr' => ['class' => 'form-control']])
-            ->add('direccionRemitente', TextType::class, ['data' => $arUsuario->getDireccionRemitente(), 'required' => false, 'label' => 'Direccion remitente:', 'attr' => ['class' => 'form-control']])
-            ->add('telefonoRemitente', TextType::class, ['data' => $arUsuario->getTelefonoRemitente(), 'required' => false, 'label' => 'Telefono remitente:', 'attr' => ['class' => 'form-control']])
+            ->add('codigoUsuarioPk', TextType::class, [
+                'data' => $arUsuario->getCodigoUsuarioPk(),
+                'disabled' => $arUsuario->getCodigoUsuarioPk() ? true : $esEmpleado, // Ya existe O es empleado
+                'required' => true,
+                'label' => 'Usuario',
+                'attr' => ['class' => 'form-control']
+            ])
+            ->add('numeroIdentificacion', IntegerType::class, [
+                'data' => $arUsuario->getNumeroIdentificacion(),
+                'required' => true,
+                'label' => 'Número identificación',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('nombres', TextType::class, [
+                'data' => $arUsuario->getNombres(),
+                'required' => true,
+                'label' => 'Nombres',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('apellidos', TextType::class, [
+                'data' => $arUsuario->getApellidos(),
+                'required' => false,
+                'label' => 'Apellidos',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('correo', EmailType::class, [
+                'data' => $arUsuario->getCorreo(),
+                'required' => true,
+                'label' => 'Correo electrónico',
+                'attr' => ['class' => 'form-control']
+                // Correo NUNCA disabled, incluso para empleados
+            ])
+            ->add('cliente', CheckboxType::class, array(
+                'data' => $arUsuario->getCliente(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('proveedor', CheckboxType::class, array(
+                'data' => $arUsuario->getProveedor(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('gestionTranporte', CheckboxType::class, array(
+                'data' => $arUsuario->isGestionTranporte(),
+                'label'=> 'Gestión Transporte',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('guiaNuevo', CheckboxType::class, array(
+                'data' => $arUsuario->isGuiaNuevo(),
+                'label'=> 'Guía nuevo',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('cambiarValoresGuia', CheckboxType::class, array(
+                'data' => $arUsuario->isCambiarValoresGuia(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('permiteCambiarAdquiriente', CheckboxType::class, array(
+                'data' => $arUsuario->isPermiteCambiarAdquiriente(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('estadoRecogido', CheckboxType::class, array(
+                'data' => $arUsuario->isEstadoRecogido(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('estadoIngreso', CheckboxType::class, array(
+                'data' => $arUsuario->isEstadoIngreso(),
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('bloquearRecaudo', CheckboxType::class, array(
+                'data' => $arUsuario->isBloquearRecaudo(),
+                'label'=> 'Bloquear recaudo',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('bloquearAdquirienteCredito', CheckboxType::class, array(
+                'data' => $arUsuario->isBloquearAdquirienteCredito(),
+                'label'=> 'Bloquear adquiriente credito',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('bloquearOperacionCliente', CheckboxType::class, array(
+                'data' => $arUsuario->isBloquearOperacionCliente(),
+                'label'=> 'Bloquear operacion cliente',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('invertirOrigenDestino', CheckboxType::class, array(
+                'data' => $arUsuario->isInvertirOrigenDestino(),
+                'label'=> 'Invertir origen/destino',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('guiaDescargaMasivo', CheckboxType::class, array(
+                'data' => $arUsuario->isGuiaDescargaMasivo(),
+                'label'=> 'Guia descarga masivo',
+                'required' => false,
+                'disabled' => $esEmpleado // Solo si es empleado
+            ))
+            ->add('codigoOperacionClienteFk', TextType::class, [
+                'data' => $arUsuario->getCodigoOperacionClienteFk(),
+                'required' => false,
+                'label' => '',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('codigoTerceroErpFk', TextType::class, [
+                'data' => $arUsuario->getCodigoTerceroErpFk(),
+                'required' => true,
+                'label' => '',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('codigoOperacionFk', TextType::class, [
+                'data' => $arUsuario->getCodigoOperacionFk(),
+                'required' => true,
+                'label' => 'Operacion',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('codigoCiudadOrigenFk', TextType::class, [
+                'data' => $arUsuario->getCodigoCiudadOrigenFk(),
+                'required' => false,
+                'label' => 'Codigo ciudad origen',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('direccionRemitente', TextType::class, [
+                'data' => $arUsuario->getDireccionRemitente(),
+                'required' => false,
+                'label' => 'Direccion remitente:',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
+            ->add('telefonoRemitente', TextType::class, [
+                'data' => $arUsuario->getTelefonoRemitente(),
+                'required' => false,
+                'label' => 'Telefono remitente:',
+                'attr' => ['class' => 'form-control'],
+                'disabled' => $esEmpleado // Solo si es empleado
+            ])
             ->add('btnGuardar', SubmitType::class, ['label' => 'Guardar', 'attr' => ['class' => 'btn btn-sm btn-primary']])
-            ->add('claveNueva', PasswordType::class, $propiedades)
+            ->add('claveNueva', PasswordType::class, array_merge($propiedades, [
+                'disabled' => $esEmpleado // Solo si es empleado
+            ]))
             ->getForm();
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('btnGuardar')->isClicked()) {
-                $usuario = $form->get('codigoUsuarioPk')->getData();
-                $arUsuario->setCodigoUsuarioPk($usuario);
-                $arUsuario->setNombres($form->get('nombres')->getData());
-                $arUsuario->setApellidos($form->get('apellidos')->getData());
-                $arUsuario->setNumeroIdentificacion($form->get('numeroIdentificacion')->getData());
-                $arUsuario->setIdentificacionRel($form->get('identificacionRel')->getData());
-                $arUsuario->setCorreo($form->get('correo')->getData());
-                $arUsuario->setCliente($form->get('cliente')->getData());
-                $arUsuario->setProveedor($form->get('proveedor')->getData());
-                $arUsuario->setGestionTranporte($form->get('gestionTranporte')->getData());
-                $arUsuario->setGuiaNuevo($form->get('guiaNuevo')->getData());
-                $arUsuario->setBloquearRecaudo($form->get('bloquearRecaudo')->getData());
-                $arUsuario->setBloquearOperacionCliente($form->get('bloquearOperacionCliente')->getData());
-                $arUsuario->setBloquearAdquirienteCredito($form->get('bloquearAdquirienteCredito')->getData());
-                $arUsuario->setGuiaDescargaMasivo($form->get('guiaDescargaMasivo')->getData());
-                $arUsuario->setCambiarValoresGuia($form->get('cambiarValoresGuia')->getData());
-                $arUsuario->setInvertirOrigenDestino($form->get('invertirOrigenDestino')->getData());
-                $arUsuario->setCodigoTerceroErpFk($form->get('codigoTerceroErpFk')->getData());
-                $arUsuario->setCodigoOperacionFk($form->get('codigoOperacionFk')->getData());
-                $arUsuario->setCodigoOperacionClienteFk($form->get('codigoOperacionClienteFk')->getData());
-                $arUsuario->setCodigoCiudadOrigenFk($form->get('codigoCiudadOrigenFk')->getData());
-                $arUsuario->setPermiteCambiarAdquiriente($form->get('permiteCambiarAdquiriente')->getData());
-                $arUsuario->setEstadoRecogido($form->get('estadoRecogido')->getData());
-                $arUsuario->setEstadoIngreso($form->get('estadoIngreso')->getData());
-                $arUsuario->setDireccionRemitente($form->get('direccionRemitente')->getData());
-                $arUsuario->setTelefonoRemitente($form->get('telefonoRemitente')->getData());
-                if ($id == "0") {
-                    $arUsuario->setFechaRegistro(new \DateTime('now'));
-                    $arUsuario->setEmpresaRel($arEmpresa);
-                    $arUsuario->setEmpresa(false);
-                    $arUsuario->setEmpleado(false);
-                    $arUsuario->setCodigoRolFk("ROLE_USER");
-                    $arUsuario->setClave($form->get('claveNueva')->getData());
-                    $arUsuarioExistente = $em->getRepository(Usuario::class)->find($form->get('codigoUsuarioPk')->getData());
-                    if ($arUsuarioExistente) {
-                        Mensajes::error("Ya existe un usuario con el nombre de usuario '{$form->get('codigoUsuarioPk')->getData()}'");
+
+                // Si es empleado, solo actualizar el correo
+                if ($esEmpleado && $id != "0") {
+                    $arUsuario->setCorreo($form->get('correo')->getData());
+                    $em->persist($arUsuario);
+                    $em->flush();
+                    Mensajes::success("Correo actualizado");
+                    return $this->redirect($this->generateUrl('empresa_usuario_detalle', ['id' => $arUsuario->getCodigoUsuarioPk()]));
+                } else {
+                    // Código original para no empleados o nuevo registro
+                    $usuario = $form->get('codigoUsuarioPk')->getData();
+                    $arUsuario->setCodigoUsuarioPk($usuario);
+                    $arUsuario->setNombres($form->get('nombres')->getData());
+                    $arUsuario->setApellidos($form->get('apellidos')->getData());
+                    $arUsuario->setNumeroIdentificacion($form->get('numeroIdentificacion')->getData());
+                    $arUsuario->setIdentificacionRel($form->get('identificacionRel')->getData());
+                    $arUsuario->setCorreo($form->get('correo')->getData());
+                    $arUsuario->setCliente($form->get('cliente')->getData());
+                    $arUsuario->setProveedor($form->get('proveedor')->getData());
+                    $arUsuario->setGestionTranporte($form->get('gestionTranporte')->getData());
+                    $arUsuario->setGuiaNuevo($form->get('guiaNuevo')->getData());
+                    $arUsuario->setBloquearRecaudo($form->get('bloquearRecaudo')->getData());
+                    $arUsuario->setBloquearOperacionCliente($form->get('bloquearOperacionCliente')->getData());
+                    $arUsuario->setBloquearAdquirienteCredito($form->get('bloquearAdquirienteCredito')->getData());
+                    $arUsuario->setGuiaDescargaMasivo($form->get('guiaDescargaMasivo')->getData());
+                    $arUsuario->setCambiarValoresGuia($form->get('cambiarValoresGuia')->getData());
+                    $arUsuario->setInvertirOrigenDestino($form->get('invertirOrigenDestino')->getData());
+                    $arUsuario->setCodigoTerceroErpFk($form->get('codigoTerceroErpFk')->getData());
+                    $arUsuario->setCodigoOperacionFk($form->get('codigoOperacionFk')->getData());
+                    $arUsuario->setCodigoOperacionClienteFk($form->get('codigoOperacionClienteFk')->getData());
+                    $arUsuario->setCodigoCiudadOrigenFk($form->get('codigoCiudadOrigenFk')->getData());
+                    $arUsuario->setPermiteCambiarAdquiriente($form->get('permiteCambiarAdquiriente')->getData());
+                    $arUsuario->setEstadoRecogido($form->get('estadoRecogido')->getData());
+                    $arUsuario->setEstadoIngreso($form->get('estadoIngreso')->getData());
+                    $arUsuario->setDireccionRemitente($form->get('direccionRemitente')->getData());
+                    $arUsuario->setTelefonoRemitente($form->get('telefonoRemitente')->getData());
+
+                    if ($id == "0") {
+                        $arUsuario->setFechaRegistro(new \DateTime('now'));
+                        $arUsuario->setEmpresaRel($arEmpresa);
+                        $arUsuario->setEmpresa(false);
+                        $arUsuario->setEmpleado(false);
+                        $arUsuario->setCodigoRolFk("ROLE_USER");
+                        $arUsuario->setClave($form->get('claveNueva')->getData());
+                        $arUsuarioExistente = $em->getRepository(Usuario::class)->find($form->get('codigoUsuarioPk')->getData());
+                        if ($arUsuarioExistente) {
+                            Mensajes::error("Ya existe un usuario con el nombre de usuario '{$form->get('codigoUsuarioPk')->getData()}'");
+                        } else {
+                            $em->persist($arUsuario);
+                            $em->flush();
+                            Mensajes::success("Registro creado");
+                            return $this->redirect($this->generateUrl('empresa_usuario_detalle', ['id' => $arUsuario->getCodigoUsuarioPk()]));
+                        }
                     } else {
                         $em->persist($arUsuario);
                         $em->flush();
-                        Mensajes::success("Registro creado");
+                        Mensajes::success("Registro actualizado");
                         return $this->redirect($this->generateUrl('empresa_usuario_detalle', ['id' => $arUsuario->getCodigoUsuarioPk()]));
                     }
-                } else {
-                    $em->persist($arUsuario);
-                    $em->flush();
-                    Mensajes::success("Registro actualizado");
-                    return $this->redirect($this->generateUrl('empresa_usuario_detalle', ['id' => $arUsuario->getCodigoUsuarioPk()]));
                 }
             }
         }
@@ -201,6 +347,7 @@ class UsuarioController extends AbstractController
             'arUsuario' => $arUsuario,
             'id' => $id,
             'ingresarContrasena' => $ingresarContrasena,
+            'esEmpleado' => $esEmpleado,
             'form' => $form->createView()
         ]);
     }

@@ -90,16 +90,12 @@
                         <td class="text-center">{{ arUsuario.empleado ? "SI":"NO" }}</td>
                         <td class="text-center">{{ arUsuario.cliente ? "SI":"NO" }}</td>
                         <td class="text-center">{{ arUsuario.proveedor ? "SI":"NO" }}</td>
-                        {% if arUsuario.empleado == false %}
-                            <td class="text-center">
-                                <a href="{{ path('empresa_usuario_nuevo', {'id':arUsuario.codigoUsuarioPk }) }}"
-                                   class="btn btn-sm btn-default" title="Editar">
-                                    <i class="fa fa-pencil"></i>
-                                </a>
-                            </td>
-                        {% else %}
-                            <td></td>
-                        {% endif %}
+                        <td class="text-center">
+                            <a href="{{ path('empresa_usuario_nuevo', {'id':arUsuario.codigoUsuarioPk }) }}"
+                               class="btn btn-sm btn-default" title="Editar">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </td>
                         <td class="text-center">
                             <a href="javascript:abrirVentana3('{{ path('empresa_usuario_cambioclave', {'id':  arUsuario.codigoUsuarioPk}) }}', 'Cambio de clave', 600, 1200)"
                                class="btn btn-sm btn-default" title="Cambio clave">
