@@ -40,76 +40,85 @@ class InicioController extends AbstractController
         $form = $this->createFormBuilder()
             ->getForm();
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            if($request->get('OpDescargar')){
-                $this->ficheroDescarga($em, $arEmpresa->getCodigoEmpresaPk(), $request->get('OpDescargar'));
-            }
-        }
-        if($arEmpresa){
-            if ($arEmpresa->isValidarContratoActivo()){
-                if($arUsuario->getEmpleado()){
-                    $url = "/recursohumano/api/empleado/validarcontratiactivo";
-                    $parametros = ['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion(), 'tipoIdentificacion' => $arUsuario->getCodigoIdentificacionFk()];
-                    $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
-                    if($respuesta !== null){
-                        if ($respuesta->error === false) {
-                            if($respuesta->validaContrato === false){
-                                $arUsuario->setEmpresaRel(null);
-                                $em->persist($arUsuario);
-                                $em->flush();
-                                return $this->redirect($this->generateUrl('inicio'));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if ($arUsuario->isForzarCambioClave()) {
-            return $this->redirect($this->generateUrl('usuario_forzarcambioclave'));
-        }
-        $booCliente = null;
-        $booEmpleado = null;
-        $booProveedor = null;
-        $booEmpresa = null;
-        $arrTurnos = null;
-        $arrRecurso = null;
-        $arrCapacitaciones = null;
-        $codigoPuesto = null;
-        $arrInformacionCapacitaciones = null;
-        $arrEnlaces = null;
-        if ($usuario->getEmpresaRel() != null) {
-            $booCliente = $usuario->getCliente();
-            $booEmpleado = $usuario->getEmpleado();
-            $booProveedor = $usuario->getProveedor();
-            $booEmpresa = $usuario->getEmpresa();
-            if($usuario->getEmpleado()) {
-                if($usuario->getEmpresaRel()->isMenuEmpleadoProgramacion()) {
-                    $respuesta = $this->turnos();
-                    if ($respuesta['turnos']) {
-                        $arrTurnos = $respuesta['turnos'];
-                        $codigoPuesto = $arrTurnos[0]->codigoPuestoFk;
-                    }
-                    if ($respuesta['recurso']) {
-                        $arrRecurso = $respuesta['recurso'];
-                    }
-                    $arrCapacitaciones = $this->capacitacionesPendientes();
-                    if ($arrCapacitaciones) {
-                        $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
-                    }
-                }
-                $arrEnlaces = $this->enlaces();
-            }
-        }
+//        if ($form->isSubmitted() && $form->isValid()) {
+//            if($request->get('OpDescargar')){
+//                $this->ficheroDescarga($em, $arEmpresa->getCodigoEmpresaPk(), $request->get('OpDescargar'));
+//            }
+//        }
+//        if($arEmpresa){
+//            if ($arEmpresa->isValidarContratoActivo()){
+//                if($arUsuario->getEmpleado()){
+//                    $url = "/recursohumano/api/empleado/validarcontratiactivo";
+//                    $parametros = ['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion(), 'tipoIdentificacion' => $arUsuario->getCodigoIdentificacionFk()];
+//                    $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+//                    if($respuesta !== null){
+//                        if ($respuesta->error === false) {
+//                            if($respuesta->validaContrato === false){
+//                                $arUsuario->setEmpresaRel(null);
+//                                $em->persist($arUsuario);
+//                                $em->flush();
+//                                return $this->redirect($this->generateUrl('inicio'));
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        if ($arUsuario->isForzarCambioClave()) {
+//            return $this->redirect($this->generateUrl('usuario_forzarcambioclave'));
+//        }
+//        $booCliente = null;
+//        $booEmpleado = null;
+//        $booProveedor = null;
+//        $booEmpresa = null;
+//        $arrTurnos = null;
+//        $arrRecurso = null;
+//        $arrCapacitaciones = null;
+//        $codigoPuesto = null;
+//        $arrInformacionCapacitaciones = null;
+//        $arrEnlaces = null;
+//        if ($usuario->getEmpresaRel() != null) {
+//            $booCliente = $usuario->getCliente();
+//            $booEmpleado = $usuario->getEmpleado();
+//            $booProveedor = $usuario->getProveedor();
+//            $booEmpresa = $usuario->getEmpresa();
+//            if($usuario->getEmpleado()) {
+//                if($usuario->getEmpresaRel()->isMenuEmpleadoProgramacion()) {
+//                    $respuesta = $this->turnos();
+//                    if ($respuesta['turnos']) {
+//                        $arrTurnos = $respuesta['turnos'];
+//                        $codigoPuesto = $arrTurnos[0]->codigoPuestoFk;
+//                    }
+//                    if ($respuesta['recurso']) {
+//                        $arrRecurso = $respuesta['recurso'];
+//                    }
+//                    $arrCapacitaciones = $this->capacitacionesPendientes();
+//                    if ($arrCapacitaciones) {
+//                        $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
+//                    }
+//                }
+//                $arrEnlaces = $this->enlaces();
+//            }
+//        }
         return $this->render('aplicacion/inicio.html.twig', [
-            'arrTurnos' => $arrTurnos,
-            'arrRecurso' => $arrRecurso,
-            'booCliente' => $booCliente,
-            'booEmpleado' => $booEmpleado,
-            'booProveedor' => $booProveedor,
-            'booEmpresa' => $booEmpresa,
-            'codigoPuesto' => $codigoPuesto,
-            'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
-            'arrEnlaces' => $arrEnlaces,
+//            'arrTurnos' => $arrTurnos,
+//            'arrRecurso' => $arrRecurso,
+//            'booCliente' => $booCliente,
+//            'booEmpleado' => $booEmpleado,
+//            'booProveedor' => $booProveedor,
+//            'booEmpresa' => $booEmpresa,
+//            'codigoPuesto' => $codigoPuesto,
+//            'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
+//            'arrEnlaces' => $arrEnlaces,
+            'arrTurnos' => [],
+            'arrRecurso' => [],
+            'booCliente' => [],
+            'booEmpleado' => [],
+            'booProveedor' => [],
+            'booEmpresa' => [],
+            'codigoPuesto' => [],
+            'arrInformacionCapacitaciones' => [],
+            'arrEnlaces' => [],
             'form' => $form->createView()
         ]);
     }
