@@ -1180,7 +1180,7 @@ class GuiaController extends AbstractController
             $libro = new Spreadsheet();
             $hoja = $libro->getActiveSheet();
             $hoja->getStyle(1)->getFont()->setName('Arial')->setSize(8);
-            $hoja->setTitle('Items');
+            $hoja->setTitle('guias');
             $j = 0;
             $arrColumnas = ['GUIA', 'TIPO', 'FECHA', 'DOCUMENTO', 'ORIGEN', 'DESTINO', 'DESTINATARIO', 'DIRECCION', 'TELEFONO', 'COMENTARIO', 'UND', 'PESO', 'VOL', 'RECAUDO', 'FLETE', 'DECLARADO', 'MANEJO', 'TOTAL',
                 'REC', 'FH_REC', 'SCL', 'DES', 'FH_DES', 'ENT', 'FH_ENT', 'CUM', 'FAC', 'NOV', 'DIG', 'ANU', 'OPC', 'FACTURA'];
