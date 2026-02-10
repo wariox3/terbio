@@ -385,6 +385,12 @@ class GuiaController extends AbstractController
             $codigoCiudadOrigen = $arUsuario->getCodigoCiudadOrigenFk();
         }
         $invertirOrigenDestino = $arUsuario->isInvertirOrigenDestino();
+        $mapaGuiaTipo = [];
+        foreach ($arrDatos['arrGuiaTipo'] as $dato) {
+            $mapaGuiaTipo[$dato['codigoGuiaTipoPk']] = [
+                'corriente' => $dato['corriente']
+            ];
+        }
 
         $form = $this->createFormBuilder()
             ->add('liquidacionRel', ChoiceType::class, array('choices' => $arrLiquidaciones, 'required' => true, 'attr' => ['class' => 'aplicarSelect2']))
@@ -520,6 +526,7 @@ class GuiaController extends AbstractController
             'codigoPrecio' => $arrDatos['arrTercero']['codigoPrecioFk'],
             'codigoOrigen' => $codigoCiudadOrigen,
             'invertirOrigenDestino' => $invertirOrigenDestino,
+            'mapaGuiaTipo' => $mapaGuiaTipo,
             'form' => $form->createView()
         ]);
     }
@@ -804,19 +811,28 @@ class GuiaController extends AbstractController
                     $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametrosTercero, "/transporte/api/oxigeno/tercero/nuevo");
 
                     if ($respuesta->error == false) {
-                        echo "<script>
-                        let numeroIdentificacion = '{$formNuevo->get('numeroIdentificacion')->getData()}'
-                        let nombreCorto = '{$formNuevo->get('nombreCorto')->getData()}'
-                        let IdentificacionFk = '{$formNuevo->get('codigoIdentificacionFk')->getData()}'
-                        let codigoTercero = '{$respuesta->codigoTerceroPk}'
-
+                        if ($respuesta->error == false) {
+                            echo "<script>
+                                let numeroIdentificacion = '" . addslashes($formNuevo->get('numeroIdentificacion')->getData()) . "';
+                                let nombreCorto = '" . addslashes($formNuevo->get('nombreCorto')->getData()) . "';
+                                let IdentificacionFk = '" . addslashes($formNuevo->get('codigoIdentificacionFk')->getData()) . "';
+                                let codigoTercero = '" . addslashes($respuesta->codigoTerceroPk) . "';
                         
-                        window.opener.document.getElementById('form_identificacionAdquiriente').value = numeroIdentificacion;
-                        window.opener.document.getElementById('form_nombreAdquiriente').value = nombreCorto;
-                        window.opener.document.getElementById('form_tipoIdentificacionAdquiriente').value = IdentificacionFk;
-                        window.opener.document.getElementById('form_codigoAdquiriente').value = codigoTercero;
-                        window.close()
-                    </script>";
+                                if (window.opener) {
+                                    window.opener.document.getElementById('form_identificacionAdquiriente').value = numeroIdentificacion;
+                                    window.opener.document.getElementById('form_nombreAdquiriente').value = nombreCorto;
+                                    window.opener.document.getElementById('form_tipoIdentificacionAdquiriente').value = IdentificacionFk;
+                                    window.opener.document.getElementById('form_codigoAdquiriente').value = codigoTercero;
+                                    
+                                    // Notificar el cambio
+                                    if (window.opener.notificarCambioAdquiriente) {
+                                        window.opener.notificarCambioAdquiriente();
+                                    }
+                                }
+                                
+                                window.close();
+                            </script>";
+                        }
                     } else {
                         Mensajes::error($respuesta->error);
                     }

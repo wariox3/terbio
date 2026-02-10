@@ -2,6 +2,10 @@
 {% block title %}Guia nueva{% endblock %}
 {% block content %}
     {{ form_start(form) }}
+    <script>
+    const bloquearAdquirienteCredito = {{ app.user.bloquearAdquirienteCredito ? 'true' : 'false' }};
+    const mapaGuiaTipo = {{ mapaGuiaTipo|json_encode|raw }};
+    </script>
     <input type="hidden" id="codigoTercero" value="{{ codigoTercero }}">
     <input type="hidden" id="codigoPrecio" value="{{ codigoPrecio }}">
     <input type="hidden" id="codigoOrigen" value="{{ codigoOrigen }}">
@@ -86,7 +90,7 @@
                         {{ form_widget(form.nombreAdquiriente) }}
                     </div>
                     {% if app.user.permiteCambiarAdquiriente %}
-                    <div style="flex: 1">
+                    <div id="btnBuscarAdquiriente" style="flex: 1">
                         <span class="input-group-btn">
                             <a class="btn btn-sm btn-default"
                                href="javascript:abrirVentana3('{{ path('cliente_transporte_guia_buscaradquiriente')}}', 'buscarAdquiriente', 600, 1200)">
@@ -272,6 +276,106 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const selectGuiaTipo = document.getElementById('{{ form.guiaTipoRel.vars.id }}');
+    const inputAdquiriente = document.getElementById('{{ form.codigoAdquiriente.vars.id }}');
+    const btnBuscar = document.getElementById('btnBuscarAdquiriente');
+    const inputTipoIdentificacion = document.getElementById('{{ form.tipoIdentificacionAdquiriente.vars.id }}');
+    const inputIdentificacion = document.getElementById('{{ form.identificacionAdquiriente.vars.id }}');
+    const inputNombre = document.getElementById('{{ form.nombreAdquiriente.vars.id }}');
+
+    // Si no existe el botón de búsqueda (porque permiteCambiarAdquiriente es false), no ejecutamos nada
+    if (!btnBuscar) return;
+
+    // Guardar valores iniciales
+    const adquirienteInicial = {
+        codigo: inputAdquiriente.value,
+        identificacion: inputIdentificacion.value,
+        nombre: inputNombre.value
+    };
+
+    let adquirienteModificado = false;
+
+    // Función para verificar si hubo cambios
+    function verificarCambios() {
+        const codigoActual = inputAdquiriente.value;
+        const identificacionActual = inputIdentificacion.value;
+        const nombreActual = inputNombre.value;
+
+        if (codigoActual !== adquirienteInicial.codigo ||
+            identificacionActual !== adquirienteInicial.identificacion ||
+            nombreActual !== adquirienteInicial.nombre) {
+            adquirienteModificado = true;
+        }
+    }
+
+    // Escuchar cambios en los campos del adquiriente
+    inputAdquiriente.addEventListener('change', verificarCambios);
+    inputIdentificacion.addEventListener('change', verificarCambios);
+    inputNombre.addEventListener('change', verificarCambios);
+
+    // Función global para notificar cambios desde la ventana emergente
+    window.notificarCambioAdquiriente = function() {
+        adquirienteModificado = true;
+    };
+
+    function esCredito(codigoGuiaTipo) {
+        return mapaGuiaTipo[codigoGuiaTipo]?.corriente === true;
+    }
+
+    function actualizarEstado() {
+        const codigo = selectGuiaTipo.value;
+
+        if (!codigo) return;
+
+        const esTipoCredito = esCredito(codigo);
+
+        // CASO 1: Si el usuario tiene bloquearAdquirienteCredito === true
+        if (bloquearAdquirienteCredito === true) {
+            // Solo ocultar lupa si es tipo crédito
+            if (esTipoCredito) {
+                btnBuscar.style.display = 'none';
+
+                // Validación SOLO para caso 2: Si ya modificó el adquiriente y selecciona tipo crédito
+                if (adquirienteModificado) {
+                    alert(
+                        'El usuario tiene bloqueado el cambio de adquiriente para créditos y ya modificó el adquiriente.\n' +
+                        'Por seguridad debe recargar la página y comenzar nuevamente.'
+                    );
+                    location.reload();
+                    return;
+                }
+            } else {
+                // Si no es tipo crédito, mostrar lupa normalmente
+                btnBuscar.style.display = 'block';
+            }
+        }
+        // CASO 2: Si el usuario NO tiene bloquearAdquirienteCredito (solo permiteCambiarAdquiriente = true)
+        else {
+            // Mostrar lupa para TODOS los tipos de guía
+            btnBuscar.style.display = 'block';
+
+            // NO disparar alert en este caso, aunque cambien adquiriente y luego seleccionen crédito
+            // El usuario tiene permiso para cambiar adquiriente libremente
+        }
+    }
+
+    // Configurar eventos
+    selectGuiaTipo.addEventListener('change', actualizarEstado);
+
+    // Soporte para Select2
+    if (typeof $ !== 'undefined' && $.fn.select2) {
+        $(selectGuiaTipo).on('select2:select', function () {
+            actualizarEstado();
+        });
+    }
+
+    // Ejecutar estado inicial
+    actualizarEstado();
+});
+    </script>
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function()

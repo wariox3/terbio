@@ -183,3 +183,30 @@
     {{ form_rest(formNuevo) }}
     {{ form_end(formNuevo) }}
 {% endblock %}
+{% block javascripts %}
+    <script>
+        function selDestinatario(numeroIdentificacion, nombreCorto, codigoIdentificacionFk, codigoTerceroPk) {
+            const opener = window.opener;
+
+            if (!opener) {
+                alert('No se puede acceder a la ventana principal');
+                return;
+            }
+
+            // Actualizar los campos en la ventana principal
+            opener.document.getElementById('form_codigoAdquiriente').value = codigoTerceroPk;
+            opener.document.getElementById('form_tipoIdentificacionAdquiriente').value = codigoIdentificacionFk;
+            opener.document.getElementById('form_identificacionAdquiriente').value = numeroIdentificacion;
+            opener.document.getElementById('form_nombreAdquiriente').value = nombreCorto;
+
+            // Notificar a la ventana principal que hubo un cambio
+            if (opener.notificarCambioAdquiriente) {
+                opener.notificarCambioAdquiriente();
+            }
+
+            window.close();
+        }
+    </script>
+
+
+{% endblock %}
