@@ -194,12 +194,12 @@ class InicioController extends AbstractController
     {
         $arUsuario = $this->getUser();
         $arrCapacitaciones = [];
-        $parametros = ['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion()];
-        $url = "/recursohumano/api/capacitaciones/empleado/pendiente";
-        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
-        if($respuesta->error == false ) {
-            $arrCapacitaciones = $respuesta->capacitaciones;
-        }
+//        $parametros = ['numeroIdentificacion' => $arUsuario->getNumeroIdentificacion()];
+//        $url = "/recursohumano/api/capacitaciones/empleado/pendiente";
+//        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+//        if($respuesta->error == false ) {
+//            $arrCapacitaciones = $respuesta->capacitaciones;
+//        }
         return $arrCapacitaciones;
     }
 
