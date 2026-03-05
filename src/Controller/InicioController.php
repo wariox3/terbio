@@ -169,20 +169,20 @@ class InicioController extends AbstractController
         $arrTurnos = [];
         $arrRecurso = [];
 
-        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/turno/api/programacion/turno");
-
-        if ($respuesta !== null &&
-            is_object($respuesta) &&
-            property_exists($respuesta, 'error') &&
-            $respuesta->error == false) {
-
-            if (property_exists($respuesta, 'turnos')) {
-                $arrTurnos = $respuesta->turnos;
-            }
-            if (property_exists($respuesta, 'recurso')) {
-                $arrRecurso = $respuesta->recurso;
-            }
-        }
+//        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/turno/api/programacion/turno");
+//
+//        if ($respuesta !== null &&
+//            is_object($respuesta) &&
+//            property_exists($respuesta, 'error') &&
+//            $respuesta->error == false) {
+//
+//            if (property_exists($respuesta, 'turnos')) {
+//                $arrTurnos = $respuesta->turnos;
+//            }
+//            if (property_exists($respuesta, 'recurso')) {
+//                $arrRecurso = $respuesta->recurso;
+//            }
+//        }
 
         return [
             'turnos' => $arrTurnos,
@@ -208,16 +208,16 @@ class InicioController extends AbstractController
         $arUsuario = $this->getUser();
         $arrEnlaces = [];
         $parametros = [];
-        $url = "/api/general/enlace/lista";
-
-        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
-        if ($respuesta !== null &&
-            is_object($respuesta) &&
-            property_exists($respuesta, 'error') &&
-            $respuesta->error == false &&
-            property_exists($respuesta, 'enlaces')) {
-            $arrEnlaces = $respuesta->enlaces;
-        }
+//        $url = "/api/general/enlace/lista";
+//
+//        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, $url);
+//        if ($respuesta !== null &&
+//            is_object($respuesta) &&
+//            property_exists($respuesta, 'error') &&
+//            $respuesta->error == false &&
+//            property_exists($respuesta, 'enlaces')) {
+//            $arrEnlaces = $respuesta->enlaces;
+//        }
 
         return $arrEnlaces;
     }
