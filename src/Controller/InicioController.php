@@ -110,6 +110,7 @@ class InicioController extends AbstractController
 //            'codigoPuesto' => $codigoPuesto,
 //            'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
 //            'arrEnlaces' => $arrEnlaces,
+
             'arrTurnos' => [],
             'arrRecurso' => [],
             'booCliente' => [],
