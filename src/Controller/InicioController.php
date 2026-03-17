@@ -101,17 +101,17 @@ class InicioController extends AbstractController
             }
         }
         return $this->render('aplicacion/inicio.html.twig', [
-//            'arrTurnos' => $arrTurnos,
-//            'arrRecurso' => $arrRecurso,
-//            'booCliente' => $booCliente,
-//            'booEmpleado' => $booEmpleado,
-//            'booProveedor' => $booProveedor,
-//            'booEmpresa' => $booEmpresa,
-//            'codigoPuesto' => $codigoPuesto,
-//            'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
-//            'arrEnlaces' => $arrEnlaces,
+            'arrTurnos' => $arrTurnos,
+            'arrRecurso' => $arrRecurso,
+            'booCliente' => $booCliente,
+            'booEmpleado' => $booEmpleado,
+            'booProveedor' => $booProveedor,
+            'booEmpresa' => $booEmpresa,
+            'codigoPuesto' => $codigoPuesto,
+            'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
+            'arrEnlaces' => $arrEnlaces,
 
-            'arrTurnos' => [],
+/*            'arrTurnos' => [],
             'arrRecurso' => [],
             'booCliente' => [],
             'booEmpleado' => [],
@@ -119,7 +119,7 @@ class InicioController extends AbstractController
             'booEmpresa' => [],
             'codigoPuesto' => [],
             'arrInformacionCapacitaciones' => [],
-            'arrEnlaces' => [],
+            'arrEnlaces' => [],*/
             'form' => $form->createView()
         ]);
     }
@@ -168,22 +168,19 @@ class InicioController extends AbstractController
         ];
         $arrTurnos = [];
         $arrRecurso = [];
+        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/turno/api/programacion/turno");
+        if ($respuesta !== null &&
+            is_object($respuesta) &&
+            property_exists($respuesta, 'error') &&
+            $respuesta->error == false) {
 
-//        $respuesta = FuncionesController::consumirApi($arUsuario->getEmpresaRel(), $parametros, "/turno/api/programacion/turno");
-//
-//        if ($respuesta !== null &&
-//            is_object($respuesta) &&
-//            property_exists($respuesta, 'error') &&
-//            $respuesta->error == false) {
-//
-//            if (property_exists($respuesta, 'turnos')) {
-//                $arrTurnos = $respuesta->turnos;
-//            }
-//            if (property_exists($respuesta, 'recurso')) {
-//                $arrRecurso = $respuesta->recurso;
-//            }
-//        }
-
+            if (property_exists($respuesta, 'turnos')) {
+                $arrTurnos = $respuesta->turnos;
+            }
+            if (property_exists($respuesta, 'recurso')) {
+                $arrRecurso = $respuesta->recurso;
+            }
+        }
         return [
             'turnos' => $arrTurnos,
             'recurso' => $arrRecurso
