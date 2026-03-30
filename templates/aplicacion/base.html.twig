@@ -60,24 +60,30 @@
         <!-- end: sidebar -->
         <section role="main" class="content-body">
             <header class="page-header">
-                <h2>{{ app.user.empresaRel.nombre  | default("") }}
+                <h2 class="d-flex align-items-center">
+
                     {% if app.user.codigoEmpresaFk == null %}
-                    <a title="Cambiar o asignar una empresa"
-                       id="{{ path('empleado_cambio_empresa', {'codigoEmpleado': app.user.codigoUsuarioPk }) }}"
-                       data-toggle="modal" data-target="#modalBootstrap">
-                        Asignar empresa
-                        {% else %}
-                            {% if app.user.empresaRel.menuCambioEmpresa %}
-                                {% if app.user.empleado or is_granted('ROLE_ADMIN') %}
-                                    <a title="Cambiar o asignar una empresa"
-                                    id="{{ path('empleado_cambio_empresa', {'codigoEmpleado': app.user.codigoUsuarioPk }) }}"
-                                    data-toggle="modal" data-target="#modalBootstrap">
+                        <a title="Cambiar o asignar una empresa"
+                           id="{{ path('empleado_cambio_empresa', {'codigoEmpleado': app.user.codigoUsuarioPk }) }}"
+                           data-toggle="modal" data-target="#modalBootstrap"
+                           class="mr-2">
+                            Asignar empresa
+                        </a>
+                    {% else %}
+                        {% if app.user.empresaRel.menuCambioEmpresa %}
+                            {% if app.user.empleado or is_granted('ROLE_ADMIN') %}
+                                <a title="Cambiar o asignar una empresa"
+                                   id="{{ path('empleado_cambio_empresa', {'codigoEmpleado': app.user.codigoUsuarioPk }) }}"
+                                   data-toggle="modal" data-target="#modalBootstrap"
+                                   class="mr-2">
                                     (cambiar)
-                                {% endif %}
                                 </a>
                             {% endif %}
                         {% endif %}
-                    </a>
+                    {% endif %}
+
+                    {{ app.user.empresaRel.nombre | default("") }}
+
                 </h2>
                 <div class="right-wrapper pull-right">
                     <ol class="breadcrumbs">
