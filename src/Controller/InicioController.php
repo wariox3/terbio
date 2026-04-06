@@ -92,10 +92,10 @@ class InicioController extends AbstractController
                     if ($respuesta['recurso']) {
                         $arrRecurso = $respuesta['recurso'];
                     }
-                    $arrCapacitaciones = $this->capacitacionesPendientes();
+                    /*$arrCapacitaciones = $this->capacitacionesPendientes();
                     if ($arrCapacitaciones) {
                         $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
-                    }
+                    }*/
                 }
                 $arrEnlaces = $this->enlaces();
             }
