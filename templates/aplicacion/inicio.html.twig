@@ -351,141 +351,141 @@
                 </div>
             {% endif %}
         {% endif %}
-        <div class="col-md-9">
-            <section class="panel">
-                <header class="panel-heading">
-                    <div class="panel-actions">
-                        <a href="#" class="fa fa-caret-down"></a>
-                        <a href="#" class="fa fa-times"></a>
-                    </div>
-                    <h2 class="panel-title">Enlaces</h2>
-                    <p class="panel-subtitle">En este espacio encontrará enlaces útiles relacionados con la plataforma</p>
-                </header>
+{#        <div class="col-md-9">#}
+{#            <section class="panel">#}
+{#                <header class="panel-heading">#}
+{#                    <div class="panel-actions">#}
+{#                        <a href="#" class="fa fa-caret-down"></a>#}
+{#                        <a href="#" class="fa fa-times"></a>#}
+{#                    </div>#}
+{#                    <h2 class="panel-title">Enlaces</h2>#}
+{#                    <p class="panel-subtitle">En este espacio encontrará enlaces útiles relacionados con la plataforma</p>#}
+{#                </header>#}
 
-                <div class="panel-body">
-                    {% if arrEnlaces is empty %}
-                        <p class="text-center text-muted">No hay enlaces disponibles en este momento.</p>
-                    {% else %}
-                        {% for arEnlace in arrEnlaces %}
-                            <section class="panel panel-horizontal mb-md">
-                                <header class="panel-heading bg-primary text-center" style="width: 181px;">
-                                    <div class="panel-heading-icon">
-                                        <i class="fa fa-link"></i>
-                                    </div>
-                                </header>
+{#                <div class="panel-body">#}
+{#                    {% if arrEnlaces is empty %}#}
+{#                        <p class="text-center text-muted">No hay enlaces disponibles en este momento.</p>#}
+{#                    {% else %}#}
+{#                        {% for arEnlace in arrEnlaces %}#}
+{#                            <section class="panel panel-horizontal mb-md">#}
+{#                                <header class="panel-heading bg-primary text-center" style="width: 181px;">#}
+{#                                    <div class="panel-heading-icon">#}
+{#                                        <i class="fa fa-link"></i>#}
+{#                                    </div>#}
+{#                                </header>#}
 
-                                <div class="panel-body p-lg">
-                                    <div class="row">
-                                        <div class="col-sm-10">
-                                            <h3 class="text-semibold mt-sm">{{ arEnlace.nombre }}</h3>
+{#                                <div class="panel-body p-lg">#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-10">#}
+{#                                            <h3 class="text-semibold mt-sm">{{ arEnlace.nombre }}</h3>#}
 
-                                            {% if arEnlace.descripcion is defined and arEnlace.descripcion %}
-                                                <p class="text-justify mb-sm">{{ arEnlace.descripcion }}</p>
-                                            {% endif %}
+{#                                            {% if arEnlace.descripcion is defined and arEnlace.descripcion %}#}
+{#                                                <p class="text-justify mb-sm">{{ arEnlace.descripcion }}</p>#}
+{#                                            {% endif %}#}
 
-                                        </div>
+{#                                        </div>#}
 
-                                        <div class="col-sm-2 d-flex align-items-center justify-content-center">
-                                            <a href="{{ arEnlace.url }}" target="_blank"
-                                               rel="noopener noreferrer"
-                                               class="btn btn-success">
-                                                <i class="fa fa-external-link"></i> Abrir enlace
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </section>
-        </div>
-        {% if app.user.empresaRel.menuCapacitacion %}
-            <div class="col-md-9">
-                <section class="panel">
-                    <header class="panel-heading">
-                        <div class="panel-actions">
-                            <a href="#" class="fa fa-caret-down"></a>
-                            <a href="#" class="fa fa-times"></a>
-                        </div>
-                        <h2 class="panel-title">Capacitaciones virtuales</h2>
-                        <p class="panel-subtitle">En este espacio encontrará información relacionada con las
-                            capacitaciones pendientes</p>
-                    </header>
-                    <div class="panel-body">
-                        {% for arrInformacionCapacitacion in arrInformacionCapacitaciones %}
-                            <section class="panel panel-horizontal">
-                                <header class="panel-heading bg-primary" style="width: 181px;">
-                                    <div class="panel-heading-icon">
-                                        <i class="fa fa-file-archive-o"></i>
-                                    </div>
-                                </header>
-                                <div class="panel-body p-lg">
-                                    <div class="row">
-                                        <div class="col-sm-10">
-                                            <h3 class="text-semibold mt-sm text-center">{{ arrInformacionCapacitacion.tema }}</h3>
-                                            <strong>Objetivo:</strong>
-                                            <p class="text-justify">{{ arrInformacionCapacitacion.objetivo }}</p>
-                                            <br>
-                                            <strong>Contenido:</strong>
-                                            <p class="text-justify">{{ arrInformacionCapacitacion.contenido }}</p>
-                                            <br>
-                                            <strong>Archivos:</strong>
-                                            <br>
-                                            {% for archivo in arrInformacionCapacitacion.archivos.ficheros %}
-                                                <li style="list-style: none">
-                                                    <td>
-                                                        <button class="fa fa-download" type="submit" name="OpDescargar" value="{{ archivo.codigoFicheroPk }}"></button>
-                                                    </td>
-                                                    {{ archivo.nombre }}
-                                                </li>
-                                            {% endfor %}
-                                            <strong>Enlaces:</strong>
-                                            <br>
-                                            {% if arrInformacionCapacitacion.urls is empty %}
-                                                <p>No hay enlaces disponibles en este momento.</p>
-                                            {% else %}
-                                                {% for url in arrInformacionCapacitacion.urls %}
-                                                    <a href="{{ url }}" target="_blank">{{ url }}</a><br>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-sm-2">
-                                            <a href="{{ path('empleado_capacitaciones_pendites_confirmarasistencia', {'codigoCapacitacionDetelle':arrInformacionCapacitacion.codigoCapacitacionDetallePk }) }}"
-                                               onclick="return confirm('¿Está seguro de confirmar asistencia para la capacitación, esta acción no se puede deshacer?')"
-                                               class="btn btn-info">
-                                                Confirmar asistencia
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        {% endfor %}
-                    </div>
-                </section>
-            </div>
-        {% endif %}
-        <div class="col-md-9">
-            {% for arrTurno in arrTurnos %}
-                <section class="panel">
-                    <header class="panel-heading">
-                        <div class="panel-actions">
-                            <a href="#" class="fa fa-caret-down"></a>
-                            <a href="#" class="fa fa-times"></a>
-                        </div>
-                        <h2 class="panel-title">Consignas puesto</h2>
-                        <p class="panel-subtitle">Recuerde seguir atentamente las consignas del puesto.</p>
-                    </header>
-                    <div class="panel-body">
-                        <ul>
-                            {% for arrConsigna in arrTurno.consignas %}
-                                <li>{{ arrConsigna.consigna }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </section>
-            {% endfor %}
-        </div>
+{#                                        <div class="col-sm-2 d-flex align-items-center justify-content-center">#}
+{#                                            <a href="{{ arEnlace.url }}" target="_blank"#}
+{#                                               rel="noopener noreferrer"#}
+{#                                               class="btn btn-success">#}
+{#                                                <i class="fa fa-external-link"></i> Abrir enlace#}
+{#                                            </a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </section>#}
+{#                        {% endfor %}#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </section>#}
+{#        </div>#}
+{#        {% if app.user.empresaRel.menuCapacitacion %}#}
+{#            <div class="col-md-9">#}
+{#                <section class="panel">#}
+{#                    <header class="panel-heading">#}
+{#                        <div class="panel-actions">#}
+{#                            <a href="#" class="fa fa-caret-down"></a>#}
+{#                            <a href="#" class="fa fa-times"></a>#}
+{#                        </div>#}
+{#                        <h2 class="panel-title">Capacitaciones virtuales</h2>#}
+{#                        <p class="panel-subtitle">En este espacio encontrará información relacionada con las#}
+{#                            capacitaciones pendientes</p>#}
+{#                    </header>#}
+{#                    <div class="panel-body">#}
+{#                        {% for arrInformacionCapacitacion in arrInformacionCapacitaciones %}#}
+{#                            <section class="panel panel-horizontal">#}
+{#                                <header class="panel-heading bg-primary" style="width: 181px;">#}
+{#                                    <div class="panel-heading-icon">#}
+{#                                        <i class="fa fa-file-archive-o"></i>#}
+{#                                    </div>#}
+{#                                </header>#}
+{#                                <div class="panel-body p-lg">#}
+{#                                    <div class="row">#}
+{#                                        <div class="col-sm-10">#}
+{#                                            <h3 class="text-semibold mt-sm text-center">{{ arrInformacionCapacitacion.tema }}</h3>#}
+{#                                            <strong>Objetivo:</strong>#}
+{#                                            <p class="text-justify">{{ arrInformacionCapacitacion.objetivo }}</p>#}
+{#                                            <br>#}
+{#                                            <strong>Contenido:</strong>#}
+{#                                            <p class="text-justify">{{ arrInformacionCapacitacion.contenido }}</p>#}
+{#                                            <br>#}
+{#                                            <strong>Archivos:</strong>#}
+{#                                            <br>#}
+{#                                            {% for archivo in arrInformacionCapacitacion.archivos.ficheros %}#}
+{#                                                <li style="list-style: none">#}
+{#                                                    <td>#}
+{#                                                        <button class="fa fa-download" type="submit" name="OpDescargar" value="{{ archivo.codigoFicheroPk }}"></button>#}
+{#                                                    </td>#}
+{#                                                    {{ archivo.nombre }}#}
+{#                                                </li>#}
+{#                                            {% endfor %}#}
+{#                                            <strong>Enlaces:</strong>#}
+{#                                            <br>#}
+{#                                            {% if arrInformacionCapacitacion.urls is empty %}#}
+{#                                                <p>No hay enlaces disponibles en este momento.</p>#}
+{#                                            {% else %}#}
+{#                                                {% for url in arrInformacionCapacitacion.urls %}#}
+{#                                                    <a href="{{ url }}" target="_blank">{{ url }}</a><br>#}
+{#                                                {% endfor %}#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+{#                                        <div class="col-sm-2">#}
+{#                                            <a href="{{ path('empleado_capacitaciones_pendites_confirmarasistencia', {'codigoCapacitacionDetelle':arrInformacionCapacitacion.codigoCapacitacionDetallePk }) }}"#}
+{#                                               onclick="return confirm('¿Está seguro de confirmar asistencia para la capacitación, esta acción no se puede deshacer?')"#}
+{#                                               class="btn btn-info">#}
+{#                                                Confirmar asistencia#}
+{#                                            </a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </section>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </section>#}
+{#            </div>#}
+{#        {% endif %}#}
+{#        <div class="col-md-9">#}
+{#            {% for arrTurno in arrTurnos %}#}
+{#                <section class="panel">#}
+{#                    <header class="panel-heading">#}
+{#                        <div class="panel-actions">#}
+{#                            <a href="#" class="fa fa-caret-down"></a>#}
+{#                            <a href="#" class="fa fa-times"></a>#}
+{#                        </div>#}
+{#                        <h2 class="panel-title">Consignas puesto</h2>#}
+{#                        <p class="panel-subtitle">Recuerde seguir atentamente las consignas del puesto.</p>#}
+{#                    </header>#}
+{#                    <div class="panel-body">#}
+{#                        <ul>#}
+{#                            {% for arrConsigna in arrTurno.consignas %}#}
+{#                                <li>{{ arrConsigna.consigna }}</li>#}
+{#                            {% endfor %}#}
+{#                        </ul>#}
+{#                    </div>#}
+{#                </section>#}
+{#            {% endfor %}#}
+{#        </div>#}
 {#        Card con tabla para todos los enlaces no borrar Sebastian orozco#}
 {#        <div class="col-md-9">#}
 {#            <section class="panel">#}

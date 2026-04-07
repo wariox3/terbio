@@ -84,14 +84,14 @@ class InicioController extends AbstractController
             $booEmpresa = $usuario->getEmpresa();
             if($usuario->getEmpleado()) {
                 if($usuario->getEmpresaRel()->isMenuEmpleadoProgramacion()) {
-                    $respuesta = $this->turnos();
+                    /*$respuesta = $this->turnos();
                     if ($respuesta['turnos']) {
                         $arrTurnos = $respuesta['turnos'];
                         $codigoPuesto = $arrTurnos[0]->codigoPuestoFk;
                     }
                     if ($respuesta['recurso']) {
                         $arrRecurso = $respuesta['recurso'];
-                    }
+                    }*/
                     /*$arrCapacitaciones = $this->capacitacionesPendientes();
                     if ($arrCapacitaciones) {
                         $arrInformacionCapacitaciones = $this->archivosCapacitacitaciones($arrCapacitaciones);
@@ -110,16 +110,6 @@ class InicioController extends AbstractController
             'codigoPuesto' => $codigoPuesto,
             'arrInformacionCapacitaciones' => $arrInformacionCapacitaciones,
             'arrEnlaces' => $arrEnlaces,
-
-/*            'arrTurnos' => [],
-            'arrRecurso' => [],
-            'booCliente' => [],
-            'booEmpleado' => [],
-            'booProveedor' => [],
-            'booEmpresa' => [],
-            'codigoPuesto' => [],
-            'arrInformacionCapacitaciones' => [],
-            'arrEnlaces' => [],*/
             'form' => $form->createView()
         ]);
     }
