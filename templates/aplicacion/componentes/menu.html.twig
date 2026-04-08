@@ -70,20 +70,20 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            {% if app.user.empresaRel.menuIncapacidad %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Incapacidades</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('empleado_incapacidad_lista') }}"></i>
-                                                <span>Incapacidades</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuIncapacidad %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Incapacidades</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_incapacidad_lista') }}"></i>#}
+{#                                                <span>Incapacidades</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
                             {% if app.user.empresaRel.menuSolicitud %}
                                 <li class="nav-parent">
                                     <a>
@@ -98,20 +98,20 @@
                                     </ul>
                                 </li>
                             {% endif %}
-                            {% if app.user.empresaRel.menuCapacitacion %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Capacitaciones</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('empleado_capacitaciones_pendites_lista') }}"></i>
-                                                <span>Pendientes</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuCapacitacion %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Capacitaciones</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_capacitaciones_pendites_lista') }}"></i>#}
+{#                                                <span>Pendientes</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
                             {% if app.user.empresaRel.menuCertificado %}
                                 <li class="nav-parent">
                                     <a>
