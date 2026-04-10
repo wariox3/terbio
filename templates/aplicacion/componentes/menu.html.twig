@@ -48,28 +48,28 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            {% if app.user.empresaRel.mostrarSubmenu %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Reclamos</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('empleado_reclamo_lista') }}"></i>
-                                                <span>Reclamos</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% else %}
-                                <li class="nav nav-main">
-                                    <a>
-                                        <a href="{{ path('empleado_reclamo_lista') }}"></i>
-                                            <span>Reclamos</span>
-                                        </a>
-                                    </a>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.mostrarSubmenu %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Reclamos</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_reclamo_lista') }}"></i>#}
+{#                                                <span>Reclamos</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% else %}#}
+{#                                <li class="nav nav-main">#}
+{#                                    <a>#}
+{#                                        <a href="{{ path('empleado_reclamo_lista') }}"></i>#}
+{#                                            <span>Reclamos</span>#}
+{#                                        </a>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            {% endif %}#}
 {#                            {% if app.user.empresaRel.menuIncapacidad %}#}
 {#                                <li class="nav-parent">#}
 {#                                    <a>#}
@@ -84,20 +84,20 @@
 {#                                    </ul>#}
 {#                                </li>#}
 {#                            {% endif %}#}
-                            {% if app.user.empresaRel.menuSolicitud %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Solicitudes</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('empleado_solicitud_lista') }}"></i>
-                                                <span>Solicitudes</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuSolicitud %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Solicitudes</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_solicitud_lista') }}"></i>#}
+{#                                                <span>Solicitudes</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
 {#                            {% if app.user.empresaRel.menuCapacitacion %}#}
 {#                                <li class="nav-parent">#}
 {#                                    <a>#}
