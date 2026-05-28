@@ -126,69 +126,69 @@
                                     </ul>
                                 </li>
                             {% endif %}
-                            {% if app.user.empresaRel.menuCertificadoOtro %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Otros certificados</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="{{ path('retirolaboral_lista') }}">
-                                                <span>Laboral terminado</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('certificadohistorico_lista') }}">
-                                                <span>Histórico</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('empleado_autorizacionarma_lista') }}">
-                                                <span>Autorización arma</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('empleado_certificadoseguridadsocial_lista') }}">
-                                                <span>Seguridad social</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuCertificadoOtro %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Otros certificados</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('retirolaboral_lista') }}">#}
+{#                                                <span>Laboral terminado</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('certificadohistorico_lista') }}">#}
+{#                                                <span>Histórico</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_autorizacionarma_lista') }}">#}
+{#                                                <span>Autorización arma</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_certificadoseguridadsocial_lista') }}">#}
+{#                                                <span>Seguridad social</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
 
-                            {% if app.user.empresaRel.menuEmpleadoProgramacion %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Programación</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="{{ path('turno_programacion_lista') }}"></i>
-                                                <span>Turnos</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('turno_programacionreporte_lista') }}"></i>
-                                                <span>Reporte</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
-                            {% if app.user.empresaRel.menuInformacionPersonal %}
-                                <li class="nav-parent">
-                                    <a><span>Información personal</span></a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="{{ path('empleado_informacion_personal') }}"></i>
-                                                <span>Actualizar información personal</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuEmpleadoProgramacion %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Programación</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('turno_programacion_lista') }}"></i>#}
+{#                                                <span>Turnos</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('turno_programacionreporte_lista') }}"></i>#}
+{#                                                <span>Reporte</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
+{#                            {% if app.user.empresaRel.menuInformacionPersonal %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a><span>Información personal</span></a>#}
+{#                                    <ul class="nav nav-children">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_informacion_personal') }}"></i>#}
+{#                                                <span>Actualizar información personal</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                                </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
                         {% endif %}
                         {% if app.user.cliente %}
                             <li class="nav-parent">
