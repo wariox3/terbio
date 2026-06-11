@@ -2,6 +2,12 @@
 {% block title %}Guias{% endblock %}
 {% block css %}
     <style>
+        :root {
+            --primary: #0066cc;
+            --primary-light: #e6f2ff;
+            --primary-dark: #004d99;
+        }
+
         .tm-title {
             border: solid 1px #0088cc;
             color: #0088cc;
@@ -38,15 +44,277 @@
 
         header{
             display: flex;
-            justify-content:
-            space-between; align-items: center
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
         }
 
+        header a {
+            background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        header a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 102, 204, 0.3);
+            text-decoration: none;
+        }
+
+        .base > h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: #343a40;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        .base > h1:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .contenedorFormulario {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .contenedorFormulario label {
+            font-weight: 600;
+            color: #343a40;
+            margin-bottom: 8px;
+        }
+
+        .contenedorFormulario input {
+            border-radius: 50px 0 0 50px !important;
+            border: 2px solid #e9ecef;
+            padding: 12px 20px !important;
+            font-size: 1rem !important;
+            transition: all 0.3s ease;
+        }
+
+        .contenedorFormulario input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(0, 102, 204, 0.15);
+        }
+
+        .contenedorFormulario button {
+            border-radius: 0 50px 50px 0 !important;
+            padding: 12px 25px !important;
+            background: var(--primary) !important;
+            border: none !important;
+            transition: all 0.3s ease;
+        }
+
+        .contenedorFormulario button:hover {
+            background: var(--primary-dark) !important;
+        }
+
+        .table-simetrica {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .table-simetrica > thead > tr > th {
+            width: 50%;
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+            border: none;
+            padding: 12px 20px;
+        }
+
+        .table-simetrica > tbody > tr > td {
+            padding: 15px 20px;
+            border-color: #e9ecef;
+            font-weight: 500;
+        }
+
+        .timeline .tm-body {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline .tm-title {
+            background: var(--primary-light);
+            border: none;
+            border-left: 4px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            padding: 10px 20px;
+            margin: 25px 0 15px 0;
+            color: var(--primary);
+        }
+
+        .timeline .tm-title:first-child {
+            margin-top: 0;
+        }
+
+        .timeline .tm-title h3 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .timeline .tm-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 3px 10px rgba(0, 102, 204, 0.3);
+        }
+
+        .timeline .tm-datetime-date {
+            font-weight: 600;
+            color: #343a40;
+        }
+
+        .timeline .tm-box {
+            transition: all 0.3s ease;
+        }
+
+        .timeline .tm-box:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transform: translateX(3px);
+        }
+
+        .timeline .table thead th {
+            background: var(--primary) !important;
+            color: white !important;
+            border: none !important;
+            padding: 8px 12px !important;
+            font-size: 0.8rem;
+        }
+
+        .img-thumbnail {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .img-thumbnail:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .img-thumbnail img {
+            border-radius: 6px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .img-thumbnail img:hover {
+            transform: scale(1.02);
+        }
+
+        .imgOpciones {
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .imgOpciones:hover {
+            color: var(--primary-dark);
+            transform: scale(1.2);
+        }
+
+        .tabla-datos-v2 {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .tabla-datos-v2 thead th {
+            background: #28a745 !important;
+            color: white !important;
+            border: none !important;
+            font-size: 0.8rem;
+        }
+
+        .tabla-datos-v2 .fa-download {
+            transition: all 0.3s ease;
+        }
+
+        .tabla-datos-v2 .fa-download:hover {
+            transform: scale(1.2);
+            color: var(--primary-dark) !important;
+        }
+
+        .alert-danger {
+            background: #fff5f5;
+            border: 1px solid #fed7d7;
+            border-left: 4px solid #e53e3e;
+            border-radius: 10px;
+            color: #c53030;
+        }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-weight: 500;
+        }
+
+        hr {
+            border-top: 1px solid #e9ecef;
+            margin: 20px 0;
+        }
+
+        h6 {
+            font-weight: 700;
+            color: #343a40;
+            margin-bottom: 15px;
+        }
 
         .table-simetrica > thead > tr > th{
             width: 50%;
         }
 
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .timeline .tm-body {
+                padding: 20px;
+            }
+        }
     </style>
 {% endblock %}
 {% block content %}
@@ -175,8 +443,8 @@
                                     <div class="tm-info">
                                         <div class="tm-icon"><i class="fa fa-car"></i></div>
                                         <time class="tm-datetime" datetime="2013-11-19 18:13">
-{#                                            <div class="tm-datetime-date">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('Y-m-d'):'N/A':'N/A' }}</div>#}
-{#                                            <div class="tm-datetime-time">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('H:i'):'N/A':'N/A' }}</div>#}
+                                            {#                                            <div class="tm-datetime-date">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('Y-m-d'):'N/A':'N/A' }}</div>#}
+                                            {#                                            <div class="tm-datetime-time">{{ arGuia.estadoDespachado?arGuia.fechaIngreso?arGuia.fechaIngreso | date('H:i'):'N/A':'N/A' }}</div>#}
                                         </time>
                                     </div>
                                     <div class="tm-box appear-animation fadeInRight appear-animation-visible"
@@ -198,13 +466,13 @@
                                                         <td>{{ arrDespacho.fechaSalida | date('Y-m-d') }}</td>
                                                         <td>
                                                             {% if arrDespacho.codigoDespachoClaseFk == 'VIA' %}
-                                                                <p>En transporte nacional</p>
+                                                                <span class="badge badge-primary">En transporte nacional</span>
                                                             {% endif %}
                                                             {% if arrDespacho.codigoDespachoClaseFk == 'REP' %}
-                                                                <p>En reparto urbano/local</p>
+                                                                <span class="badge badge-info">En reparto urbano/local</span>
                                                             {% endif %}
                                                             {% if arrDespacho.codigoDespachoClaseFk == 'REC' %}
-                                                                <p>Recogida</p>
+                                                                <span class="badge badge-warning">Recogida</span>
                                                             {% endif %}
                                                         </td>
                                                     </tr>
@@ -340,7 +608,7 @@
                                                             <td>{{ fichero.tamano }}</td>
                                                             <td class="text-center">
                                                                 <a href="{{ path('utilidad_localizador_fichero_descarga', {'codigoEmpresa': codigoEmpresa,  'codigo':fichero.codigoFicheroPk }) }}"
-                                                                        target="_blank"><i
+                                                                   target="_blank"><i
                                                                             class="fa fa-download" style="font-size: large;color: black;"></i></a>
                                                             </td>
                                                         </tr>

@@ -1,67 +1,278 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Servicios Semantica ERP{% endblock %}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/sitio/bootstrap.min.css') }}">
-            <link rel="stylesheet" href="{{ asset('css/sitio/small-business.css') }}">
-        {% endblock %}
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166939788-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-166939788-1');
-        </script>
-    </head>
-    <body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="#">Semantica ERP | Portal de servicios vHelios</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Inicio
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contáctenos</a>
-                    </li>
-                </ul>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Servicios Semantica ERP{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Portal de servicios empresariales Semantica ERP">
+    <meta name="author" content="Semantica Digital">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/sitio/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/sitio/small-business.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <style>
+            :root {
+                --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                --dark-bg: #1a202c;
+            }
+
+            body {
+                padding-top: 76px;
+                background: #f8f9fa;
+            }
+
+            .navbar {
+                backdrop-filter: blur(10px);
+                background: rgba(26, 32, 44, 0.95) !important;
+                box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            }
+
+            .navbar-brand {
+                font-weight: 700;
+                letter-spacing: -0.5px;
+            }
+
+            .navbar-brand span {
+                color: #667eea;
+            }
+
+            .nav-link {
+                position: relative;
+                font-weight: 500;
+                margin: 0 5px;
+                transition: color 0.3s ease;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: 0;
+                left: 50%;
+                background: var(--primary-gradient);
+                transition: all 0.3s ease;
+                transform: translateX(-50%);
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+            .nav-link:hover {
+                color: #a78bfa !important;
+            }
+
+            .icon-circle {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--primary-gradient);
+            }
+
+            .btn-custom {
+                border-radius: 50px;
+                padding: 12px 30px;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease;
+                border: none;
+            }
+
+            .btn-custom:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            }
+
+            .card-custom {
+                border: none;
+                border-radius: 20px;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .card-custom:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            }
+
+            .feature-icon {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(102, 126, 234, 0.1);
+                color: #667eea;
+            }
+
+            .glass-effect {
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .shadow-hover {
+                transition: all 0.3s ease;
+            }
+
+            .shadow-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+            }
+
+            .badge-custom {
+                background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 50px;
+                font-weight: 600;
+            }
+
+            .section-divider {
+                height: 2px;
+                background: linear-gradient(90deg, transparent 0%, #e2e8f0 50%, transparent 100%);
+                border: none;
+                margin: 3rem 0;
+            }
+
+            .animated-gradient {
+                background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+
+            @keyframes gradient {
+                0% { background-position: 0% 50%; }
+                50% { background-position: 100% 50%; }
+                100% { background-position: 0% 50%; }
+            }
+
+            footer {
+                margin-top: 4rem;
+            }
+
+            @media (max-width: 768px) {
+                .navbar-brand {
+                    font-size: 1rem;
+                }
+
+                .container {
+                    padding: 0 20px;
+                }
+            }
+        </style>
+    {% endblock %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166939788-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-166939788-1');
+    </script>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-cube mr-2"></i>
+            <span>Semantica</span> ERP
+            <small class="text-muted ml-2" style="font-size: 0.75rem;">| Portal vHelios</small>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-home mr-1"></i> Inicio
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-info-circle mr-1"></i> Acerca de
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-cogs mr-1"></i> Servicios
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-envelope mr-1"></i> Contáctenos
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="container mt-4">
+    {% block content %}
+    {% endblock %}
+</main>
+
+<!-- Footer -->
+<footer class="py-4 bg-dark">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-left">
+                <p class="m-0 text-white">
+                    <i class="far fa-copyright mr-1"></i>
+                    <span style="color: #667eea;">Semantica Digital</span> 2024
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-right mt-3 mt-md-0">
+                <a href="#" class="text-white-50 mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white-50 mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white-50 mx-2"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-white-50 mx-2"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
-    </nav>
-    <div class="container">
-        {% block content %}
-        {% endblock %}
     </div>
+</footer>
 
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Semantica Digital 2020</p>
-        </div>
-    </footer>
+{% block javascripts %}
+    <script src="{{ asset('js/sitio/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/sitio/bootstrap.bundle.min.js') }}"></script>
+    <script>
+        // Navbar scroll effect
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 50) {
+                $('.navbar').addClass('shadow-lg');
+            } else {
+                $('.navbar').removeClass('shadow-lg');
+            }
+        });
 
-    {% block javascripts %}
-        <script src="{{ asset('js/sitio/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/sitio/bootstrap.bundle.min.js') }}"></script>
-    {% endblock %}
+        // Smooth scroll
+        $('a[href^="#"]').on('click', function(event) {
+            var target = $(this.getAttribute('href'));
+            if( target.length ) {
+                event.preventDefault();
+                $('html, body').stop().animate({
+                    scrollTop: target.offset().top - 76
+                }, 1000);
+            }
+        });
 
-    </body>
+        // Active link handler
+        $('.nav-link').on('click', function() {
+            $('.nav-link').removeClass('active');
+            $(this).addClass('active');
+        });
+    </script>
+{% endblock %}
+</body>
 </html>

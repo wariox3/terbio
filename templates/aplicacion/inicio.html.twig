@@ -2,6 +2,101 @@
 {% block content %}
     {{ form_start(form, { 'attr': {'class': 'form-horizontal'} }) }}
     {% if booEmpleado %}
+        <div class="col-md-9">
+            <section class="panel panel-featured panel-featured-primary" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08);">
+                <div class="panel-body" style="padding: 3rem;">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <div class="d-flex align-items-center mb-4">
+                                <div style="background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-right: 20px;">
+                                    <i class="fa fa-rocket" style="color: white; font-size: 24px;"></i>
+                                </div>
+                                <div>
+                                    <h3 style="margin: 0; font-weight: 700; font-size: 1.8rem; color: #2c3e50;">
+                                        Nuevo Portal de Empleados
+                                    </h3>
+                                    <span style="background: #e8f4fd; color: #224abe; font-size: 0.9rem; padding: 5px 14px; border-radius: 20px; font-weight: 600; letter-spacing: 0.5px;">
+                                NUEVA EXPERIENCIA
+                            </span>
+                                </div>
+                            </div>
+
+                            <p style="color: #5a6c7d; font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.8rem;">
+                                Hemos rediseñado completamente nuestra plataforma para ofrecerte una experiencia más moderna,
+                                rápida y segura. La migración es necesaria para mantener el acceso a todas las funcionalidades
+                                y actualizaciones futuras.
+                            </p>
+
+                            <div style="background: #f8fafc; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.8rem; border: 1px solid #e8ecf1;">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #d4edda; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 14px;">
+                                        <i class="fa fa-shield" style="color: #155724; font-size: 16px;"></i>
+                                    </span>
+                                            <span style="font-weight: 500; color: #2c3e50; font-size: 1.05rem;">Mayor seguridad</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #fff3cd; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 14px;">
+                                        <i class="fa fa-bolt" style="color: #856404; font-size: 16px;"></i>
+                                    </span>
+                                            <span style="font-weight: 500; color: #2c3e50; font-size: 1.05rem;">Mejor rendimiento</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #d1ecf1; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 14px;">
+                                        <i class="fa fa-mobile" style="color: #0c5460; font-size: 16px;"></i>
+                                    </span>
+                                            <span style="font-weight: 500; color: #2c3e50; font-size: 1.05rem;">Experiencia móvil</span>
+                                        </div>
+                                        <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                                    <span style="background: #d4edda; width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 14px;">
+                                        <i class="fa fa-check-circle" style="color: #155724; font-size: 16px;"></i>
+                                    </span>
+                                            <span style="font-weight: 500; color: #2c3e50; font-size: 1.05rem;">Nuevas funcionalidades</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <p style="color: #7f8c8d; font-size: 1.05rem; margin: 0;">
+                                <i class="fa fa-info-circle" style="color: #4e73df; margin-right: 8px; font-size: 1.1rem;"></i>
+                                Realiza la transición ahora para disfrutar de todas las mejoras y mantener tu información protegida.
+                            </p>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div style="background: linear-gradient(135deg, #f8fafc 0%, #e8ecf1 100%); border-radius: 14px; padding: 2.5rem; text-align: center; border: 1px solid #dde2e8;">
+                                <div style="margin-bottom: 1.8rem;">
+                                    <div style="background: white; width: 76px; height: 76px; border-radius: 18px; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 3px 16px rgba(0,0,0,0.1);">
+                                        <i class="fa fa-rocket" style="color: #4e73df; font-size: 28px;"></i>
+                                    </div>
+                                </div>
+
+                                <h4 style="font-weight: 700; color: #2c3e50; margin-bottom: 0.5rem; font-size: 1.3rem;">¿Listo para empezar?</h4>
+                                <p style="color: #7f8c8d; font-size: 1rem; margin-bottom: 1.8rem;">Accede al nuevo portal en segundos</p>
+
+                                <a href="https://empleado.co/"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   style="background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; padding: 14px 36px; border-radius: 10px; text-decoration: none; display: inline-block; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 14px rgba(78, 115, 223, 0.3);"
+                                   onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 22px rgba(78, 115, 223, 0.4)';"
+                                   onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 14px rgba(78, 115, 223, 0.3)';">
+                                    <i class="fa fa-external-link" style="margin-right: 10px; font-size: 1.1rem;"></i>
+                                    Acceder ahora
+                                </a>
+
+                                <div style="margin-top: 1.2rem; color: #95a5a6; font-size: 0.95rem;">
+                                    <i class="fa fa-lock" style="margin-right: 6px;"></i>
+                                    Conexión segura • empleado.co
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
 {#        {% if app.user.empresaRel.mostrarInformacionEmpleado %}#}
 {#            <div class="col-md-9">#}
 {#                <section class="panel panel-featured-right panel-featured-primary">#}

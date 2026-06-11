@@ -20,34 +20,34 @@
                     </li>
                     {% if app.user.codigoEmpresaFk != null %}
                         {% if app.user.empleado %}
-                            <li class="nav-parent">
-                            <a>
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Empleado</span>
-                            </a>
-                            <ul class="nav nav-children" style="">
-                            {% if app.user.empresaRel.mostrarSubmenu %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Pagos</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('empleado_pago_lista') }}"></i>
-                                                <span>Pago</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% else %}
-                                <li class="nav nav-main">
-                                    <a>
-                                        <a href="{{ path('empleado_pago_lista') }}">
-                                            <span>Pago</span>
-                                        </a>
-                                    </a>
-                                </li>
-                            {% endif %}
+{#                            <li class="nav-parent">#}
+{#                            <a>#}
+{#                                <i class="fa fa-user" aria-hidden="true"></i>#}
+{#                                <span>Empleado</span>#}
+{#                            </a>#}
+{#                            <ul class="nav nav-children" style="">#}
+{#                            {% if app.user.empresaRel.mostrarSubmenu %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Pagos</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('empleado_pago_lista') }}"></i>#}
+{#                                                <span>Pago</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% else %}#}
+{#                                <li class="nav nav-main">#}
+{#                                    <a>#}
+{#                                        <a href="{{ path('empleado_pago_lista') }}">#}
+{#                                            <span>Pago</span>#}
+{#                                        </a>#}
+{#                                    </a>#}
+{#                                </li>#}
+{#                            {% endif %}#}
 {#                            {% if app.user.empresaRel.mostrarSubmenu %}#}
 {#                                <li class="nav-parent">#}
 {#                                    <a>#}
@@ -112,20 +112,20 @@
 {#                                    </ul>#}
 {#                                </li>#}
 {#                            {% endif %}#}
-                            {% if app.user.empresaRel.menuCertificado %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <span>Certificados</span>
-                                    </a>
-                                    <ul class="nav nav-children">
-                                        <li>
-                                            <a href="{{ path('certificadolaboral_lista') }}"></i>
-                                                <span>Laboral</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            {% endif %}
+{#                            {% if app.user.empresaRel.menuCertificado %}#}
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <span>Certificados</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('certificadolaboral_lista') }}"></i>#}
+{#                                                <span>Laboral</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
+{#                            {% endif %}#}
 {#                            {% if app.user.empresaRel.menuCertificadoOtro %}#}
 {#                                <li class="nav-parent">#}
 {#                                    <a>#}
@@ -377,19 +377,19 @@
                         {% endif %}
                         {% if app.user.empresaRel.menuInformacion %}
                             {% if app.user.persona or app.user.empleado %}
-                                <li class="nav-parent">
-                                    <a>
-                                        <i class="fa fa-address-card-o" aria-hidden="true"></i>
-                                        <span>Información</span>
-                                    </a>
-                                    <ul class="nav nav-children" style="">
-                                        <li>
-                                            <a href="{{ path('aspirante_lista') }}"></i>
-                                                <span>Hoja de vida</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
+{#                                <li class="nav-parent">#}
+{#                                    <a>#}
+{#                                        <i class="fa fa-address-card-o" aria-hidden="true"></i>#}
+{#                                        <span>Información</span>#}
+{#                                    </a>#}
+{#                                    <ul class="nav nav-children" style="">#}
+{#                                        <li>#}
+{#                                            <a href="{{ path('aspirante_lista') }}"></i>#}
+{#                                                <span>Hoja de vida</span>#}
+{#                                            </a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </li>#}
                             {% endif %}
                         {% endif %}
                         {% if is_granted('ROLE_ADMIN') %}
